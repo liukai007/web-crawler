@@ -3,6 +3,8 @@ HOST: http://192.168.1.228
 
 # web-crawler
 
+音乐人产品搜索库 [产品搜索](http://192.168.1.228)
+
 ## update
 
 + 2016年8月17日
@@ -28,7 +30,6 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
 
-音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
 ## 产品详情 [/product/profile/{doc_id}]
 
