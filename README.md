@@ -9,7 +9,7 @@ HOST: http://192.168.1.228
 
 + hits.hits._source.priceUnit - 价格单位
 + hits.hits._source.price - 价格
-+ hits.hits._source.images - 图片集合
++ hits.hits._source.images - 图片集合dddd
 + hits.hits._source.category - 产品分类
 
 + Parameters
