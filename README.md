@@ -7,6 +7,9 @@ HOST: http://192.168.1.228
 
 ## update
 
++ 2016年8月18日
+    + 搜索API增加按来源条件[from]过滤的功能, 参数c增加了第6位来表示网站来源的ID
+
 + 2016年8月17日
     + 增加颜色的接口
     + 增加价格聚合
@@ -112,7 +115,7 @@ HOST: http://192.168.1.228
 ## 产品搜索 [/product/profile/_search?q={q}&c={c}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}]
 
 + Description
-    + Condition (category:支持多选, brand:支持多选, tag:数据与category合并现为保留字段, price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0], color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']) e.g: bass_0_0_50.0-500.0_FF0000, 查询关键词时bass价格在50.0-500.0之间的产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
+    + Condition (category:支持多选, brand:支持多选, tag:数据与category合并现为保留字段, price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0], color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF'], from:来源网站的ID 支持多选) e.g: bass_0_0_50.0-500.0_FF0000_1, 查询关键词是bass价格在50.0-500.0之间的来源于ID=1的网站产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
 
 + Response
     + hits.total - 记录总数
@@ -149,7 +152,7 @@ HOST: http://192.168.1.228
 
 + Parameters
     + q (string) - Query 查询关键词 
-    + c (string) - Condition 搜索条件[0_0_0_0_0], [category_brand_tag_price_color]
+    + c (string) - Condition 搜索条件[0_0_0_0_0_0], [category_brand_tag_price_color_from]
     + page (number) - 页码
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
