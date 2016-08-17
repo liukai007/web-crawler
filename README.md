@@ -7,17 +7,26 @@ HOST: http://192.168.1.228
 
 ## 产品详细 [/product/profile/{doc_id}]
 
-+ hits.hits._source.priceUnit - 价格单位
-+ hits.hits._source.price - 价格
-+ hits.hits._source.category - 产品分类
-+ hits.hits._source.brand - 品牌
-+ hits.hits._source.tags - （保留）标签
-+ hits.hits._source.name - 产品名称
-+ hits.hits._source.description - 产品描述
-+ hits.hits._source.rawContent - 富文本内容
-+ hits.hits._source.origin - 原始链接
-+ hits.hits._source.created - 抓取时间
-+ hits.hits._source.images - 图片集合dddd
++ Response
+    + hits.total - 记录总数
+    + hits.hits[]._source.category - 产品分类
+    + hits.hits[]._source.brand - 品牌
+    + hits.hits[]._source.tags - （保留）标签
+    + hits.hits[]._source.name - 产品名称
+    + hits.hits[]._source.description - 产品描述
+    + hits.hits[]._source.rawContent - 富文本内容
+    + hits.hits[]._source.origin - 原始链接
+    + hits.hits[]._source.priceUnit - 价格单位
+    + hits.hits[]._source.price - 价格
+    + hits.hits[]._source.seedId - 产品所属种子网站的ID
+    + hits.hits[]._source.created - 抓取时间
+    + hits.hits[]._source.images[] - 图片集合
+    + hits.hits[]._source.images[].id - 图片标识符
+    + hits.hits[]._source.images[].image - 本地图片链接
+    + hits.hits[]._source.images[].width - 宽度
+    + hits.hits[]._source.images[].height - 高度
+    + hits.hits[]._source.images[].title - 图片标题
+    + hits.hits[]._source.images[].alt - 图片alt
 
 + Parameters
     + doc_id (required, number) - 产品文档ID
@@ -73,7 +82,19 @@ HOST: http://192.168.1.228
           "aggregations": null
         }
 
-## 产品搜索 [/profile/_search]
+
+## 产品搜索 [/product/profile/_search?q={q}&c={c}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}]
+
++ Description
+    + Condition (category:支持多选, brand:支持多选, tag:数据与category合并现为保留字段, price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0], color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']) e.g: bass_0_0_50.0-500.0_FF0000, 查询关键词时bass价格在50.0-500.0之间的产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
+
++ Parameters
+    + q (string) - Query 查询关键词 
+    + c (string) - Condition 搜索条件[0_0_0_0_0], [category_brand_tag_price_color]
+    + page (number) - 页码
+    + size (number) - 大小
+    + cluster (boolean) - 是非返回搜索结果聚类数据
+    + aggregation (string) - 聚合条件[0_0_0_50], (0|1:关闭|打开 聚合搜索, 0|1:asc|desc, 0|1:term|count 排序字段, 50:返回聚合结果的size)
 
 ### 产品搜索 [GET]
 
@@ -190,15 +211,147 @@ HOST: http://192.168.1.228
             }
           }
         }
-        
-## 产品相似查询(More Like This) [/product/profile/_search/mlt]
+    
 
-### 产品搜索 [GET]
+## 产品相似查询More Like This [/profile/_search/mlt]
 
-## 产品聚合 [/product/profile/_search/aggregation]
+### MLT [GET]
 
-### 产品搜索 [GET]
++ Response 200 (application/json)
 
-## 产品颜色集合 [/product/colors]
+        {
+          "hits": {
+            "hits": [
+              {
+                "_source": {
+                  "priceUnit": "$",
+                  "images": [
+                    {
+                      "image": "http://static.budee.com/yyren/image/201608/12/11/B5/B1/4F/0E/AF/AA/7B/4B/DB/0D/98/53/E2/2B/15/11B5B14F0EAFAA7B4BDB0D9853E22B15.jpg",
+                      "000000": 0.0015284483987619338,
+                      "0000FF": 0.0016725935114987162,
+                      "FF0000": 0.0017398052281613968,
+                      "FF00FF": 0.002004197277862656,
+                      "alt": "Simmons Piezo Drum Trigger",
+                      "00FF00": 0.0018473284671215245,
+                      "00FFFF": 0.002361876797803322,
+                      "FFFF00": 0.0025789561502864537,
+                      "FFFFFF": 0.008876127604525032,
+                      "width": 120,
+                      "id": 328592,
+                      "height": 120
+                    }
+                  ],
+                  "created": "2016-08-12T10:23:21.000Z",
+                  "price": 19.99,
+                  "origin": "http://www.music123.com/drums-percussion/simmons-piezo-drum-trigger",
+                  "seedId": 1,
+                  "name": "  Simmons Piezo Drum Trigger",
+                  "category": [
+                    "Drums & Percussion",
+                    "Electronic Drums",
+                    "Acoustic Triggers"
+                  ],
+                  "brand": "Simmons",
+                  "tags": []
+                },
+                "_id": "59297",
+                "_score": 4.1201496
+              }
+            ],
+            "total": 3142
+          },
+          "aggregations": null
+        }
 
-### 产品搜索 [GET]
+
+## 产品聚合统计搜索 [/product/profile/_search/aggregation]
+
+### 聚合搜索 [GET]
+
++ Response 200 (application/json)
+
+        {
+          "hits": {
+            "hits": [],
+            "total": 97857
+          },
+          "aggregations": {
+            "price": {
+              "buckets": [
+                {
+                  "doc_count": 49346,
+                  "from": "-Infinity",
+                  "to": 100,
+                  "key": "*-100.0"
+                },
+                {
+                  "doc_count": 10829,
+                  "from": 100,
+                  "to": 200,
+                  "key": "100.0-200.0"
+                },
+                {
+                  "doc_count": 5994,
+                  "from": 200,
+                  "to": 300,
+                  "key": "200.0-300.0"
+                },
+                {
+                  "doc_count": 6605,
+                  "from": 300,
+                  "to": 500,
+                  "key": "300.0-500.0"
+                },
+                {
+                  "doc_count": 8267,
+                  "from": 500,
+                  "to": 1000,
+                  "key": "500.0-1000.0"
+                },
+                {
+                  "doc_count": 5124,
+                  "from": 1000,
+                  "to": 2000,
+                  "key": "1000.0-2000.0"
+                },
+                {
+                  "doc_count": 3918,
+                  "from": 2000,
+                  "to": 5000,
+                  "key": "2000.0-5000.0"
+                },
+                {
+                  "doc_count": 965,
+                  "from": 5000,
+                  "to": 10000,
+                  "key": "5000.0-10000.0"
+                },
+                {
+                  "doc_count": 78,
+                  "from": 50000,
+                  "to": "Infinity",
+                  "key": "50000.0-*"
+                }
+              ]
+            }
+          }
+        }
+
+
+## 查询产品颜色列表 [/product/colors]
+
+### 颜色列表 [GET]
+
++ Response 200 (application/json)
+
+        [
+          "000000",
+          "0000FF",
+          "00FF00",
+          "00FFFF",
+          "FF0000",
+          "FF00FF",
+          "FFFF00",
+          "FFFFFF"
+        ]
