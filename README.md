@@ -5,13 +5,13 @@ HOST: http://192.168.1.228
 
 音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
-## 产品详细 [/product/profile/{doc_id}]
+## 产品详情 [/product/profile/{doc_id}]
 
 + Response
     + hits.total - 记录总数
-    + hits.hits[]._source.category - 产品分类
+    + hits.hits[]._source.category[] - 产品分类
     + hits.hits[]._source.brand - 品牌
-    + hits.hits[]._source.tags - （保留）标签
+    + hits.hits[]._source.tags[] - （保留）标签
     + hits.hits[]._source.name - 产品名称
     + hits.hits[]._source.description - 产品描述
     + hits.hits[]._source.rawContent - 富文本内容
@@ -31,7 +31,7 @@ HOST: http://192.168.1.228
 + Parameters
     + doc_id (required, number) - 产品文档ID
 
-### 产品详细 [GET]
+### 查询产品详细信息 [GET]
 
 + Response 200 (application/json)
 
@@ -87,6 +87,39 @@ HOST: http://192.168.1.228
 
 + Description
     + Condition (category:支持多选, brand:支持多选, tag:数据与category合并现为保留字段, price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0], color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']) e.g: bass_0_0_50.0-500.0_FF0000, 查询关键词时bass价格在50.0-500.0之间的产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
+
++ Response
+    + hits.total - 记录总数
+    + hits.hits[]._source.category[] - 产品分类
+    + hits.hits[]._source.brand - 品牌
+    + hits.hits[]._source.tags[] - （保留）标签
+    + hits.hits[]._source.name - 产品名称
+    + hits.hits[]._source.origin - 原始链接
+    + hits.hits[]._source.priceUnit - 价格单位
+    + hits.hits[]._source.price - 价格
+    + hits.hits[]._source.seedId - 产品所属种子网站的ID
+    + hits.hits[]._source.created - 抓取时间
+    + hits.hits[]._source.images[] - 图片集合
+    + hits.hits[]._source.images[].id - 图片标识符
+    + hits.hits[]._source.images[].image - 本地图片链接
+    + hits.hits[]._source.images[].width - 宽度
+    + hits.hits[]._source.images[].height - 高度
+    + hits.hits[]._source.images[].title - 图片标题
+    + hits.hits[]._source.images[].alt - 图片alt
+    + hits.hits[]._source.from.host - 网站主页
+    + hits.hits[]._source.from.source - 网站简称
+    + hits.hits[].highlight.content[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
+    + aggregations.{name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
+    + aggregations.{name}.buckets[].key - label名称
+    + aggregations.{name}.buckets[].doc_count - count统计
+    + clusters[] - 聚类数据
+    + clusters[].documentReferences[] - 对搜索结果前n条记录聚类的文档ID集合
+    + clusters[].label - 描述聚类的标签名称
+    + clusters[].score - 保留
+    + clusters[].subgroups - 保留
+    + clusters[].otherTopics - 保留
+    + clusters[].id - 保留
+    + clusters[].phrases - 保留
 
 + Parameters
     + q (string) - Query 查询关键词 
@@ -213,9 +246,22 @@ HOST: http://192.168.1.228
         }
     
 
-## 产品相似查询More Like This [/profile/_search/mlt]
+## 产品相似查询More Like This [/profile/_search/mlt?text={text}&docId={docId}&size={size}]
+
++ Parameters
+    + text (string) - 根据该文本内容找相似文档(与docId二选一)
+    + docId (number) - 根据指定的文档ID找相似文档(与text二选一)
+    + size (number) - 显示相似文档的数量
 
 ### MLT [GET]
+
++ Request (application/json)
+
+        {
+            "text": "The Simmons Piezo Drum Trigger enables you to trigger electronic drum sounds",
+            "docId": 1
+            "size": 20
+        }
 
 + Response 200 (application/json)
 
@@ -265,9 +311,18 @@ HOST: http://192.168.1.228
         }
 
 
-## 产品聚合统计搜索 [/product/profile/_search/aggregation]
+## 产品聚合统计搜索 [/product/profile/_search/aggregation?type={type}]
+
++ Parameters
+    + type (string) - [category|brand|price|from] 分类|品牌|价格|来源 可选参数,没有的话返回所有数据
 
 ### 聚合搜索 [GET]
+
++ Request (application/json)
+
+        {
+            "type": "price"
+        }
 
 + Response 200 (application/json)
 
