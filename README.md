@@ -3,6 +3,31 @@ HOST: http://192.168.1.228
 
 # web-crawler
 
+## update
+
++ 2016年8月17日
+    + 增加颜色的接口
+    + 增加价格聚合
+    + 增加来源聚合
+    + 聚合类的接口进行了整合, 并且返回的格式进行了稍微的调整, 请查看/product/profile/_search/aggregation
+    + 对聚合数据增加缓存
+    + 返回的搜索数据列表中增加了关联来源的对象信息(from), 具体查看/product/profile/_search
+
++ 2016年8月16日
+    + 修改了products表结构, 重新建立的索引, 搜索结果中增加产盘来源信息
+    + 搜索中的通过聚合参数查询出来的结果增加价格range的统计信息
+
++ 2016年8月15日
+    + 修复了URL CRC越界的一个bug
+    + 搜索增加了产品所属网站的字段（from）, 目前可以根据网站来源进行搜索, 索引中保存的是ID
+    + MORE LIKE THIS 现在如果是根据docId搜索, 会过滤掉docId本身的文档; docId修改为String类型
+
++ 2016年8月12日
+    + 增加了聚合搜索功能
+    + 增加查找产品分类[category], 产品品牌[brand]的API
+    + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
+    + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
+
 音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
 ## 产品详情 [/product/profile/{doc_id}]
