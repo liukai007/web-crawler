@@ -1,133 +1,78 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://192.168.1.228
 
-# Polls
+# web-crawler
 
-Polls is a simple API allowing consumers to view polls and vote in them. You can view this documentation over at [Apiary](http://docs.pollsapi.apiary.io).
+音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
-# Polls API Root [/]
+## 产品 [/product/profile/{doc_id}]
 
-This resource does not have any attributes. Instead it offers the initial API affordances in the form of the links in the JSON body.
++ hits.hits._source.priceUnit - 价格单位
++ hits.hits._source.price - 价格
++ hits.hits._source.images - 图片集合
++ hits.hits._source.category - 产品分类
 
-It is recommend to follow the “url” link values, [Link](https://tools.ietf.org/html/rfc5988) or Location headers where applicable to retrieve resources. Instead of constructing your own URLs, to keep your client decoupled from implementation details.
++ Parameters
+    + doc_id (required, number) - 产品文档ID
 
-## Retrieve the Entry Point [GET]
+### 产品详细页 [GET]
 
 + Response 200 (application/json)
 
         {
-            "questions_url": "/questions"
+          "hits": {
+            "hits": [
+              {
+                "_source": {
+                  "priceUnit": "CNY",
+                  "images": [
+                    {
+                      "image": "http://static.budee.com/yyren/image/201608/10/C5/42/00/F6/87/FE/D9/0F/D5/DA/8F/6A/E8/E4/98/2E/C54200F687FED90FD5DA8F6AE8E4982E.jpg",
+                      "000000": 0.0015232958813356824,
+                      "0000FF": 0.0016691663195955856,
+                      "FF0000": 0.0017360185242277426,
+                      "FF00FF": 0.002001311678124089,
+                      "alt": "Simmons Piezo Drum Trigger",
+                      "00FF00": 0.0018438470871000882,
+                      "00FFFF": 0.002360421052461741,
+                      "FFFF00": 0.0025782791325445493,
+                      "FFFFFF": 0.009053163686147867,
+                      "width": 180,
+                      "id": 1,
+                      "height": 180
+                    }
+                  ],
+                  "created": "2016-08-10T04:41:12.000Z",
+                  "price": 133.19,
+                  "origin": "http://www.guitarcenter.com/Simmons/Piezo-Drum-Trigger.gc",
+                  "seedId": 3,
+                  "name": "Simmons Piezo Drum Trigger  ",
+                  "description": null,
+                  "category": [
+                    "Drums & Percussion",
+                    "Electronic Drums",
+                    "Acoustic Triggers"
+                  ],
+                  "brand": null,
+                  "tags": [],
+                  "rawContent": "<div>  \n <div>\n   Overview \n </div> \n <div>  \n  <p>The Simmons Piezo Drum Trigger enables you to trigger electronic drum sounds, effects, and loops with an acoustic drum. It easily mounts to any drumhead to trigger any electronic drum module. A trigger hat and insulated rim jack mount clip come included. (Electronic drum module not included)<br></p> \n </div>  \n</div>"
+                },
+                "_id": "1",
+                "_score": 1
+              }
+            ],
+            "total": 1
+          },
+          "aggregations": null
         }
 
-## Group Question
-
-Resources related to questions in the API.
-
-## Question [/questions/{question_id}]
-
-A Question object has the following attributes:
-
-+ question
-+ published_at - An ISO8601 date when the question was published.
-+ url
-+ choices - An array of Choice objects.
-
-+ Parameters
-    + question_id: 1 (required, number) - ID of the Question in form of an integer
-
-### View a Questions Detail [GET]
-
-+ Response 200 (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "published_at": "2014-11-11T08:40:51.620Z",
-            "url": "/questions/1",
-            "choices": [
-                {
-                    "choice": "Swift",
-                    "url": "/questions/1/choices/1",
-                    "votes": 2048
-                }, {
-                    "choice": "Python",
-                    "url": "/questions/1/choices/2",
-                    "votes": 1024
-                }, {
-                    "choice": "Objective-C",
-                    "url": "/questions/1/choices/3",
-                    "votes": 512
-                }, {
-                    "choice": "Ruby",
-                    "url": "/questions/1/choices/4",
-                    "votes": 256
-                }
-            ]
-        }
-
-## Choice [/questions/{question_id}/choices/{choice_id}]
-
-+ Parameters
-    + question_id: 1 (required, number) - ID of the Question in form of an integer
-    + choice_id: 1 (required, number) - ID of the Choice in form of an integer
-
-### Vote on a Choice [POST]
-
-This action allows you to vote on a question's choice.
-
-+ Response 201
-
-    + Headers
-
-            Location: /questions/1
-
-## Questions Collection [/questions{?page}]
-
-+ Parameters
-    + page: 1 (optional, number) - The page of questions to return
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-    + Headers
-
-            Link: </questions?page=2>; rel="next"
-
-    + Body
-
-            [
-                {
-                    "question": "Favourite programming language?",
-                    "published_at": "2014-11-11T08:40:51.620Z",
-                    "url": "/questions/1",
-                    "choices": [
-                        {
-                            "choice": "Swift",
-                            "url": "/questions/1/choices/1",
-                            "votes": 2048
-                        }, {
-                            "choice": "Python",
-                            "url": "/questions/1/choices/2",
-                            "votes": 1024
-                        }, {
-                            "choice": "Objective-C",
-                            "url": "/questions/1/choices/3",
-                            "votes": 512
-                        }, {
-                            "choice": "Ruby",
-                            "url": "/questions/1/choices/4",
-                            "votes": 256
-                        }
-                    ]
-                }
-            ]
+## 搜索 [/profile/_search]
 
 ### Create a New Question [POST]
 
-You may create your own question using this action. It takes a JSON object containing a question and a collection of answers in the form of choices.
-
-+ question (string) - The question
-+ choices (array[string]) - A collection of choices.
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
 
 + Request (application/json)
 
@@ -151,24 +96,19 @@ You may create your own question using this action. It takes a JSON object conta
 
             {
                 "question": "Favourite programming language?",
-                "published_at": "2014-11-11T08:40:51.620Z",
-                "url": "/questions/2",
+                "published_at": "2015-08-05T08:40:51.620Z",
                 "choices": [
                     {
                         "choice": "Swift",
-                        "url": "/questions/2/choices/1",
                         "votes": 0
                     }, {
                         "choice": "Python",
-                        "url": "/questions/2/choices/2",
                         "votes": 0
                     }, {
                         "choice": "Objective-C",
-                        "url": "/questions/2/choices/3",
                         "votes": 0
                     }, {
                         "choice": "Ruby",
-                        "url": "/questions/2/choices/4",
                         "votes": 0
                     }
                 ]
