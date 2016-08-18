@@ -8,7 +8,7 @@ HOST: http://192.168.1.228
 ## update
 
 + 2016年8月18日
-    + 关于[Deep Pagination]问题，性能消耗会成指数级增长，建议搜索引擎只返回前n条数据, https://www.elastic.co/guide/en/elasticsearch/guide/current/_fetch_phase.html, https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html
+    + 关于[Deep Pagination]问题，有两种解决方案, 第一种修改索引setting, 将max_result_window数变大(性能消耗会成指数级增长); 第二种使用scroll API(只能一页一页进行翻页), 两种方案都有限制，建议搜索引擎只返回前n条数据, https://www.elastic.co/guide/en/elasticsearch/guide/current/_fetch_phase.html, https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html
     + 搜索API增加按来源条件[from]过滤的功能, 参数c增加了第6位来表示网站来源的ID
 
 + 2016年8月17日
