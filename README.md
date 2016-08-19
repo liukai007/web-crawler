@@ -9,6 +9,7 @@ HOST: http://192.168.1.228
 
 + 2016年8月19日
     + 增加facet
+    + /product/profile/_search API 增加排序参数[s] sort
 
 + 2016年8月18日
     + 关于[Deep Pagination]问题，有两种解决方案, 第一种修改索引setting, 将max_result_window数变大(性能消耗会成指数级增长); 第二种使用scroll API(只能一页一页进行翻页), 两种方案都有限制，建议搜索引擎只返回前n条数据, https://www.elastic.co/guide/en/elasticsearch/guide/current/_fetch_phase.html, https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html
@@ -116,10 +117,16 @@ HOST: http://192.168.1.228
         }
 
 
-## 产品搜索 [/product/profile/_search?q={q}&c={c}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}]
+## 产品搜索 [/product/profile/_search?q={q}&c={c}&s={s}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}]
 
 + Description
-    + Condition (category:支持多选, brand:支持多选, tag:数据与category合并现为保留字段, price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0], color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF'], from:来源网站的ID 支持多选) e.g: bass_0_0_50.0-500.0_FF0000_1, 查询关键词是bass价格在50.0-500.0之间的来源于ID=1的网站产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
+    + Condition [0_0_0_0_0_0] e.g: bass_0_0_50.0-500.0_FF0000_1, 查询关键词是bass价格在50.0-500.0之间的来源于ID=1的网站产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
+    + category:支持多选
+    + brand:支持多选
+    + tag:(保留字段)数据与category合并
+    + price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0]
+    + color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']
+    + from:来源网站的ID 支持多选
 
 + Response
     + hits.total - 记录总数
@@ -143,7 +150,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.from.source - 网站简称
     + hits.hits[].highlight.content[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
     + aggregations.{name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
-    + aggregations.{name}.buckets[].key - label名称
+    + aggregations.{name}.buckets[].key - label名称, 会按key名称进行分组[A, B, C..., Z, #]
     + aggregations.{name}.buckets[].doc_count - count统计
     + clusters[] - 聚类数据
     + clusters[].documentReferences[] - 对搜索结果前n条记录聚类的文档ID集合
@@ -157,6 +164,7 @@ HOST: http://192.168.1.228
 + Parameters
     + q (string) - Query 查询关键词 
     + c (string) - Condition 搜索条件[0_0_0_0_0_0], [category_brand_tag_price_color_from]
+    + s (string) - 排序字段目前是排他的, 和颜色排序互斥, 排序优先级比颜色高[0:ASC, 1:DESC], 可选参数, 没有的话按关键词相关度排序
     + page (number) - 页码
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
