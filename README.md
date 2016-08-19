@@ -164,7 +164,7 @@ HOST: http://192.168.1.228
 + Parameters
     + q (string) - Query 查询关键词 
     + c (string) - Condition 搜索条件[0_0_0_0_0_0], [category_brand_tag_price_color_from]
-    + s (string) - 排序字段目前是排他的, 和颜色排序互斥, 排序优先级比颜色高[0:ASC, 1:DESC], 可选参数, 没有的话按关键词相关度排序
+    + s (string) - 排序字段目前是排他的, 排序优先级比颜色高, 可选参数, 没有的话按关键词相关度排序. 格式:[price|created]-0, e.g: price-0 (0:ASC, 1:DESC)
     + page (number) - 页码
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
@@ -177,6 +177,7 @@ HOST: http://192.168.1.228
         {
             "q": "bass",
             "c": "0_0_0_*-200.0_0"
+	    "s": "price-0"
             "page": 1,
             "size": 20,
             "cluster": "false",
