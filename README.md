@@ -9,6 +9,7 @@ HOST: http://192.168.1.228
 + 2016年9月7日
     + 索引mapping修改（brand由字符串类型变为一个Object类型）
     + Image调度任务修改
+    + ImageDownloadHandler的流程优化
 
 + 2016年9月6日
     + 修改了爬虫种子表的数据结构
