@@ -6,6 +6,11 @@ HOST: http://192.168.1.228
 音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
 ## update
++ 2016年9月9日
+    + [BUG FIXED] 修改了URI中特殊字符导致的链接处理失败的问题
+    + 产品搜索的[brand]数据结构变化, [brand]聚合增加logo字段
+    + 分类减少了, 现在只返回第一级分类数据
+
 + 2016年9月8日
     + 优化了过滤器链的处理
     + 增加了对深度优先策略的支持，避免了广度优先策略导致URL队列过度膨胀与元数据长久占据内存的问题
@@ -137,7 +142,10 @@ HOST: http://192.168.1.228
                     "Electronic Drums",
                     "Acoustic Triggers"
                   ],
-                  "brand": null,
+                  "brand": {
+                    "name": "ADG Productions",
+                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
+                  },
                   "tags": [],
                   "rawContent": "<div>  \n <div>\n   Overview \n </div> \n <div>  \n  <p>The Simmons Piezo Drum Trigger enables you to trigger electronic drum sounds, effects, and loops with an acoustic drum. It easily mounts to any drumhead to trigger any electronic drum module. A trigger hat and insulated rim jack mount clip come included. (Electronic drum module not included)<br></p> \n </div>  \n</div>"
                 },
@@ -264,7 +272,10 @@ HOST: http://192.168.1.228
                     "Rosin",
                     "Double Bass Rosin"
                   ],
-                  "brand": null,
+                  "brand": {
+                    "name": "ADG Productions",
+                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
+                  },
                   "tags": []
                 },
                 "_id": "1200",
@@ -306,14 +317,17 @@ HOST: http://192.168.1.228
               "buckets": [
                 {
                   "doc_count": 702,
+                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
                   "key": "Hal Leonard"
                 },
                 {
                   "doc_count": 549,
+                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
                   "key": "Gator"
                 },
                 {
                   "doc_count": 59,
+                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
                   "key": "Epiphone"
                 }
               ]
@@ -374,7 +388,10 @@ HOST: http://192.168.1.228
                     "Electronic Drums",
                     "Acoustic Triggers"
                   ],
-                  "brand": "Simmons",
+                  "brand": {
+                    "name": "ADG Productions",
+                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
+                  },
                   "tags": []
                 },
                 "_id": "59297",
