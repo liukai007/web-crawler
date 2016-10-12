@@ -8,7 +8,8 @@ HOST: http://192.168.1.228
 ## update
 
 + 2016年10月12日
-    + 【问题】不同二级域名相同图片暂时没有进行排重，需要修改模板（link中使用replace将随机域名替换为固定）
+    + 【问题】不同二级域名相同图片暂时没有进行排重，需要修改模板（link中使用replace将随机域名替换为固定）
+    + 修改产品搜索, 产品详细API文档
 
 + 2016年10月11日
     + 图片下载采用更新策略并对相同地址的图片进行的排重，避免在更新产品信息时重新下载已有的图片
@@ -129,6 +130,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.origin - 原始链接
     + hits.hits[]._source.priceUnit - 价格单位
     + hits.hits[]._source.price - 价格
+    + hits.hits[]._source.rating - 产品评级, 取值范围[0,1], (0% ~ 100%) 
     + hits.hits[]._source.seedId - 产品所属种子网站的ID
     + hits.hits[]._source.created - 抓取时间
     + hits.hits[]._source.images[] - 图片集合
@@ -138,6 +140,9 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.images[].height - 高度
     + hits.hits[]._source.images[].title - 图片标题
     + hits.hits[]._source.images[].alt - 图片alt
+    + hits.hits[]._source.images[].sizes[] - 图片大小集合 e.g: ['80','220','400','800','1200'], 小于等于原生图片的最大高度或宽度 
+    + hits.hits[]._source.features[]._name - 特性名称
+    + hits.hits[]._source.features[]._value - 特性值
 
 + Parameters
     + doc_id (required, number) - 产品文档ID
@@ -152,23 +157,107 @@ HOST: http://192.168.1.228
               {
                 "_source": {
                   "priceUnit": "CNY",
+                  "rating": 0.80,
                   "images": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201608/10/C5/42/00/F6/87/FE/D9/0F/D5/DA/8F/6A/E8/E4/98/2E/C54200F687FED90FD5DA8F6AE8E4982E.jpg",
-                      "000000": 0.0015232958813356824,
-                      "0000FF": 0.0016691663195955856,
-                      "FF0000": 0.0017360185242277426,
-                      "FF00FF": 0.002001311678124089,
-                      "alt": "Simmons Piezo Drum Trigger",
-                      "00FF00": 0.0018438470871000882,
-                      "00FFFF": 0.002360421052461741,
-                      "FFFF00": 0.0025782791325445493,
-                      "FFFFFF": 0.009053163686147867,
+                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
+                      "alt": "Pops' Bass Rosin Bass Rosin",
                       "width": 180,
-                      "id": 1,
-                      "height": 180
+                      "id": 1389,
+                      "height": 180,
+                      "sizes":[
+                        80,
+                        220,
+                        400,
+                        800,
+                        1200
+                      ],
+                      "distance": {
+                        "000000": 0.001625050938040724,
+                        "0000FF": 0.0017121483481907281,
+                        "FF0000": 0.002108896256451791,
+                        "FF00FF": 0.002219442528339659,
+                        "00FF00": 0.0018475207605581057,
+                        "00FFFF": 0.002146904123589382,
+                        "FFFF00": 0.0026933843973544424,
+                        "FFFFFF": 0.005582458482860849,
+                      }
                     }
                   ],
+                  "features":[
+                        {
+                            "_name": "Sound Engine Type(s)",
+                            "_value": "Analog Modeling"
+                        },
+                        {
+                            "_name": "Polyphony",
+                            "_value": "20 Notes-90 Notes (Depending On the Patch)"
+                        },
+                        {
+                            "_name": "Number of Presets",
+                            "_value": "512 RAM Patches, 3328 ROM Sounds"
+                        },
+                        {
+                            "_name": "Number of Effects",
+                            "_value": "192"
+                        },
+                        {
+                            "_name": "Effects Types",
+                            "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                        },
+                        {
+                            "_name": "Arpeggiator",
+                            "_value": "Yes"
+                        },
+                        {
+                            "_name": "Analog Inputs",
+                            "_value": "2 x TS"
+                        },
+                        {
+                            "_name": "Analog Outputs",
+                            "_value": "6 x TS, 1 x TRS (Headphones)"
+                        },
+                        {
+                            "_name": "Digital Inputs",
+                            "_value": "1 x S/PDIF"
+                        },
+                        {
+                            "_name": "Digital Outputs",
+                            "_value": "1 x S/PDIF"
+                        },
+                        {
+                            "_name": "MIDI I/O",
+                            "_value": "In/Out/Thru/USB"
+                        },
+                        {
+                            "_name": "USB",
+                            "_value": "1 x Type B"
+                        },
+                        {
+                            "_name": "Height",
+                            "_value": "3.2\""
+                        },
+                        {
+                            "_name": "Width",
+                            "_value": "18.5\""
+                        },
+                        {
+                            "_name": "Depth",
+                            "_value": "7.4\""
+                        },
+                        {
+                            "_name": "Weight",
+                            "_value": "7.4 lbs."
+                        },
+                        {
+                            "_name": "Power Supply",
+                            "_value": "Power Supply Included"
+                        },
+                        {
+                            "_name": "Manufacturer Part Number",
+                            "_value": "Virus TI2 Desk"
+                        }
+                    ],
                   "created": "2016-08-10T04:41:12.000Z",
                   "price": 133.19,
                   "origin": "http://www.guitarcenter.com/Simmons/Piezo-Drum-Trigger.gc",
@@ -217,6 +306,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.origin - 原始链接
     + hits.hits[]._source.priceUnit - 价格单位
     + hits.hits[]._source.price - 价格
+    + hits.hits[]._source.rating - 产品评级, 取值范围[0,1], (0% ~ 100%) 
     + hits.hits[]._source.seedId - 产品所属种子网站的ID
     + hits.hits[]._source.created - 抓取时间
     + hits.hits[]._source.images[] - 图片集合
@@ -226,6 +316,9 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.images[].height - 高度
     + hits.hits[]._source.images[].title - 图片标题
     + hits.hits[]._source.images[].alt - 图片alt
+    + hits.hits[]._source.images[].sizes[] - 图片大小集合 e.g: ['80','220','400','800','1200'], 小于等于原生图片的最大高度或宽度 
+    + hits.hits[]._source.features[]._name - 特性名称
+    + hits.hits[]._source.features[]._value - 特性值
     + hits.hits[]._source.from.host - 网站主页
     + hits.hits[]._source.from.source - 网站简称
     + hits.hits[].highlight.content[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
@@ -277,23 +370,107 @@ HOST: http://192.168.1.228
                 },
                 "_source": {
                   "priceUnit": "CNY",
+                  "rating": 0.80,
                   "images": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201608/10/32/F9/E4/53/A0/6A/3E/8B/5A/F7/9A/4A/EB/54/0D/12/32F9E453A06A3E8B5AF79A4AEB540D12.jpg",
-                      "000000": 0.001625050938040724,
-                      "0000FF": 0.0017121483481907281,
-                      "FF0000": 0.002108896256451791,
-                      "FF00FF": 0.002219442528339659,
+                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
                       "alt": "Pops' Bass Rosin Bass Rosin",
-                      "00FF00": 0.0018475207605581057,
-                      "00FFFF": 0.002146904123589382,
-                      "FFFF00": 0.0026933843973544424,
-                      "FFFFFF": 0.005582458482860849,
                       "width": 180,
                       "id": 1389,
-                      "height": 180
+                      "height": 180,
+                      "sizes":[
+                        80,
+                        220,
+                        400,
+                        800,
+                        1200
+                      ],
+                      "distance": {
+                        "000000": 0.001625050938040724,
+                        "0000FF": 0.0017121483481907281,
+                        "FF0000": 0.002108896256451791,
+                        "FF00FF": 0.002219442528339659,
+                        "00FF00": 0.0018475207605581057,
+                        "00FFFF": 0.002146904123589382,
+                        "FFFF00": 0.0026933843973544424,
+                        "FFFFFF": 0.005582458482860849,
+                      }
                     }
                   ],
+                  "features":[
+                        {
+                            "_name": "Sound Engine Type(s)",
+                            "_value": "Analog Modeling"
+                        },
+                        {
+                            "_name": "Polyphony",
+                            "_value": "20 Notes-90 Notes (Depending On the Patch)"
+                        },
+                        {
+                            "_name": "Number of Presets",
+                            "_value": "512 RAM Patches, 3328 ROM Sounds"
+                        },
+                        {
+                            "_name": "Number of Effects",
+                            "_value": "192"
+                        },
+                        {
+                            "_name": "Effects Types",
+                            "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                        },
+                        {
+                            "_name": "Arpeggiator",
+                            "_value": "Yes"
+                        },
+                        {
+                            "_name": "Analog Inputs",
+                            "_value": "2 x TS"
+                        },
+                        {
+                            "_name": "Analog Outputs",
+                            "_value": "6 x TS, 1 x TRS (Headphones)"
+                        },
+                        {
+                            "_name": "Digital Inputs",
+                            "_value": "1 x S/PDIF"
+                        },
+                        {
+                            "_name": "Digital Outputs",
+                            "_value": "1 x S/PDIF"
+                        },
+                        {
+                            "_name": "MIDI I/O",
+                            "_value": "In/Out/Thru/USB"
+                        },
+                        {
+                            "_name": "USB",
+                            "_value": "1 x Type B"
+                        },
+                        {
+                            "_name": "Height",
+                            "_value": "3.2\""
+                        },
+                        {
+                            "_name": "Width",
+                            "_value": "18.5\""
+                        },
+                        {
+                            "_name": "Depth",
+                            "_value": "7.4\""
+                        },
+                        {
+                            "_name": "Weight",
+                            "_value": "7.4 lbs."
+                        },
+                        {
+                            "_name": "Power Supply",
+                            "_value": "Power Supply Included"
+                        },
+                        {
+                            "_name": "Manufacturer Part Number",
+                            "_value": "Virus TI2 Desk"
+                        }
+                    ],
                   "created": "2016-08-10T04:53:06.000Z",
                   "price": 79.89,
                   "origin": "http://www.guitarcenter.com/Pops-Bass-Rosin/Bass-Rosin.gc",
@@ -399,21 +576,31 @@ HOST: http://192.168.1.228
               {
                 "_source": {
                   "priceUnit": "$",
+                  "rating": 0.80,
                   "images": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201608/12/11/B5/B1/4F/0E/AF/AA/7B/4B/DB/0D/98/53/E2/2B/15/11B5B14F0EAFAA7B4BDB0D9853E22B15.jpg",
-                      "000000": 0.0015284483987619338,
-                      "0000FF": 0.0016725935114987162,
-                      "FF0000": 0.0017398052281613968,
-                      "FF00FF": 0.002004197277862656,
-                      "alt": "Simmons Piezo Drum Trigger",
-                      "00FF00": 0.0018473284671215245,
-                      "00FFFF": 0.002361876797803322,
-                      "FFFF00": 0.0025789561502864537,
-                      "FFFFFF": 0.008876127604525032,
-                      "width": 120,
-                      "id": 328592,
-                      "height": 120
+                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
+                      "alt": "Pops' Bass Rosin Bass Rosin",
+                      "width": 180,
+                      "id": 1389,
+                      "height": 180,
+                      "sizes":[
+                        80,
+                        220,
+                        400,
+                        800,
+                        1200
+                      ],
+                      "distance": {
+                        "000000": 0.001625050938040724,
+                        "0000FF": 0.0017121483481907281,
+                        "FF0000": 0.002108896256451791,
+                        "FF00FF": 0.002219442528339659,
+                        "00FF00": 0.0018475207605581057,
+                        "00FFFF": 0.002146904123589382,
+                        "FFFF00": 0.0026933843973544424,
+                        "FFFFFF": 0.005582458482860849,
+                      }
                     }
                   ],
                   "created": "2016-08-12T10:23:21.000Z",
