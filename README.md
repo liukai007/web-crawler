@@ -6,12 +6,15 @@ HOST: http://192.168.1.228
 音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
 ## update
++ 2016年10月13日
+    + [FIXED]修改了图片不能正常分组的问题，该问题会导致产品关联的图片中出现富文本中包含的图片
+    + [BUG]UnknownHostException:该异常将使调度程序不能从异常中恢复
 
 + 2016年10月12日
-    + [bug]不同二级域名相同图片暂时没有进行排重，需要修改模板（link中使用replace将随机域名替换为固定）
+    + [BUG]不同二级域名相同图片暂时没有进行排重，需要修改模板（link中使用replace将随机域名替换为固定）
     + 修改产品搜索, 产品详细API文档
     + visited表废除, 现在只采用redis进行已访问的url验证, 清除redis缓存将全量更新产品数据
-    + [fixed]修改了RedisFilterAdapter的实现, 现在不会产生URL MD5碰撞问题了
+    + [FIXED]修改了RedisFilterAdapter的实现, 现在不会产生URL MD5碰撞问题了
     + 产品搜索详情加入来源数据 from
 
 + 2016年10月11日
