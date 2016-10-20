@@ -6,6 +6,7 @@ HOST: http://192.168.1.228
 音乐人产品搜索库 [产品搜索](http://192.168.1.228)
 
 ## update
+
 +2016年10月20日
     + [FIXED]修复错误图片链接数据记录
     + [FIXED] 修复了异步HTTP（New I/O worker）与信号量（Semaphore）资源竞争导致的死锁问题
