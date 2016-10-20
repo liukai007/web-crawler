@@ -7,6 +7,7 @@ HOST: http://192.168.1.228
 
 ## update
 +2016年10月20日
+    + 啊
     + [FIXED] 修复了异步HTTP（New I/O worker）与信号量（Semaphore）资源竞争导致的死锁问题
 
 + 2016年10月17日
