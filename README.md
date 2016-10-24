@@ -8,7 +8,7 @@ HOST: http://192.168.1.228
 ## update
 
 + 2016年10月24日
-    + 增加了对AJAX请求的处理逻辑，如产品图片链接的AJAX加载。
+    + 增加了对AJAX请求的处理逻辑，如产品图片链接的AJAX加载。
 
 + 2016年10月20日
     + [FIXED] 修复了异步HTTP（New I/O worker）与信号量（Semaphore）资源竞争导致的死锁问题
