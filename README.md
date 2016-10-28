@@ -8,6 +8,9 @@ HOST: http://192.168.1.228
 ## update
 
 + 2016年10月28日
+    + [new]增加记录搜索关键词的API，redis + 数据库
+
++ 2016年10月28日
     + [FIXED]images数据一致性问题, image字段
     + [BUG] 略 断网时visited数据需要重置
     + 生产环境部署
