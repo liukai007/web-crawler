@@ -7,8 +7,13 @@ HOST: http://192.168.1.228
 
 ## update
 
-+ 2016年10月28日
-    + [new]增加记录搜索关键词的API，redis + 数据库
++ 2016年11月
+    + [new] 增加记录搜索关键词的API，redis + 数据库
+    + [new] 增加推荐关键词的API
+    + [new] mahout : 系统过滤推荐（user based, item based）
+    + [new] mahout : 聚类
+    + [new] mahout : 分类
+    
 
 + 2016年10月28日
     + [FIXED]images数据一致性问题, image字段
