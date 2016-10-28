@@ -9,7 +9,7 @@ HOST: http://192.168.1.228
 
 + 2016年10月28日
     + [FIXED]images数据一致性问题, image字段
-    + [BUG](略)断网时visited数据需要重置
+    + [BUG] 略 断网时visited数据需要重置
 
 + 2016年10月24日
     + 增加了对AJAX请求的处理逻辑，如产品图片链接的AJAX加载。
