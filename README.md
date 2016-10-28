@@ -10,8 +10,8 @@ HOST: http://192.168.1.228
 + 2016年11月
     + [new] 增加记录搜索关键词的API，redis 数据库
     + [new] 增加推荐关键词的API
-    + [new] 增加分类列表API 
-    + [new] 增加品牌列表API 
+    + [new] 增加分类列表API （名称，图片）
+    + [new] 增加品牌列表API （名称，图片）
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] mahout : 分类
