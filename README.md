@@ -15,7 +15,7 @@ HOST: http://192.168.1.228
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] mahout : 分类
-    + [new] 修改 fetcher 时间。
+    + [new] 修改 fetcher 时间
     
 + 2016年10月31日
     + 修改thomann模板, 增加了对后补图片的抓取 （当产品没有图片列表时, 抓取其他元素中的图片作为产品图）
