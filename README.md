@@ -15,8 +15,8 @@ HOST: http://192.168.1.228
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] mahout : 分类
-    + [new] 修改 fetcher 时间
-    + [new] 增加产品比较（Compare）API
+    + [new] 修改 fetcher 时间
+    + [new] 增加产品比较（Compare）API
     
 + 2016年11月2日
     + [BUG] 建立索引时没有图片的品牌被忽略掉了， 需要修改下
