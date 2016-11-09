@@ -9,12 +9,11 @@ HOST: http://192.168.1.228
 
 + 基于Mahout的产品分类
     + 第一阶段：将原始数据转换为可分类数据的预处理过程
-        + 检查产品数据（确定目标变量：16个产品大类别，['Guitars and Basses','Drums + Percussion', ...]）
-        + 产品库可能为空的字段：category(99.71%), brand(99.65%), tag(?), description(), content(99.87), price(99.50%), price_unit, rating(84.75), feature()
-        + 产品库不可能为空的字段：seed_id, origin, name, time
-        + 保留字段：origin, name, brand, description, content, content-length, price, rating, feature
-    + 第二阶段：将可分类数据转化为向量（连续型、类别型、单词型、文本型）
-        + 
+        + 检查产品数据（确定目标变量：16个产品大类别，['Guitars and Basses','Drums + Percussion', ...]）
+        + 产品库可能为空的字段：category(99.71%), brand(99.65%), tag(?), description(), content(99.87), price(99.50%), price_unit, rating(84.75), feature()
+        + 产品库不可能为空的字段：seed_id, origin, name, time
+        + 保留字段：origin, name, brand, description, content, content-length, price, rating, feature
+    + 第二阶段：将可分类数据转化为向量（连续型、类别型、单词型、文本型）
 
 + 2016年11月
     + [new] 增加记录搜索关键词的API，redis 数据库
