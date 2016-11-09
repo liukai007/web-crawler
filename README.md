@@ -25,7 +25,7 @@ HOST: http://192.168.1.228
     + [new] mahout : 分类
     + [new] 修改 fetcher 时间
     + [new] 增加产品比较（Compare）API
-    + [OK] 汇率转换问题
+    + [OK] 建立索引时增加了货币的汇率转换
     + [new] 品牌详细信息抓取
     
 + 2016年11月2日
