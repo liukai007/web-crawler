@@ -27,6 +27,9 @@ HOST: http://192.168.1.228
     + [new] 增加产品比较（Compare）API
     + [OK] 建立索引时增加了货币的汇率转换
     + [new] 品牌详细信息抓取
+    + [BUG] upload图片失败时需要提供一个票据以告知下载器
+    + 写一个图片校验器, 来检查enabled = 1但是没有上传成功的图片
+    + [API] 
     
 + 2016年11月2日
     + [FIXED] 建立索引时没有图片的品牌被忽略掉了， 需要修改下
@@ -170,6 +173,58 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
 
+## 品牌 [/product/profile/_search/aggregation?type={type}&size={size}]
+
++ Response
+    + aggregations.{type-name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
+    + aggregations.{type-name}.buckets[].key - label名称, 会按key名称进行分组[A, B, C..., Z, #]
+    + aggregations.{type-name}.buckets[].doc_count - count统计
+    + aggregations.{type-name}.buckets[].id - 品牌ID
+    + aggregations.{type-name}.buckets[].ranking - 品牌排名(基于thomann)
+    + aggregations.{type-name}.buckets[].top - true为有品牌内容简介的, false为没有品牌介绍的
+
++ Parameters
+    + type (string) - 默认brand, 可选值[brand] 
+    + size (number) - 默认3000, 品牌列表的数量
+
+### 品牌列表 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "hits": {
+                "hits": [], 
+                "total": 117298
+            },
+            "aggregations": {
+                "brand": {
+                  "buckets": {
+                    "#": [
+                      {
+                        "doc_count": 43, 
+                        "logo": "http://static.budee.com/yyren/image/13.jpg", 
+                        "key": "9.solutions",
+                        "reviews": 99,
+                        "top": true
+                      }, 
+                      {
+                        "doc_count": 34, 
+                        "logo": "http://static.budee.com/yyren/image/11.jpg", 
+                        "key": "Äolis Klangspiele",
+                        "reviews": 97,
+                        "top": true
+                      }, 
+                      {
+                        "doc_count": 30, 
+                        "logo": "http://static.budee.com/yyren/image/9.jpg", 
+                        "key": "2box",
+                        "reviews": 33,
+                        "top": true
+                      }
+                    ]
+                }
+            }
+        }
 
 ## 产品详情 [/product/profile/{doc_id}]
 
