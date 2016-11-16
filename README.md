@@ -395,7 +395,7 @@ HOST: http://192.168.1.228
         }
 
 
-## 产品搜索 [/product/profile/_search?q={q}&c={c}&s={s}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}]
+## 产品搜索 [/product/profile/_search?q={q}&c={c}&s={s}&page={page}&size={size}&cluster={cluster}&aggregation={aggregation}&group={group}&b={b}]
 
 + Description
     + Condition [0_0_0_0_0_0] e.g: bass_0_0_50.0-500.0_FF0000_1, 查询关键词是bass价格在50.0-500.0之间的来源于ID=1的网站产品并按图片颜色[FF0000]红色降序排序, '-'为多选或区间, '_'为不同字段的delimiter符号
@@ -405,6 +405,8 @@ HOST: http://192.168.1.228
     + price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0]
     + color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']
     + from:来源网站的ID 支持多选
+    + group: 默认true, 是否按首字母分组
+    + b: bit位, 显示的聚合数据 1:category 2:brand 4:price 8:from
 
 + Response
     + hits.total - 记录总数
