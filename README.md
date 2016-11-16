@@ -23,13 +23,13 @@ HOST: http://192.168.1.228
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] 50% mahout : 分类
-    + [new] 修改 fetcher 时间
+    + [OK] 修改 fetcher 时间
     + [new] 增加产品比较（Compare）API
     + [OK] 建立索引时增加了货币的汇率转换
-    + [new] 品牌详细信息抓取
+    + [OK] 品牌详细信息抓取
     + [FIXED] upload图片失败时需要提供一个票据(Future)以告知下载器
-    + [OK] 写一个图片校验器, 来检查enabled = 1但是没有上传成功的图片
-    + [OK] 增加品牌聚合API
+    + [OK] 写一个图片校验器, 来检查enabled = 1但是没有上传成功的图片
+    + [OK] 增加品牌聚合API
     
 + 2016年11月2日
     + [FIXED] 建立索引时没有图片的品牌被忽略掉了， 需要修改下
