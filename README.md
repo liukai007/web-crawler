@@ -648,15 +648,15 @@ HOST: http://192.168.1.228
               "buckets": [
                 {
                   "doc_count": 702,
-                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
-                  "key": "Hal Leonard",
+                  "logo":"http://static.budee.com/yyren/image/1.jpg",
+                  "key": "Hal Leonard",
                   "reviews": 999,
                   "rating": 0.86,
                   "top": true
                 },
                 {
                   "doc_count": 549,
-                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
+                  "logo":"http://static.budee.com/yyren/image/1.jpg",
                   "key": "Gator",
                   "reviews": 543,
                   "rating": 0.03,
@@ -664,7 +664,7 @@ HOST: http://192.168.1.228
                 },
                 {
                   "doc_count": 59,
-                  "logo":"http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg",
+                  "logo":"http://static.budee.com/yyren/image/1.jpg",
                   "key": "Epiphone",
                   "reviews": 33,
                   "rating": 0.99,
