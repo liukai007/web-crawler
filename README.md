@@ -531,7 +531,9 @@ HOST: http://192.168.1.228
             "page": 1,
             "size": 20,
             "cluster": "false",
-            "aggregation": "0_0_0_50"
+            "aggregation": "0_0_0_50",
+            "group": true,
+            "b":3
         }
 
 + Response 200 (application/json)
