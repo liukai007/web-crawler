@@ -23,7 +23,7 @@ HOST: http://192.168.1.228
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] 50% mahout : 分类
-    + [OK] 修改 fetcher 时间
+    + [OK] 修改 fetcher 时间
     + [new] 增加产品比较（Compare）API
     + [OK] 建立索引时增加了货币的汇率转换
     + [OK] 品牌详细信息抓取
