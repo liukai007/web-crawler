@@ -173,6 +173,67 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
 
+## 品牌详细 [/product/brand/{name}]
+
++ Response
+    + hits.hits[]._id - 唯一标识符, 取品牌名称
+    + hits.hits[]._source.features[] - 品牌的一些参数
+    + hits.hits[]._source.brandName - 品牌名称
+    + hits.hits[]._source.reviews - 品牌评论/浏览数
+    + hits.hits[]._source.rating - 品牌评分, 取值区间[0,1], 保留2位小数
+    + hits.hits[]._source.logo - 品牌logo
+    + hits.hits[]._source.description - 品牌描述
+    + hits.hits[]._source.rawContent - 品牌HTML富文本
+
++ Parameters
+    + name (string) - 品牌名称(大小写敏感)
+
+### 品牌详细 [GET]
+
++ Response 200 (application/json)
+
+        {
+          "hits": {
+            "hits": [
+              {
+                "_source": {
+                  "features": [
+                    {
+                      "_name": "Manufacturer Ranking", 
+                      "_value": "481"
+                    }, 
+                    {
+                      "_name": "In our range since", 
+                      "_value": "2009"
+                    }, 
+                    {
+                      "_name": "Product range", 
+                      "_value": "30"
+                    }, 
+                    {
+                      "_name": "On Stock", 
+                      "_value": "30"
+                    }, 
+                    {
+                      "_name": "Ø Availability (1 Year)", 
+                      "_value": "85.81 %"
+                    }
+                  ],
+                  "brandName": "2box", 
+                  "reviews": 174, 
+                  "rating": 0.85, 
+                  "logo": "http://static.budee.com/yyren/image/213/14/972244.jpg", 
+                  "description": "Thomann is Germany's most significant 2box dealer. Here you'll find all their latest products at especially low prices and immediately available. If you would like to see a list of all products from 2box, then please click here.", 
+                  "rawContent": "<p>You can find 30 2box products at Thomann 30 of them are ready for dispatch . 2box products have been a part of our range for 7 year(s).</p>"
+                }, 
+                "_id": "2box", 
+                "_score": 1
+              }
+            ],
+            "total": 1
+          }
+        }
+
 ## 品牌 [/product/profile/_search/aggregation?type={type}&size={size}]
 
 + Response
