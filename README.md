@@ -405,8 +405,8 @@ HOST: http://192.168.1.228
     + price:格式一[50000.0-\*] 格式二[100.0-200.0] 格式三[\*-100.0]
     + color:单选 可用数据集合['000000','0000FF','00FF00','00FFFF','FF0000','FF00FF','FFFF00','FFFFFF']
     + from:来源网站的ID 支持多选
-    + group:默认true, 是否按首字母分组如[A,B,C,...Z]
-    + b:bit位, 显示的聚合数据 1:category 2:brand 4:price 8:from. e.g: 如果为【3】, 聚合结果中显示category与brand聚合数据. 默认显示不在条件中的其他聚合数据
+    + group:默认true, 是否按首字母分组如[A,B,C,...Z]
+    + b:bit位, 显示的聚合数据 1:category 2:brand 4:price 8:from. e.g: 如果为【3】, 聚合结果中显示category与brand聚合数据. 默认显示不在条件中的其他聚合数据
 
 + Response
     + hits.total - 记录总数
@@ -436,9 +436,9 @@ HOST: http://192.168.1.228
     + aggregations.{name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
     + aggregations.{name}.buckets[].key - label名称, 会按key名称进行分组[A, B, C..., Z, #]
     + aggregations.{name}.buckets[].doc_count - count统计
-    + aggregations.{name}.buckets[].reviews - (integer) 品牌评论/浏览数
-    + aggregations.{name}.buckets[].rating - (double) 品牌评分,取值区间[0,1]
-    + aggregations.{name}.buckets[].top - (boolean) 是否是置顶品牌（该品牌有详细数据）
+    + aggregations.{name}.buckets[].reviews - (integer) 品牌评论/浏览数
+    + aggregations.{name}.buckets[].rating - (double) 品牌评分,取值区间[0,1]
+    + aggregations.{name}.buckets[].top - (boolean) 是否是置顶品牌（该品牌有详细数据）
     + clusters[] - 聚类数据
     + clusters[].documentReferences[] - 对搜索结果前n条记录聚类的文档ID集合
     + clusters[].label - 描述聚类的标签名称
@@ -456,8 +456,8 @@ HOST: http://192.168.1.228
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
     + aggregation (string) - 聚合条件[0_0_0_50], (0|1:关闭|打开 聚合搜索, 0|1:asc|desc, 0|1:term|count 排序字段, 50:返回聚合结果的size)
-    + group (boolean) - default true, 是否按首字母分组
-    + b (number) - 取值范围一个字节的范围[0,15], 1:category 2:brand 4:price 8:from 以及其各种组合, 控制显示在聚合字段（aggs）中的数据
+    + group (boolean) - default true, 是否按首字母分组
+    + b (number) - 取值范围一个字节的范围[0,15], 1:category 2:brand 4:price 8:from 以及其各种组合, 控制显示在聚合字段（aggs）中的数据
 
 ### 产品搜索 [GET]
 
