@@ -19,7 +19,7 @@ HOST: http://192.168.1.228
     + [new] 增加记录搜索关键词的API，redis 数据库
     + [new] 增加推荐关键词的API
     + [new] 增加分类列表API （名称，图片）
-    + [new] 增加品牌列表API （名称，图片）
+    + [OK] 增加品牌列表API （名称，图片）
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
     + [new] 50% mahout : 分类
@@ -30,6 +30,9 @@ HOST: http://192.168.1.228
     + [FIXED] upload图片失败时需要提供一个票据(Future)以告知下载器
     + [OK] 写一个图片校验器, 来检查enabled = 1但是没有上传成功的图片
     + [OK] 增加品牌聚合API
+    
++ 2016年11月17日
+    + 丁丁
     
 + 2016年11月2日
     + [FIXED] 建立索引时没有图片的品牌被忽略掉了， 需要修改下
