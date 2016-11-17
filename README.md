@@ -32,7 +32,7 @@ HOST: http://192.168.1.228
     + [OK] 增加品牌聚合API
     
 + 2016年11月17日
-    + 丁丁
+    + 增加【查找某个品牌下的子分类】API
     
 + 2016年11月2日
     + [FIXED] 建立索引时没有图片的品牌被忽略掉了， 需要修改下
@@ -175,6 +175,53 @@ HOST: http://192.168.1.228
     + 增加查找产品分类[category], 产品品牌[brand]的API
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
+    
+## 查找某个品牌下的子分类 [/product/brand/{brand}/category/{category}]
+
++ Response
+    + aggregations.{name}.buckets[].image - 子分类图片
+    + aggregations.{name}.buckets[].key - 子分类名称
+
++ Parameters
+    + brand (string) - 品牌名称(大小写敏感)
+    + category (string) - 分类名称(大小写敏感)
+
+### 查找某个品牌下的子分类 [GET]
+
++ Response 200 (application/json)
+
+        {
+          "hits": {
+            "hits": [], 
+            "total": 8
+          }, 
+          "aggregations": {
+            "category": {
+              "buckets": [
+                {
+                  "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
+                  "doc_count": 8, 
+                  "key": "Drums & Percussion"
+                }, 
+                {
+                  "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
+                  "doc_count": 8, 
+                  "key": "Electronic Drums"
+                }, 
+                {
+                  "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
+                  "doc_count": 6, 
+                  "key": "Acoustic Triggers"
+                }, 
+                {
+                  "image": "http://static.budee.com/yyren/image/134/14/952058.jpg", 
+                  "doc_count": 2, 
+                  "key": "Electronic Drum Sets"
+                }
+              ]
+            }
+          }
+        }
 
 ## 品牌详细 [/product/brand/{name}]
 
