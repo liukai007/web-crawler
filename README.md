@@ -192,7 +192,7 @@ HOST: http://192.168.1.228
     + aggregations.{name}.buckets[].key - 子分类名称
 
 + Parameters
-    + conditions (string) - 数组, 筛选条件名称
+    + conditions (string) - 数组, 筛选条件名称, e.g[brand.name|category.raw|level_0.raw] = [品牌名称|分类|有层级的分类]
     + values (string) - 数组, 筛选条件值
     + names (required, string) - 数组, name
     + fields (required, string) - 数组, 聚合字段名称
