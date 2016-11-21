@@ -183,7 +183,7 @@ HOST: http://192.168.1.228
     + conditions和values的大小要一致, key value对
     + names和fields的大小要一致, 为每个聚合数据(field)提供一个命名(name)
     
- + Example
++ Example
     + /product/profile/aggregation?names[]=category&fields[]=level_0.raw (一级产品类别聚合数据)
     + /product/profile/aggregation?conditions[]=level_0.raw&values[]=Guitars and Basses&names[]=category&fields[]=level_1.raw (查找一级类别(level_0)是【Guitars and Basses】的, 并按二级类别(level_1)聚合数据)
 
