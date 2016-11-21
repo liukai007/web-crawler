@@ -176,15 +176,24 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
     
-## 查找某个品牌下的子分类 [/product/brand/{brand}/category/{category}]
+## 产品统计聚合接口 [/product/profile/aggregation?conditions={conditions}&values={values}&names={names}&fields={fields}&size={size}&image={image}]
+
++ Description
+    + conditions[], values[], names[], fields[]是数组类型参数, 可以传递多个值
+    + conditions和values的大小要一致, key value对
+    + names和fields的大小要一致, 为每个聚合数据(field)提供一个命名(name)
 
 + Response
     + aggregations.{name}.buckets[].image - 子分类图片
     + aggregations.{name}.buckets[].key - 子分类名称
 
 + Parameters
-    + brand (string) - 品牌名称(大小写敏感)
-    + category (string) - 分类名称(大小写敏感)
+    + conditions (string) - 数组, 筛选条件名称
+    + values (string) - 数组, 筛选条件值
+    + names (required, string) - 数组, name
+    + fields (required, string) - 数组, 聚合字段名称
+    + size (integer) - default:100, 聚合数据集合大小
+    + image (boolean) - default:true, 是否包含image字段
 
 ### 查找某个品牌下的子分类 [GET]
 
