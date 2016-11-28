@@ -182,6 +182,7 @@ HOST: http://192.168.1.228
     + conditions[], values[], names[], fields[]是数组类型参数, 可以传递多个值
     + conditions和values的大小要一致, key value对
     + names和fields的大小要一致, 为每个聚合数据(field)提供一个命名(name)
+    + fields增加向下钻取功能, 以'-'字符连接, e.g: level_0.raw-level_1.raw 表示先按一级分类聚合数据, 再按每个一级分类的二级分类聚合数据. 聚合深度没有限制, 依据索引如何建立.
     
 + Example
     + /product/profile/aggregation?names[]=category&fields[]=level_0.raw (一级产品类别聚合数据)
@@ -206,30 +207,152 @@ HOST: http://192.168.1.228
         {
           "hits": {
             "hits": [], 
-            "total": 8
+            "total": 38
           }, 
           "aggregations": {
             "category": {
               "buckets": [
                 {
+                  "image": "http://static.budee.com/yyren/image/60/13/867371.jpg", 
+                  "doc_count": 29, 
+                  "category": {
+                    "buckets": [
+                      {
+                        "image": "http://static.budee.com/yyren/image/60/13/867371.jpg", 
+                        "doc_count": 20, 
+                        "category": {
+                          "buckets": [
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867376.jpg", 
+                              "doc_count": 5, 
+                              "key": "Accesorios para batería"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/173/2/175374.jpg", 
+                              "doc_count": 3, 
+                              "key": "EDrum Cymbal Pads"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/173/2/175566.jpg", 
+                              "doc_count": 3, 
+                              "key": "EDrum Triggers"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867371.jpg", 
+                              "doc_count": 2, 
+                              "key": "EDrum Bass Pads"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867381.jpg", 
+                              "doc_count": 2, 
+                              "key": "EDrum HiHats and Controllers"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867370.jpg", 
+                              "doc_count": 2, 
+                              "key": "EDrum Snare and Tom Pads"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867382.jpg", 
+                              "doc_count": 2, 
+                              "key": "EDrum Sound Modules"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/173/2/175379.jpg", 
+                              "doc_count": 1, 
+                              "key": "Electronic Drumsets"
+                            }
+                          ]
+                        }, 
+                        "key": "E-Drums"
+                      }, 
+                      {
+                        "image": "http://static.budee.com/yyren/image/60/13/867380.jpg", 
+                        "doc_count": 6, 
+                        "category": {
+                          "buckets": [
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867380.jpg", 
+                              "doc_count": 5, 
+                              "key": "EDrum Hardware"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/173/2/175371.jpg", 
+                              "doc_count": 1, 
+                              "key": "Bass Drum Pedals"
+                            }
+                          ]
+                        }, 
+                        "key": "Drum Hardware"
+                      }, 
+                      {
+                        "image": "http://static.budee.com/yyren/image/173/2/175500.jpg", 
+                        "doc_count": 3, 
+                        "category": {
+                          "buckets": [
+                            {
+                              "image": "http://static.budee.com/yyren/image/173/2/175500.jpg", 
+                              "doc_count": 3, 
+                              "key": "Mesh Heads for E-Drums"
+                            }
+                          ]
+                        }, 
+                        "key": "Drum Heads"
+                      }
+                    ]
+                  }, 
+                  "key": "Drums + Percussion"
+                }, 
+                {
                   "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
                   "doc_count": 8, 
+                  "category": {
+                    "buckets": [
+                      {
+                        "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
+                        "doc_count": 8, 
+                        "category": {
+                          "buckets": [
+                            {
+                              "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
+                              "doc_count": 6, 
+                              "key": "Acoustic Triggers"
+                            }, 
+                            {
+                              "image": "http://static.budee.com/yyren/image/134/14/952058.jpg", 
+                              "doc_count": 2, 
+                              "key": "Electronic Drum Sets"
+                            }
+                          ]
+                        }, 
+                        "key": "Electronic Drums"
+                      }
+                    ]
+                  }, 
                   "key": "Drums & Percussion"
                 }, 
                 {
-                  "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
-                  "doc_count": 8, 
-                  "key": "Electronic Drums"
-                }, 
-                {
-                  "image": "http://static.budee.com/yyren/image/241/10/717218.jpg", 
-                  "doc_count": 6, 
-                  "key": "Acoustic Triggers"
-                }, 
-                {
-                  "image": "http://static.budee.com/yyren/image/134/14/952058.jpg", 
-                  "doc_count": 2, 
-                  "key": "Electronic Drum Sets"
+                  "image": "http://static.budee.com/yyren/image/60/13/867390.jpg", 
+                  "doc_count": 1, 
+                  "category": {
+                    "buckets": [
+                      {
+                        "image": "http://static.budee.com/yyren/image/60/13/867390.jpg", 
+                        "doc_count": 1, 
+                        "category": {
+                          "buckets": [
+                            {
+                              "image": "http://static.budee.com/yyren/image/60/13/867390.jpg", 
+                              "doc_count": 1, 
+                              "key": "Power Supplies"
+                            }
+                          ]
+                        }, 
+                        "key": "Guitar + Bass Effects"
+                      }
+                    ]
+                  }, 
+                  "key": "Guitars and Basses"
                 }
               ]
             }
