@@ -13,8 +13,17 @@ HOST: http://192.168.1.228
         + 产品库可能为空的字段：category(99.71%), brand(99.65%), tag(?), description(), content(99.87), price(99.50%), price_unit, rating(84.75), feature()
         + 产品库不可能为空的字段：seed_id, origin, name, time
         + 保留字段：origin, name, brand, description, content, content-length, price, rating, feature
-    + 第二阶段：将可分类数据转化为向量（连续型、类别型、单词型、文本型）
-
+    + 第二阶段：将可分类数据转化为向量（连续型、类别型、单词型、文本型）
+    
++ 2016年12月1日
+    + 首页接口: 热词接口
+    + 首页接口: 热度商品
+    + 首页接口: 新品商品
+    + 首页接口: 最近浏览商品接口（用户）
+    + 记录搜索关键词API
+    + 记录浏览记录API
+    + 首页轮播图接口
+    
 + 2016年11月
     + [new] 增加记录搜索关键词的API，redis 数据库
     + [new] 增加推荐关键词的API
@@ -30,7 +39,8 @@ HOST: http://192.168.1.228
     + [FIXED] upload图片失败时需要提供一个票据(Future)以告知下载器
     + [OK] 写一个图片校验器, 来检查enabled = 1但是没有上传成功的图片
     + [OK] 增加品牌聚合API
-    
+    + [FIXED] 搜索接口BUG修改
+    
 + 2016年11月17日
     + 增加【查找某个品牌下的子分类】API
     
