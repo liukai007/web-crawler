@@ -30,14 +30,14 @@ HOST: http://192.168.1.228
     + Elastic搜索引擎产品索引调整
 
 + 2016年12月2日
-    + [FIXED] 修改品牌图片查询时关联错误的BUG
+    + [FIXED] 修改品牌图片查询时关联错误的BUG
 
 + 2016年12月1日
-    + [OK] 增加记录搜索关键词的API，redis 数据库
+    + [OK] 增加记录搜索关键词的API，redis 数据库
     + [OK] 增加推荐关键词的API
 
 + 2016年11月
-    + [OK] 增加分类列表API （名称，图片）
+    + [OK] 增加分类列表API （名称，图片）
     + [OK] 增加品牌列表API （名称，图片）
     + [new] mahout : 系统过滤推荐（user based, item based）
     + [new] mahout : 聚类
