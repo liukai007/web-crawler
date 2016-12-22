@@ -28,7 +28,13 @@ HOST: http://192.168.1.228
     + [OK] 首页轮播图 API
     + [OK] 品牌接口的图片显示的是产品图而不是品牌图
     + [OK] 整合分类分析数据（刘凯）（数据已经整合）
-
+    + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
+    + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
+    
++ 2016年12月22日
+    + 生产环境开始抓取360度图片，thomann数据全量更新；
+    + 
+    
 + 2016年12月20日
     + thomann360度图片抓取，需要修改爬虫项目来处理JSON格式数据，需要增加一个link queue来延迟处理特定的LINK；
     + 爬虫系统修改初期设计，主要看在哪里处理节点加入逻辑比较合适；
