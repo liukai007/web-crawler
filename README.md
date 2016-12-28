@@ -30,6 +30,10 @@ HOST: http://192.168.1.228
     + [OK] 整合分类分析数据（刘凯）（数据已经整合）
     + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
     + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
+
++ 2016年12月28日
+    + 因为产品排重需求, 搜索列表API结构变化. [seedId, origin, description, price, priceUnit, rating]字段移动到items属性下
+    + 产品详细API结构没有变化，但是现在返回的数据可能有多条（相同产品的数据）
     
 + 2016年12月27日
     + 实现Elastic Search索引排重功能相关代码
