@@ -31,9 +31,22 @@ HOST: http://192.168.1.228
     + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
     + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
     
++ 2016年12月27日
+    + 实现Elastic Search索引排重功能相关代码
+    
++ 2016年12月26日
+    + 索引结构调整，采用数组保存相似的产品集合；相关API也需要调整，搜索路径变动。(https://www.elastic.co/guide/en/elasticsearch/reference/2.3/array.html)
+    + [OK]360度图片加入索引中。
+    + [brand]品牌合并 [category]类别合并 [name]名称合并 删除:image.size image.model image.enabled
+    + 方案1: top hit aggregation(无法分页)（https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-aggregations-metrics-top-hits-aggregation.html）
+    + 方案2: 双mapping, 一个用于列表 一个用于详情
+    + 方案3: 产品详细使用top hit aggregation查询相似产品数组
+    + 方案4: 详情: 扩展API返回相似产品集合, 数据结构不变
+    + 方案5: 详情使用现有API, 条件中根据URL传递的id查询相同产品id集合，在条件查询elasticsearch
+    
 + 2016年12月22日
-    + 生产环境开始抓取360度图片，thomann数据全量更新；
-    + 
+    + 修改thomann爬虫模板，生产环境开始抓取360度图片，thomann数据全量更新；
+    + rest接口安全性问题考虑，
     
 + 2016年12月20日
     + thomann360度图片抓取，需要修改爬虫项目来处理JSON格式数据，需要增加一个link queue来延迟处理特定的LINK；
