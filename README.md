@@ -31,6 +31,9 @@ HOST: http://192.168.1.228
     + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
     + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
 
++ 2016年12月30日
+    + 修改MLTBUG
+    
 + 2016年12月29日
     + 和列表相关的部分API变化，如下：
     + 搜索列表API结构变化 （/product/profile/_search）
