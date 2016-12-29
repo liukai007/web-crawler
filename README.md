@@ -726,11 +726,14 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.brand - 品牌
     + hits.hits[]._source.tags[] - （保留）标签
     + hits.hits[]._source.name - 产品名称
-    + hits.hits[]._source.origin - 原始链接
-    + hits.hits[]._source.priceUnit - 价格单位
-    + hits.hits[]._source.price - 价格
-    + hits.hits[]._source.rating - 产品评级, 取值范围[0,1], (0% ~ 100%) 
-    + hits.hits[]._source.seedId - 产品所属种子网站的ID
+    + hits.hits[]._source.items.seedId - 产品所属种子网站的ID
+    + hits.hits[]._source.items.origin - 原始链接
+    + hits.hits[]._source.items.priceUnit - 价格单位
+    + hits.hits[]._source.items.price - 价格
+    + hits.hits[]._source.items.rating - 产品评级, 取值范围[0,1], (0% ~ 100%) 
+    + hits.hits[]._source.items.from.host - 网站主页
+    + hits.hits[]._source.items.from.source - 网站简称
+    + hits.hits[]._source.items.description - 产品简述
     + hits.hits[]._source.created - 抓取时间
     + hits.hits[]._source.images[] - 图片集合
     + hits.hits[]._source.images[].id - 图片标识符
@@ -742,8 +745,6 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.images[].sizes[] - 图片大小集合 e.g: ['80','220','400','800','1200'], 小于等于原生图片的最大高度或宽度 
     + hits.hits[]._source.features[]._name - 特性名称
     + hits.hits[]._source.features[]._value - 特性值
-    + hits.hits[]._source.from.host - 网站主页
-    + hits.hits[]._source.from.source - 网站简称
     + hits.hits[].highlight.content[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
     + aggregations.{name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
     + aggregations.{name}.buckets[].key - label名称, 会按key名称进行分组[A, B, C..., Z, #]
@@ -763,7 +764,7 @@ HOST: http://192.168.1.228
 + Parameters
     + q (string) - Query 查询关键词 
     + c (string) - Condition 搜索条件[0_0_0_0_0_0], [category_brand_tag_price_color_from]
-    + s (string) - 排序字段目前是排他的, 排序优先级比颜色高, 可选参数, 没有的话按关键词相关度排序. 格式:[price|created]-[0|1], e.g: price-0 (0:ASC, 1:DESC)
+    + s (string) - 排序字段目前是排他的, 排序优先级比颜色高, 可选参数, 没有的话按关键词相关度排序. 格式:[items.price|items.created]-[0|1], e.g: price-0 (0:ASC, 1:DESC)
     + page (number) - 页码
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
@@ -794,13 +795,11 @@ HOST: http://192.168.1.228
             "hits": [
               {
                 "highlight": {
-                  "content": [
+                  "items.content": [
                     "Overview Pops' <span class='highlight'>Bass</span> Rosin is packaged in a convenient resealable red tub."
                   ]
                 },
                 "_source": {
-                  "priceUnit": "CNY",
-                  "rating": 0.80,
                   "images": [
                     {
                       "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
@@ -808,13 +807,6 @@ HOST: http://192.168.1.228
                       "width": 180,
                       "id": 1389,
                       "height": 180,
-                      "sizes":[
-                        80,
-                        220,
-                        400,
-                        800,
-                        1200
-                      ],
                       "distance": {
                         "000000": 0.001625050938040724,
                         "0000FF": 0.0017121483481907281,
@@ -902,14 +894,21 @@ HOST: http://192.168.1.228
                         }
                     ],
                   "created": "2016-08-10T04:53:06.000Z",
-                  "price": 79.89,
-                  "origin": "http://www.guitarcenter.com/Pops-Bass-Rosin/Bass-Rosin.gc",
-                  "seedId": 3,
+                  "items": [
+                        {
+                            "rating": 0.80,
+                            "priceUnit": "$", 
+                            "price": 17.98, 
+                            "seedId": 11, 
+                            "origin": "https://www.thomann.de/gb/schott_bassmethode_der_einfache_weg.htm", 
+                            "description": "Schott Bass-Methode by Ed Friedland: An easy bass tutor for beginners; with CD; Over 200 songs, riffs, exercises, tuning, playing positions, shuffle rhythm, major and minor scales, classic blues lines; in German language", 
+                            "from": {
+                              "source": "Thomann", 
+                              "host": "https://www.thomann.de"
+                            }
+                          }
+                    ],
                   "name": "Pops' Bass Rosin Bass Rosin  ",
-                  "from": {
-                    "host": "http://www.guitarcenter.com",
-                    "source": "guitarcenter"
-                  },
                   "category": [
                     "Orchestral Strings",
                     "Accessories for Orchestral Strings",
