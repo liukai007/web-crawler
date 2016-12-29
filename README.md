@@ -733,7 +733,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.items.rating - 产品评级, 取值范围[0,1], (0% ~ 100%) 
     + hits.hits[]._source.items.from.host - 网站主页
     + hits.hits[]._source.items.from.source - 网站简称
-    + hits.hits[]._source.items.description - 产品简述
+    + hits.hits[]._source.items.description - 产品简述
     + hits.hits[]._source.created - 抓取时间
     + hits.hits[]._source.images[] - 图片集合
     + hits.hits[]._source.images[].id - 图片标识符
@@ -764,7 +764,7 @@ HOST: http://192.168.1.228
 + Parameters
     + q (string) - Query 查询关键词 
     + c (string) - Condition 搜索条件[0_0_0_0_0_0], [category_brand_tag_price_color_from]
-    + s (string) - 排序字段目前是排他的, 排序优先级比颜色高, 可选参数, 没有的话按关键词相关度排序. 格式:[items.price|items.created]-[0|1], e.g: price-0 (0:ASC, 1:DESC)
+    + s (string) - 排序字段目前是排他的, 排序优先级比颜色高, 可选参数, 没有的话按关键词相关度排序. 格式:[items.price|items.created]-[0|1], e.g: price-0 (0:ASC, 1:DESC)
     + page (number) - 页码
     + size (number) - 大小
     + cluster (boolean) - 是非返回搜索结果聚类数据
