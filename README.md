@@ -31,6 +31,16 @@ HOST: http://192.168.1.228
     + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
     + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
 
++ 2016年12月29日
+    + 和列表相关的部分API变化，如下：
+    + 搜索列表API结构变化 （/product/profile/_search）
+        + a. 价格排序路径变化了：由price-0 变化为 items.price-0
+        + b. 部分字段移动到items[]属性下了 （seedId，origin，from，price，priceUnit，description，rating）
+    + More Like This API 相似产品搜索列表结构同上 （/product/profile/_search/mlt）
+    + 搜索详细API结构无变化，但是会返回多条数据。
+        + 第1条为主要产品数据，第2至n条为相同产品来自不同网站的其他数据。（产品ID e.g : 130、872、874）
+    + 其他API结构不变
+    
 + 2016年12月28日
     + 因为产品排重需求, 搜索列表API结构变化. [seedId, origin, description, price, priceUnit, rating]字段移动到items属性下
     + 产品详细API结构没有变化，但是现在返回的数据可能有多条（相同产品的数据）
