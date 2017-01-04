@@ -466,8 +466,6 @@ HOST: http://192.168.1.228
 		    }
 		}
 
-
-
 ## 产品统计聚合接口 [/product/profile/aggregation?conditions={conditions}&values={values}&names={names}&fields={fields}&size={size}&image={image}]
 
 + Description
