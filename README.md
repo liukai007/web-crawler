@@ -246,6 +246,228 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
     
+## 产品参数对比接口 [/product/compare?art[]={ids}]
+
++ Response
+    + header - 头部信息, 包含产品详细的信息
+    + body - 产品参数
+    
++ Parameters
+    + ids (integer) - 数组, 待对比的产品ID集合 e.g : 1,2,3
+
+### 查找产品对比信息
+
++ Response 200 (application/json)
+
+		{
+		    "header": {
+			"Model": [
+			    {
+				"_source": {
+				    "images": [
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1748.jpg",
+					    "width": 1800,
+					    "id": 1748,
+					    "height": 684
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1749.jpg",
+					    "width": 1800,
+					    "id": 1749,
+					    "height": 1524
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1750.jpg",
+					    "width": 1800,
+					    "id": 1750,
+					    "height": 854
+					}
+				    ],
+				    "name": "Access Virus TI2 Keyboard",
+				    "category": [
+					"Keys",
+					"Synths / Modules"
+				    ],
+				    "brand": {
+					"reviews": 0,
+					"top": false,
+					"name": "Access",
+					"rating": 0,
+					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+				    },
+				    "items": [
+					{
+					    "priceUnit": "$",
+					    "price": 2915,
+					    "seedId": "2",
+					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Key",
+					    "rating": "rating",
+					    "description": "61-key Analog Modeling Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+					    "from": {
+						"source": "Sweetwater",
+						"host": "http://www.sweetwater.com"
+					    }
+					}
+				    ]
+				},
+				"_id": "2"
+			    },
+			    {
+				"_source": {
+				    "images": [
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1745.jpg",
+					    "width": 1800,
+					    "id": 1745,
+					    "height": 500
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1746.jpg",
+					    "width": 1600,
+					    "id": 1746,
+					    "height": 794
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1747.jpg",
+					    "width": 1600,
+					    "id": 1747,
+					    "height": 1151
+					}
+				    ],
+				    "name": "Access Virus TI2 Desktop",
+				    "category": [
+					"Keys",
+					"Synths / Modules"
+				    ],
+				    "brand": {
+					"reviews": 0,
+					"top": false,
+					"name": "Access",
+					"rating": 0,
+					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+				    },
+				    "items": [
+					{
+					    "priceUnit": "$",
+					    "price": 2185,
+					    "seedId": "2",
+					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Desk",
+					    "rating": "rating",
+					    "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+					    "from": {
+						"source": "Sweetwater",
+						"host": "http://www.sweetwater.com"
+					    }
+					}
+				    ]
+				},
+				"_id": "1"
+			    }
+			]
+		    },
+		    "body": {
+			"Sound Engine Type(s)": [
+			    "Analog Modeling",
+			    "Analog Modeling"
+			],
+			"Number of Keys": [
+			    "61",
+			    "-"
+			],
+			"Type of Keys": [
+			    "Semi-weighted",
+			    "-"
+			],
+			"Other Controllers": [
+			    "Pitchbend, Mod Wheel",
+			    "-"
+			],
+			"Polyphony": [
+			    "20 Notes-90 Notes (Depending On the Patch)",
+			    "20 Notes-90 Notes (Depending On the Patch)"
+			],
+			"Number of Presets": [
+			    "512 RAM Patches, 3328 ROM Sounds",
+			    "512 RAM Patches, 3328 ROM Sounds"
+			],
+			"Number of Effects": [
+			    "192",
+			    "192"
+			],
+			"Effects Types": [
+			    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod",
+			    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+			],
+			"Arpeggiator": [
+			    "Yes",
+			    "Yes"
+			],
+			"Audio Inputs": [
+			    "2 x TS",
+			    "-"
+			],
+			"Audio Outputs": [
+			    "6 x TS, 1 x TRS (Headphones)",
+			    "-"
+			],
+			"Digital Inputs": [
+			    "1 x S/PDIF",
+			    "1 x S/PDIF"
+			],
+			"Digital Outputs": [
+			    "1 x S/PDIF",
+			    "1 x S/PDIF"
+			],
+			"USB": [
+			    "1 x Type B",
+			    "1 x Type B"
+			],
+			"MIDI I/O": [
+			    "In/Out/Thru/USB",
+			    "In/Out/Thru/USB"
+			],
+			"Pedal Inputs": [
+			    "1 x Hold, 1 x Control",
+			    "-"
+			],
+			"Power Supply": [
+			    "Included",
+			    "Power Supply Included"
+			],
+			"Height": [
+			    "4.6\"",
+			    "3.2\""
+			],
+			"Width": [
+			    "39.2\"",
+			    "18.5\""
+			],
+			"Depth": [
+			    "14.6\"",
+			    "7.4\""
+			],
+			"Weight": [
+			    "30.6 lbs.",
+			    "7.4 lbs."
+			],
+			"Manufacturer Part Number": [
+			    "Virus TI2 Key",
+			    "Virus TI2 Desk"
+			],
+			"Analog Inputs": [
+			    "-",
+			    "2 x TS"
+			],
+			"Analog Outputs": [
+			    "-",
+			    "6 x TS, 1 x TRS (Headphones)"
+			]
+		    }
+		}
+
+
+
 ## 产品统计聚合接口 [/product/profile/aggregation?conditions={conditions}&values={values}&names={names}&fields={fields}&size={size}&image={image}]
 
 + Description
