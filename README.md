@@ -48,8 +48,8 @@ HOST: http://192.168.1.228
     + 其他API结构不变
     
 + 2016年12月28日
-    + 因为产品排重需求, 搜索列表API结构变化. [seedId, origin, description, price, priceUnit, rating]字段移动到items属性下
-    + 产品详细API结构没有变化，但是现在返回的数据可能有多条（相同产品的数据）
+    + 因为产品排重需求, 搜索列表API结构变化. [seedId, origin, description, price, priceUnit, rating]字段移动到items属性下
+    + 产品详细API结构没有变化，但是现在返回的数据可能有多条（相同产品的数据）
     
 + 2016年12月27日
     + 实现Elastic Search索引排重功能相关代码
