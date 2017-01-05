@@ -15,9 +15,19 @@ HOST: http://192.168.1.228
         + 保留字段：origin, name, brand, description, content, content-length, price, rating, feature
     + 第二阶段：将可分类数据转化为向量（连续型、类别型、单词型、文本型）
     
-+ Summary
-    + 统一所有返回的列表数据只限定在两种格式内:一种是搜索引擎的hits格式, 另一个是PageImpl格式（包括从cache中查找, 数据库查找等, 都要封装成这种格式）.
-
++ 2017年1月
+    + 流程自动化：爬取数据 -> 自动分类（包括垃圾数据过滤）-> 自动判断重复 -> 建立索引
+        + 分类：先执行分类任务进行产品一级分类划分与垃圾数据过滤
+        + 排重：基于过滤后的结果再进行产品排重与合并
+	+ 索引：对排重后的数据再进行索引	
+    + 垃圾数据过滤（建立索引时，特定分类不予索引）
+    + 搜索把最相关的排在最前面
+    + 产品合并新API
+    + 优化一级分类与其他分类
+    + 对比时的参数过滤
+    + 对比接口结构变化 
+    + 考虑产品数据动态合并解决方案
+    
 + 2016年12月
     + [OK] 首页接口: 热词接口, 记录与查找(简单实现, 并按没7天的搜索词的频度进行排序)
     + [OK] 记录搜索关键词
@@ -28,8 +38,9 @@ HOST: http://192.168.1.228
     + [OK] 首页轮播图 API
     + [OK] 品牌接口的图片显示的是产品图而不是品牌图
     + [OK] 整合分类分析数据（刘凯）（数据已经整合）
-    + 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
-    + 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
+    + [OK] 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
+    + [OK] 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
+    + 统一所有返回的列表数据只限定在两种格式内:一种是搜索引擎的hits格式, 另一个是PageImpl格式（包括从cache中查找, 数据库查找等, 都要封装成这种格式）.
 
 + 2016年12月30日
     + 修改MLT BUG
