@@ -38,7 +38,7 @@ HOST: http://192.168.1.228
     + [OK] 首页轮播图 API
     + [OK] 品牌接口的图片显示的是产品图而不是品牌图
     + [OK] 整合分类分析数据（刘凯）（数据已经整合）
-    + [OK] 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
+    + [OK] 轮播图/links?keys=type&values=1&properties=sort&asc=true&fields=id,title,description,image,href
     + [OK] 导航栏/links?keys=type&values=2&properties=sort&asc=true&fields=id,title,description,image,href
     + 统一所有返回的列表数据只限定在两种格式内:一种是搜索引擎的hits格式, 另一个是PageImpl格式（包括从cache中查找, 数据库查找等, 都要封装成这种格式）.
 
