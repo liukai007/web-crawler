@@ -279,58 +279,7 @@ HOST: http://192.168.1.228
 
 		{
 		    "header": {
-			"Model": [
-			    {
-				"_source": {
-				    "images": [
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1748.jpg",
-					    "width": 1800,
-					    "id": 1748,
-					    "height": 684
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1749.jpg",
-					    "width": 1800,
-					    "id": 1749,
-					    "height": 1524
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1750.jpg",
-					    "width": 1800,
-					    "id": 1750,
-					    "height": 854
-					}
-				    ],
-				    "name": "Access Virus TI2 Keyboard",
-				    "category": [
-					"Keys",
-					"Synths / Modules"
-				    ],
-				    "brand": {
-					"reviews": 0,
-					"top": false,
-					"name": "Access",
-					"rating": 0,
-					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
-				    },
-				    "items": [
-					{
-					    "priceUnit": "$",
-					    "price": 2915,
-					    "seedId": "2",
-					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Key",
-					    "rating": "rating",
-					    "description": "61-key Analog Modeling Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
-					    "from": {
-						"source": "Sweetwater",
-						"host": "http://www.sweetwater.com"
-					    }
-					}
-				    ]
-				},
-				"_id": "2"
-			    },
+			"models": [
 			    {
 				"_source": {
 				    "images": [
@@ -381,109 +330,269 @@ HOST: http://192.168.1.228
 				    ]
 				},
 				"_id": "1"
+			    },
+			    {
+				"_source": {
+				    "images": [
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1748.jpg",
+					    "width": 1800,
+					    "id": 1748,
+					    "height": 684
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1749.jpg",
+					    "width": 1800,
+					    "id": 1749,
+					    "height": 1524
+					},
+					{
+					    "image": "http://static.budee.com/yyren/image/6/1750.jpg",
+					    "width": 1800,
+					    "id": 1750,
+					    "height": 854
+					}
+				    ],
+				    "name": "Access Virus TI2 Keyboard",
+				    "category": [
+					"Keys",
+					"Synths / Modules"
+				    ],
+				    "brand": {
+					"reviews": 0,
+					"top": false,
+					"name": "Access",
+					"rating": 0,
+					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+				    },
+				    "items": [
+					{
+					    "priceUnit": "$",
+					    "price": 2915,
+					    "seedId": "2",
+					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Key",
+					    "rating": "rating",
+					    "description": "61-key Analog Modeling Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+					    "from": {
+						"source": "Sweetwater",
+						"host": "http://www.sweetwater.com"
+					    }
+					}
+				    ]
+				},
+				"_id": "2"
 			    }
-			]
+			],
+			"size": 2
 		    },
 		    "body": {
-			"Sound Engine Type(s)": [
-			    "Analog Modeling",
-			    "Analog Modeling"
+			"features": [
+			    {
+				"columns": [
+				    "Sound Engine Type(s)",
+				    "Analog Modeling",
+				    "Analog Modeling"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Polyphony",
+				    "20 Notes-90 Notes (Depending On the Patch)",
+				    "20 Notes-90 Notes (Depending On the Patch)"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Number of Presets",
+				    "512 RAM Patches, 3328 ROM Sounds",
+				    "512 RAM Patches, 3328 ROM Sounds"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Number of Effects",
+				    "192",
+				    "192"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Effects Types",
+				    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod",
+				    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Arpeggiator",
+				    "Yes",
+				    "Yes"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Analog Inputs",
+				    "2 x TS",
+				    "-"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Analog Outputs",
+				    "6 x TS, 1 x TRS (Headphones)",
+				    "-"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Digital Inputs",
+				    "1 x S/PDIF",
+				    "1 x S/PDIF"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Digital Outputs",
+				    "1 x S/PDIF",
+				    "1 x S/PDIF"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "MIDI I/O",
+				    "In/Out/Thru/USB",
+				    "In/Out/Thru/USB"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "USB",
+				    "1 x Type B",
+				    "1 x Type B"
+				],
+				"collapsible": true
+			    },
+			    {
+				"columns": [
+				    "Height",
+				    "3.2\"",
+				    "4.6\""
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Width",
+				    "18.5\"",
+				    "39.2\""
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Depth",
+				    "7.4\"",
+				    "14.6\""
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Weight",
+				    "7.4 lbs.",
+				    "30.6 lbs."
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Power Supply",
+				    "Power Supply Included",
+				    "Included"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Manufacturer Part Number",
+				    "Virus TI2 Desk",
+				    "Virus TI2 Key"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Number of Keys",
+				    "-",
+				    "61"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Type of Keys",
+				    "-",
+				    "Semi-weighted"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Other Controllers",
+				    "-",
+				    "Pitchbend, Mod Wheel"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Audio Inputs",
+				    "-",
+				    "2 x TS"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Audio Outputs",
+				    "-",
+				    "6 x TS, 1 x TRS (Headphones)"
+				],
+				"collapsible": false
+			    },
+			    {
+				"columns": [
+				    "Pedal Inputs",
+				    "-",
+				    "1 x Hold, 1 x Control"
+				],
+				"collapsible": false
+			    }
 			],
-			"Number of Keys": [
-			    "61",
-			    "-"
-			],
-			"Type of Keys": [
-			    "Semi-weighted",
-			    "-"
-			],
-			"Other Controllers": [
-			    "Pitchbend, Mod Wheel",
-			    "-"
-			],
-			"Polyphony": [
-			    "20 Notes-90 Notes (Depending On the Patch)",
-			    "20 Notes-90 Notes (Depending On the Patch)"
-			],
-			"Number of Presets": [
-			    "512 RAM Patches, 3328 ROM Sounds",
-			    "512 RAM Patches, 3328 ROM Sounds"
-			],
-			"Number of Effects": [
-			    "192",
-			    "192"
-			],
-			"Effects Types": [
-			    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod",
-			    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
-			],
-			"Arpeggiator": [
-			    "Yes",
-			    "Yes"
-			],
-			"Audio Inputs": [
-			    "2 x TS",
-			    "-"
-			],
-			"Audio Outputs": [
-			    "6 x TS, 1 x TRS (Headphones)",
-			    "-"
-			],
-			"Digital Inputs": [
-			    "1 x S/PDIF",
-			    "1 x S/PDIF"
-			],
-			"Digital Outputs": [
-			    "1 x S/PDIF",
-			    "1 x S/PDIF"
-			],
-			"USB": [
-			    "1 x Type B",
-			    "1 x Type B"
-			],
-			"MIDI I/O": [
-			    "In/Out/Thru/USB",
-			    "In/Out/Thru/USB"
-			],
-			"Pedal Inputs": [
-			    "1 x Hold, 1 x Control",
-			    "-"
-			],
-			"Power Supply": [
-			    "Included",
-			    "Power Supply Included"
-			],
-			"Height": [
-			    "4.6\"",
-			    "3.2\""
-			],
-			"Width": [
-			    "39.2\"",
-			    "18.5\""
-			],
-			"Depth": [
-			    "14.6\"",
-			    "7.4\""
-			],
-			"Weight": [
-			    "30.6 lbs.",
-			    "7.4 lbs."
-			],
-			"Manufacturer Part Number": [
-			    "Virus TI2 Key",
-			    "Virus TI2 Desk"
-			],
-			"Analog Inputs": [
-			    "-",
-			    "2 x TS"
-			],
-			"Analog Outputs": [
-			    "-",
-			    "6 x TS, 1 x TRS (Headphones)"
+			"prices": [
+			    {
+				"columns": [
+				    "Sweetwater",
+				    "$ 2185.00",
+				    "$ 2915.00"
+				],
+				"collapsible": false
+			    }
 			]
 		    }
 		}
-
+		
 ## 产品统计聚合接口 [/product/profile/aggregation?conditions={conditions}&values={values}&names={names}&fields={fields}&size={size}&image={image}]
 
 + Description
