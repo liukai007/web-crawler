@@ -271,9 +271,9 @@ HOST: http://192.168.1.228
 ## 产品参数对比接口 [/product/compare?art[]={ids}]
 
 + Response
-    + header - 头部信息, 包含产品详细的信息
+    + header - 头部信息, 包含产品详细的信息
     + body.features - 产品参数
-    + body.prices - 产品价格
+    + body.prices - 产品价格
     
 + Parameters
     + ids (integer) - 数组, 待对比的产品ID集合 e.g : 1,2,3
