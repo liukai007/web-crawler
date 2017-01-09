@@ -31,6 +31,10 @@ HOST: http://192.168.1.228
         + 增加一个属性 来判断是否都相同
     + 考虑产品数据动态合并解决方案
     
++ 2017年1月9日
+    + 修改/product/summary索引结构，增加feature数组，并重建索引数据。
+    + 对比API现在查询summary，不再查询profile数据。
+     
 + 2017年1月6日
     + 修改对比API返回的参数数据结构，并增加价格对比数据等。
     + 修改elasticsearch索引分类错误
@@ -267,8 +271,9 @@ HOST: http://192.168.1.228
 ## 产品参数对比接口 [/product/compare?art[]={ids}]
 
 + Response
-    + header - 头部信息, 包含产品详细的信息
-    + body - 产品参数
+    + header - 头部信息, 包含产品详细的信息
+    + body.features - 产品参数
+    + body.prices - 产品价格
     
 + Parameters
     + ids (integer) - 数组, 待对比的产品ID集合 e.g : 1,2,3
