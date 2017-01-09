@@ -32,8 +32,8 @@ HOST: http://192.168.1.228
     + 考虑产品数据动态合并解决方案
     
 + 2017年1月9日
-    + 修改/product/summary索引结构，增加feature数组，并重建索引数据。
-    + 对比API现在查询summary，不再查询profile数据。
+    + 修改/product/summary索引结构，增加feature数组，并重建索引数据。
+    + 对比API现在查询summary，不再查询profile数据。
      
 + 2017年1月6日
     + 修改对比API返回的参数数据结构，并增加价格对比数据等。
