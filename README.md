@@ -19,7 +19,7 @@ HOST: http://192.168.1.228
     + 流程自动化：爬取数据 -> 自动分类（包括垃圾数据过滤）-> 自动判断重复 -> 建立索引
         + 分类：先执行分类任务进行产品一级分类划分与垃圾数据过滤
         + 排重：基于过滤后的结果再进行产品排重与合并
-        + 索引：对排重后的数据再进行索引	
+        + 索引：对排重后的数据再进行索引
     + 垃圾数据过滤（建立索引时，特定分类不予索引）
     + 搜索把最相关的排在最前面
     + 产品合并新API
@@ -31,6 +31,24 @@ HOST: http://192.168.1.228
         + 增加一个属性 来判断是否都相同
     + 考虑产品数据动态合并解决方案
     
++ 2017年2月13日 （产品索引中文翻译后的相关改动）
+    + [category, descriptions, contents, features]增加多语言数据, 结构变化, 相关API如下
+    + 产品详情API[response]变化 [/product/profile/{doc_id}]
+        + 原[description, rawContent]名称改动为[descriptions, contents]. (与brand字段结构不一致导致的命名冲突)
+        + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions, contents, features]
+        + 增加数据合并后的相关统计对象*:info, 包括平均值、最小值、最大值等(price:info, rating:info)
+    + 产品搜索API[response]变化 [/product/profile/_search]
+        + 原[description, content]名称改动为[descriptions, contents]
+        + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions] (contents, features不返回)
+        + highlight路径变化, 原[items.content]变更为[items.contents.en, items.contents.cn]. 根据不同的关键词可能会都出现, 也可能只出现其中一个
+    + 产品相似查询API[response]变化 [/profile/_search/mlt] (More Like This)
+        + 原[description, content]名称改动为[descriptions, contents]
+        + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions]
+    + 产品参数对比API[response]变化 [/product/compare?art[]={ids}]
+        + 原[description, content]名称改动为[descriptions, contents]
+        + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions, features]
+        + 上述变化只在header中, 对body无变化
+
 + 2017年1月9日
     + 修改/product/summary索引结构，增加feature数组，并重建索引数据。
     + 对比API现在查询summary，不再查询profile数据。
@@ -268,7 +286,7 @@ HOST: http://192.168.1.228
     + 调整了搜索API, 修复了价格查找的bug, delimiter符号变化
     + MORE LIKE THIS API 增加了按doc id查找详细文档的参数
     
-## 产品参数对比接口 [/product/compare?art[]={ids}]
+## 产品参数对比接口 [/product/compare?art={ids}]
 
 + Response
     + header - 头部信息, 包含产品详细的信息
@@ -278,326 +296,466 @@ HOST: http://192.168.1.228
 + Parameters
     + ids (integer) - 数组, 待对比的产品ID集合 e.g : 1,2,3
 
-### 查找产品对比信息
+### 查找产品对比信息 [GET]
 
 + Response 200 (application/json)
 
-		{
-		    "header": {
-			"models": [
-			    {
-				"_source": {
-				    "images": [
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1745.jpg",
-					    "width": 1800,
-					    "id": 1745,
-					    "height": 500
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1746.jpg",
-					    "width": 1600,
-					    "id": 1746,
-					    "height": 794
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1747.jpg",
-					    "width": 1600,
-					    "id": 1747,
-					    "height": 1151
-					}
-				    ],
-				    "name": "Access Virus TI2 Desktop",
-				    "category": [
-					"Keys",
-					"Synths / Modules"
-				    ],
-				    "brand": {
-					"reviews": 0,
-					"top": false,
-					"name": "Access",
-					"rating": 0,
-					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
-				    },
-				    "items": [
-					{
-					    "priceUnit": "$",
-					    "price": 2185,
-					    "seedId": "2",
-					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Desk",
-					    "rating": "rating",
-					    "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
-					    "from": {
-						"source": "Sweetwater",
-						"host": "http://www.sweetwater.com"
-					    }
-					}
-				    ]
-				},
-				"_id": "1"
-			    },
-			    {
-				"_source": {
-				    "images": [
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1748.jpg",
-					    "width": 1800,
-					    "id": 1748,
-					    "height": 684
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1749.jpg",
-					    "width": 1800,
-					    "id": 1749,
-					    "height": 1524
-					},
-					{
-					    "image": "http://static.budee.com/yyren/image/6/1750.jpg",
-					    "width": 1800,
-					    "id": 1750,
-					    "height": 854
-					}
-				    ],
-				    "name": "Access Virus TI2 Keyboard",
-				    "category": [
-					"Keys",
-					"Synths / Modules"
-				    ],
-				    "brand": {
-					"reviews": 0,
-					"top": false,
-					"name": "Access",
-					"rating": 0,
-					"logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
-				    },
-				    "items": [
-					{
-					    "priceUnit": "$",
-					    "price": 2915,
-					    "seedId": "2",
-					    "origin": "http://www.sweetwater.com/store/detail/VirusTI2Key",
-					    "rating": "rating",
-					    "description": "61-key Analog Modeling Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
-					    "from": {
-						"source": "Sweetwater",
-						"host": "http://www.sweetwater.com"
-					    }
-					}
-				    ]
-				},
-				"_id": "2"
-			    }
-			],
-			"size": 2
-		    },
-		    "body": {
-			"features": [
-			    {
-				"columns": [
-				    "Sound Engine Type(s)",
-				    "Analog Modeling",
-				    "Analog Modeling"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Polyphony",
-				    "20 Notes-90 Notes (Depending On the Patch)",
-				    "20 Notes-90 Notes (Depending On the Patch)"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Number of Presets",
-				    "512 RAM Patches, 3328 ROM Sounds",
-				    "512 RAM Patches, 3328 ROM Sounds"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Number of Effects",
-				    "192",
-				    "192"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Effects Types",
-				    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod",
-				    "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Arpeggiator",
-				    "Yes",
-				    "Yes"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Analog Inputs",
-				    "2 x TS",
-				    "-"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Analog Outputs",
-				    "6 x TS, 1 x TRS (Headphones)",
-				    "-"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Digital Inputs",
-				    "1 x S/PDIF",
-				    "1 x S/PDIF"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Digital Outputs",
-				    "1 x S/PDIF",
-				    "1 x S/PDIF"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "MIDI I/O",
-				    "In/Out/Thru/USB",
-				    "In/Out/Thru/USB"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "USB",
-				    "1 x Type B",
-				    "1 x Type B"
-				],
-				"collapsible": true
-			    },
-			    {
-				"columns": [
-				    "Height",
-				    "3.2\"",
-				    "4.6\""
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Width",
-				    "18.5\"",
-				    "39.2\""
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Depth",
-				    "7.4\"",
-				    "14.6\""
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Weight",
-				    "7.4 lbs.",
-				    "30.6 lbs."
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Power Supply",
-				    "Power Supply Included",
-				    "Included"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Manufacturer Part Number",
-				    "Virus TI2 Desk",
-				    "Virus TI2 Key"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Number of Keys",
-				    "-",
-				    "61"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Type of Keys",
-				    "-",
-				    "Semi-weighted"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Other Controllers",
-				    "-",
-				    "Pitchbend, Mod Wheel"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Audio Inputs",
-				    "-",
-				    "2 x TS"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Audio Outputs",
-				    "-",
-				    "6 x TS, 1 x TRS (Headphones)"
-				],
-				"collapsible": false
-			    },
-			    {
-				"columns": [
-				    "Pedal Inputs",
-				    "-",
-				    "1 x Hold, 1 x Control"
-				],
-				"collapsible": false
-			    }
-			],
-			"prices": [
-			    {
-				"columns": [
-				    "Sweetwater",
-				    "$ 2185.00",
-				    "$ 2915.00"
-				],
-				"collapsible": false
-			    }
-			]
-		    }
-		}
-		
+        {
+            "header": {
+                "models": [
+                    {
+                        "_source": {
+                            "features": [
+                                {
+                                    "en": {
+                                        "_name": "Channels",
+                                        "_value": "2 + 2 Channel"
+                                    },
+                                    "cn": {
+                                        "_name": "频道",
+                                        "_value": "2 + 2 Channel"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Analog Inputs",
+                                        "_value": "4 x stereo RCA line, 1 x XLR"
+                                    },
+                                    "cn": {
+                                        "_name": "模拟输入",
+                                        "_value": "4 x stereo RCA line, 1 x XLR"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Analog Outputs",
+                                        "_value": "2 x XLR, 2 x stereo RCA (Monitor, Record)"
+                                    },
+                                    "cn": {
+                                        "_name": "模拟输出",
+                                        "_value": "2 x XLR, 2 x stereo RCA (Monitor, Record)"
+                                    }
+                                }
+                            ],
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1751.jpg",
+                                    "width": 1385,
+                                    "id": 1751,
+                                    "height": 1800
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1752.jpg",
+                                    "width": 1600,
+                                    "id": 1752,
+                                    "height": 724
+                                }
+                            ],
+                            "created": "2016-10-12T01:55:39.000Z",
+                            "name": "Allen & Heath Xone:23",
+                            "category": [
+                                {
+                                    "en": "DJ Equipment",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Mixer",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "DJ Mixers",
+                                    "cn": null
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 1861,
+                                "top": true,
+                                "name": "Allen & Heath",
+                                "rating": 0.93,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974003.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 299,
+                                    "seedId": 2,
+                                    "origin": "http://www.sweetwater.com/store/detail/Xone23",
+                                    "rating": null,
+                                    "from": {
+                                        "source": "Sweetwater",
+                                        "host": "http://www.sweetwater.com"
+                                    },
+                                    "descriptions": {
+                                        "en": "2-channel/4-deck DJ Mixer with VCA Fading, 3-band \"Total Kill\" EQs, Assignable VCF, and Adjustable/Replaceable Crossfader",
+                                        "cn": "2通道/ 4层DJ混音器，具有VCA衰落，3段“总杀伤”均衡器，可分配VCF和可调/可替换交叉衰减器"
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "Xone23"
+                            ]
+                        },
+                        "_id": "3"
+                    },
+                    {
+                        "_source": {
+                            "features": [
+                                {
+                                    "en": {
+                                        "_name": "Sound Engine Type(s)",
+                                        "_value": "Analog Modeling"
+                                    },
+                                    "cn": {
+                                        "_name": "声音引擎类型",
+                                        "_value": "Analog Modeling"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Number of Keys",
+                                        "_value": "37"
+                                    },
+                                    "cn": {
+                                        "_name": "键数",
+                                        "_value": "37"
+                                    }
+                                }
+                            ],
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1768.jpg",
+                                    "width": 1800,
+                                    "id": 1768,
+                                    "height": 1214
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1769.jpg",
+                                    "width": 1600,
+                                    "id": 1769,
+                                    "height": 1010
+                                }
+                            ],
+                            "created": "2016-10-12T01:55:39.000Z",
+                            "name": "Access Limited Edition Virus TI2 Dark Star",
+                            "category": [
+                                {
+                                    "en": "Keys",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Keyboards & MIDI",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Synths / Modules",
+                                    "cn": null
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 0,
+                                "top": false,
+                                "name": "Access",
+                                "rating": 0,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 2915,
+                                    "seedId": 2,
+                                    "origin": "http://www.sweetwater.com/store/detail/VirusTI2PDS",
+                                    "rating": 1,
+                                    "from": {
+                                        "source": "Sweetwater",
+                                        "host": "http://www.sweetwater.com"
+                                    },
+                                    "descriptions": {
+                                        "en": "37-key Analog Modeling Synthesizer and 24-bit/192kHz USB Audio/MIDI Interface - LTD Edition \"Dark Star\" Color",
+                                        "cn": "37键模拟合成器和24位/ 192kHz USB音频/ MIDI接口 -  LTD版“暗星”颜色"
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "VirusTI2PDS"
+                            ]
+                        },
+                        "_id": "4"
+                    }
+                ],
+                "size": 2
+            },
+            "body": {
+                "features": [
+                    {
+                        "columns": [
+                            "Channels",
+                            "2 + 2 Channel",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Analog Inputs",
+                            "4 x stereo RCA line, 1 x XLR",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Analog Outputs",
+                            "2 x XLR, 2 x stereo RCA (Monitor, Record)",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Headphones",
+                            "1 x 1/4\", 1 x 1/8\"",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Other I/O",
+                            "2 x Stereo RCA (FX Loop I/O)",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Faders",
+                            "2",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Crossfader",
+                            "Adjustable",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "EQs",
+                            "3-band Full Cut",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Effects",
+                            "Resonance (Sweepable Frequency)",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Rackmountable",
+                            "Yes",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Width",
+                            "9.4\"",
+                            "22.3\""
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Depth",
+                            "12.4\"",
+                            "13.2\""
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Height",
+                            "4.2\"",
+                            "4.4\""
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Weight",
+                            "6 lbs.",
+                            "18.5 lbs."
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Manufacturer Part Number",
+                            "AH-XONE:23",
+                            "Virus TI2 Polar Darkstar"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Sound Engine Type(s)",
+                            "-",
+                            "Analog Modeling"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Number of Keys",
+                            "-",
+                            "37"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Type of Keys",
+                            "-",
+                            "Semi-weighted"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Other Controllers",
+                            "-",
+                            "Pitchbend, Mod Wheel"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Polyphony",
+                            "-",
+                            "20 Notes-90 Notes (Depending On the Patch)"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Number of Presets",
+                            "-",
+                            "512 RAM Patches, 3328 ROM Sounds"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Number of Effects",
+                            "-",
+                            "192"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Effects Types",
+                            "-",
+                            "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Arpeggiator",
+                            "-",
+                            "Yes"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Audio Inputs",
+                            "-",
+                            "2 x TS"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Audio Outputs",
+                            "-",
+                            "6 x TS, 1 x TRS (Headphones)"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Digital Inputs",
+                            "-",
+                            "1 x S/PDIF"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Digital Outputs",
+                            "-",
+                            "1 x S/PDIF"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "USB",
+                            "-",
+                            "1 x Type B"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "MIDI I/O",
+                            "-",
+                            "In/Out/Thru/USB"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Pedal Inputs",
+                            "-",
+                            "1 x Hold, 1 x Control"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Power Supply",
+                            "-",
+                            "Included"
+                        ],
+                        "collapsible": false
+                    }
+                ],
+                "prices": [
+                    {
+                        "columns": [
+                            "Sweetwater",
+                            "$ 299.00",
+                            "$ 2915.00"
+                        ],
+                        "collapsible": false
+                    }
+                ]
+            }
+        }
+  
 ## 产品统计聚合接口 [/product/profile/aggregation?conditions={conditions}&values={values}&names={names}&fields={fields}&size={size}&image={image}]
 
 + Description
@@ -904,7 +1062,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.tags[] - （保留）标签
     + hits.hits[]._source.name - 产品名称
     + hits.hits[]._source.description - 产品描述
-    + hits.hits[]._source.rawContent - 富文本内容
+    + hits.hits[]._source.contents - 富文本内容
     + hits.hits[]._source.origin - 原始链接
     + hits.hits[]._source.priceUnit - 价格单位
     + hits.hits[]._source.price - 价格
@@ -930,137 +1088,309 @@ HOST: http://192.168.1.228
 + Response 200 (application/json)
 
         {
-          "hits": {
-            "hits": [
-              {
-                "_source": {
-                  "priceUnit": "CNY",
-                  "rating": 0.80,
-                  "images": [
+            "hits": {
+                "hits": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
-                      "alt": "Pops' Bass Rosin Bass Rosin",
-                      "width": 180,
-                      "id": 1389,
-                      "height": 180,
-                      "sizes":[
-                        80,
-                        220,
-                        400,
-                        800,
-                        1200
-                      ],
-                      "distance": {
-                        "000000": 0.001625050938040724,
-                        "0000FF": 0.0017121483481907281,
-                        "FF0000": 0.002108896256451791,
-                        "FF00FF": 0.002219442528339659,
-                        "00FF00": 0.0018475207605581057,
-                        "00FFFF": 0.002146904123589382,
-                        "FFFF00": 0.0026933843973544424,
-                        "FFFFFF": 0.005582458482860849,
-                      }
+                        "_source": {
+                            "images360": [],
+                            "priceUnit": "$",
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1768.jpg",
+                                    "width": 1800,
+                                    "id": 1768,
+                                    "height": 1214
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1769.jpg",
+                                    "width": 1600,
+                                    "id": 1769,
+                                    "height": 1010
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1770.jpg",
+                                    "width": 1600,
+                                    "id": 1770,
+                                    "height": 489
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/6/1771.jpg",
+                                    "width": 1600,
+                                    "id": 1771,
+                                    "height": 396
+                                }
+                            ],
+                            "created": "2016-10-12T01:55:39.000Z",
+                            "origin": "http://product.mifanfan.cn/product/4",
+                            "rating": 1,
+                            "descriptions": {
+                                "en": "37-key Analog Modeling Synthesizer and 24-bit/192kHz USB Audio/MIDI Interface - LTD Edition \"Dark Star\" Color",
+                                "cn": "37键模拟合成器和24位/ 192kHz USB音频/ MIDI接口 -  LTD版“暗星”颜色"
+                            },
+                            "tags": [
+                                "VirusTI2PDS"
+                            ],
+                            "features": [
+                                {
+                                    "en": {
+                                        "_name": "Sound Engine Type(s)",
+                                        "_value": "Analog Modeling"
+                                    },
+                                    "cn": {
+                                        "_name": "声音引擎类型",
+                                        "_value": "Analog Modeling"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Number of Keys",
+                                        "_value": "37"
+                                    },
+                                    "cn": {
+                                        "_name": "键数",
+                                        "_value": "37"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Type of Keys",
+                                        "_value": "Semi-weighted"
+                                    },
+                                    "cn": {
+                                        "_name": "键类型",
+                                        "_value": "Semi-weighted"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Other Controllers",
+                                        "_value": "Pitchbend, Mod Wheel"
+                                    },
+                                    "cn": {
+                                        "_name": "其他控制器",
+                                        "_value": "Pitchbend, Mod Wheel"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Polyphony",
+                                        "_value": "20 Notes-90 Notes (Depending On the Patch)"
+                                    },
+                                    "cn": {
+                                        "_name": "复调",
+                                        "_value": "20 Notes-90 Notes (Depending On the Patch)"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Number of Presets",
+                                        "_value": "512 RAM Patches, 3328 ROM Sounds"
+                                    },
+                                    "cn": {
+                                        "_name": "预置数",
+                                        "_value": "512 RAM Patches, 3328 ROM Sounds"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Number of Effects",
+                                        "_value": "192"
+                                    },
+                                    "cn": {
+                                        "_name": "效果数",
+                                        "_value": "192"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Effects Types",
+                                        "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                                    },
+                                    "cn": {
+                                        "_name": "效果类型",
+                                        "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Arpeggiator",
+                                        "_value": "Yes"
+                                    },
+                                    "cn": {
+                                        "_name": "琶音",
+                                        "_value": "Yes"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Audio Inputs",
+                                        "_value": "2 x TS"
+                                    },
+                                    "cn": {
+                                        "_name": "音频输入",
+                                        "_value": "2 x TS"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Audio Outputs",
+                                        "_value": "6 x TS, 1 x TRS (Headphones)"
+                                    },
+                                    "cn": {
+                                        "_name": "音频输出",
+                                        "_value": "6 x TS, 1 x TRS (Headphones)"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Digital Inputs",
+                                        "_value": "1 x S/PDIF"
+                                    },
+                                    "cn": {
+                                        "_name": "数字输入",
+                                        "_value": "1 x S/PDIF"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Digital Outputs",
+                                        "_value": "1 x S/PDIF"
+                                    },
+                                    "cn": {
+                                        "_name": "数字输出",
+                                        "_value": "1 x S/PDIF"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "USB",
+                                        "_value": "1 x Type B"
+                                    },
+                                    "cn": {
+                                        "_name": "USB",
+                                        "_value": "1 x Type B"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "MIDI I/O",
+                                        "_value": "In/Out/Thru/USB"
+                                    },
+                                    "cn": {
+                                        "_name": "MIDI I / O",
+                                        "_value": "In/Out/Thru/USB"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Pedal Inputs",
+                                        "_value": "1 x Hold, 1 x Control"
+                                    },
+                                    "cn": {
+                                        "_name": "踏板输入",
+                                        "_value": "1 x Hold, 1 x Control"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Power Supply",
+                                        "_value": "Included"
+                                    },
+                                    "cn": {
+                                        "_name": "电源",
+                                        "_value": "Included"
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Height",
+                                        "_value": "4.4\""
+                                    },
+                                    "cn": {
+                                        "_name": "高度",
+                                        "_value": "4.4\""
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Width",
+                                        "_value": "22.3\""
+                                    },
+                                    "cn": {
+                                        "_name": "宽度",
+                                        "_value": "22.3\""
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Depth",
+                                        "_value": "13.2\""
+                                    },
+                                    "cn": {
+                                        "_name": "深度",
+                                        "_value": "13.2\""
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Weight",
+                                        "_value": "18.5 lbs."
+                                    },
+                                    "cn": {
+                                        "_name": "重量",
+                                        "_value": "18.5 lbs."
+                                    }
+                                },
+                                {
+                                    "en": {
+                                        "_name": "Manufacturer Part Number",
+                                        "_value": "Virus TI2 Polar Darkstar"
+                                    },
+                                    "cn": {
+                                        "_name": "制造商零件编号",
+                                        "_value": "Virus TI2 Polar Darkstar"
+                                    }
+                                }
+                            ],
+                            "contents": {
+                                "en": "<h2>Hot Synth in a LTD Edition Color!</h2> \n<p>The Access Virus TI2 Dark Star synthesizer takes the revered Virus TI to the next level, boasting 25% more calculating power, a more robust onboard effects section, a lighter weight, and a completely redesigned housing. At the heart of the Virus TI2 Dark Star is the new OS3 which comes with new effects - Frequency Shifter, Tape Delay, new Distortions, and Character. What's more, it now includes the enhanced Virus Control 3.0 plug-in, giving you even deeper control of the synthesizer and your many presets. Already a known Ferrari of a synth, expect even more from the Access Virus TI2 Dark Star.</p> \n<p>Access somehow managed to improve on the revered Virus TI system, taking the \"Ferrari\" to the next level of performance - and TI computer integration. With a lighter, redesigned enclosure, a bolstered effects section, and an enhanced Virus Control 3.0 plug-in - plus all the staples that made the Virus the famous powerhouse - the Virus TI2 Dark Star is truly the culmination of Access's 12-year triathlon of sound research, distillation of user input, and their simple desire to create an exceptional instrument.</p> \n<p>The new Access Virus TI2 Dark Star features an even more powerful effects section, bringing studio-favorite effects to the live performance realm. In addition to phaser, chorus/flanger, ring modulator/shifter, EQ, and a global vocoder, onboard are a new Tape Delay effect, a Frequency Shifter, and new Distortions. There's also a new Character effect, which lets you shape the timbre of the Virus's sound and its fit in the mix, using Analog Boost, Vintage 1/2/3, Pad Opener, Lead Enhancer, Bass Enhancer, or Stereo Widener \"Characters.\"</p> \n<p>The TI in the Virus TI2 Dark Star stands for Total Integration with your DAW - and Access has heightened that integration, with the Access Virus TI2 line. With the new Virus Control 3.0 plug-in, you have enhanced control over your Virus TI2, right inside your DAW. There's also an even more robust presets manager, so you can organize, sort, search, and tweak - as quickly as you want to work.</p> \n<p>The Access Virus TI2 Dark Star features three main oscillators and one sub-oscillator per voice. Each main oscillator can be made up of various oscillator types, including Hyper Saw (a multi saw-tooth oscillator with up to 9 stacked oscillators, 9 sub oscillators, and a sync oscillator at the same time), Classic Virtual Analog oscillators (saw, variable pulse, sine, triangle, 62 spectral waves with several FM modes), Graintable, Wavetable (with 100 multi-index wavetables), and Format oscillators</p> \n<p>You can use two fully independent filters with the Access Virus TI2 Dark Star - lowpass, highpass, bandpass, and bandstop) while using an optional saturation module between both filter blocks. The saturation module can add one of several distortions and lo-fi effects, or an additional low/highpass filter. There's also optional self-resonating Moog cascade filter simulation, with circuit overload and 1-4 poles. What's more, the Access Virus TI2 Dark Star offers a 2-dimensional modulation matrix, with 6 slots (1 source and 3 modulation targets each), and you can modulate parameters in real-time. </p> \n<p>Every patch onboard the Access Virus TI2 keyboard features its own arpeggiator pattern with 32 programmable steps (length and velocity can be adjusted per step) and a global control for swing/shuffle timing and for note lengths. You can control all of this using the modulation matrix.</p> \n<p>The new Access Virus TI2 Dark Star retains is classy look - all designed, engineered, and built in Germany. It also features a lighter weight, so the Virus TI2 Dark Star is even more prepared for the stage.</p> \n<p><b>Access Virus TI2 Dark Star 37-key Synthesizer Features:</b> </p> \n<ul> \n <li>New Effects, including Tape Delay, Frequency Shifter, new Distortions, and Character </li> \n <li>25% more calculating power than Virus TI, and completely redesigned housing </li> \n <li>Dual DSP system with over 80 stereo voices under average load. (Load depends on which oscillator / filter model has been chosen). </li> \n <li>Virus Control 3.0 VST and Apple Audio Unit Plug-for Mac OS X and Windows XP. The remote seamlessly integrates the Virus TI into your sequencer, making it feel just like a plug-in. </li> \n <li>The Virus TI's Audio and MIDI inputs and outputs can be used by the sequencer application as an audio and MIDI interface. </li> \n <li>The Virus TI is the first hardware synthesizer with sample-accurate timing and delay-compensated connection to your sequencer. </li> \n <li>WaveTable Oscillators for a completely new array of sounds. WaveTable and conventional Virus oscillators and filters can be mixed. </li> \n <li>HyperSaw oscillators with up to 9 sawtooths - each with parallel sub oscillator per voice (that's over 1800 stereo oscillators @ 100 voices!). </li> \n <li>Independent delay and reverb for all 16 multi mode slots. </li> \n <li>129 parallel effects. There is reverb and delay, chorus, phaser, ring modulator, distortion, 3 band EQ and the Analog Boost bass enhancer. </li> \n <li>2 multi-mode filters (HP, LP, BP, BS) and the Analog Filter (modeled after the MiniMoog cascade filter with 6-24 dB Slope and self-oscillation). </li> \n <li>Dedicated remote mode turns the Virus TI into an universal remote control for VST / AU plug-ins and external synthesizers. </li> \n <li>6 balanced outputs with +4 dB level and switchable soft limiting algorithm. Studio grade 192 khz D/A converters with S/PDIF digital I/O. 2x24 bit inputs. Surround sound capabilities </li> \n <li>Tap tempo button. The algorithm is based on Access' Sync Xtreme technology. </li> \n <li>Programmable arpeggiator pattern for every patch. </li> \n <li>Knob quantize for creating stepped controller movements. The stepping automatically syncs to the Virus clock or an incoming MIDI clock. </li> \n <li>3 LFOs with 68 waveforms to choose from. </li> \n <li>2 super fast ADSTR envelopes. </li> \n <li>Extended memory: 512 RAM patches and 2048 ROM patches (rewritable). </li> \n <li>Adaptive control smoothing for jitter-free modulations on all important parameters. </li> \n <li>Multi mode with embedded patches. </li> \n <li>Compatible with USB 2.0 specifications, USB and High-Speed USB devices. </li> \n <li>Great synth-action keyboard with 37 keys, velocity response, and aftertouch. </li> \n <li>2 pedal inputs.</li> \n</ul> \n<p><span>The Access Virus TI2 Dark Star takes the renowned Virus TI synthesizer to the next level!</span></p>",
+                                "cn": "<h2>热合成在LTD版颜色！</h2>\n<p> Access Virus TI2 Dark Star合成器将受尊敬的病毒TI提升到更高的水平，拥有25％的计算能力，更强大的板载效果部分，更轻的重量以及完全重新设计的外壳。病毒的核心TI2 Dark Star是新的OS3，它带有新的效果 - 频率移位，磁带延迟，新的失真和字符。此外，它现在包括增强的Virus Control 3.0插件，让您更深入地控制合成器和您的许多预设。已经是一个合成器的已知法拉利，希望更多的从Access病毒TI2暗星。</p>\n<p>以某种方式访问​​可以改善受尊敬的病毒TI系统，将“法拉利”提升到更高水平的性能 - 以及TI计算机集成。通过一个更轻，重新设计的外壳，一个加固的效果部分和一个增强的Virus Control 3.0插件 - 加上所有使病毒成为着名的发电厂的订书钉 - 病毒TI2黑暗星是Access的12年铁人三项赛声音研究，用户输入的蒸馏，以及他们创建特殊乐器的简单愿望。</p>\n<p>新的Access Virus TI2 Dark Star拥有更强大的效果部分，将现场演出最喜欢的效果带到现场表演领域。除了相位器，合唱/镶边器，环形调制器/移位器，EQ和全球声码器外，还有新的磁带延迟效应，频移器和新的失真。还有一个新的字符效果，它可以让你塑造病毒的声音的音色和它的混合，使用模拟升压，复古1/2/3，打开程序，铅增强器，低音增强器或立体声宽度字符的适合。 “</p>\n<p>病毒TI2 Dark Star中的TI代表与您的DAW的总集成 - 并且Access已经提高了与Access病毒TI2线的集成。使用新的Virus Control 3.0插件，您可以在DAW内部对病毒TI2进行增强的控制。还有一个更强大的预设管理器，所以你可以组织，排序，搜索和调整，尽快，你想工作。</p>\n<p> Access Virus TI2 Dark Star每个声音具有三个主振荡器和一个子振荡器。每个主振荡器可以由各种振荡器类型组成，包括超锯（多锯齿振荡器，具有多达9个堆叠振荡器，9个子振荡器和同时的同步振荡器），经典虚拟模拟振荡器（锯，可变脉冲，正弦，三角形，62个具有多个FM模式的光谱波），Graintable，Wavetable（具有100个多折射波表）和格式振荡器</p>\n<p>您可以使用两个完全独立的过滤器与Access Virus TI2 Dark Star  - 低通，高通，带通和带阻），同时在两个滤波器模块之间使用可选的饱和模块。饱和模块可以添加几个失真和低音效果中的一个，或附加的低/高通滤波器。还有可选的自谐振Moog级联滤波器模拟，电路过载和1-4极。此外，Access Virus TI2 Dark Star提供了一个2维调制矩阵，具有6个插槽（每个1个源和3个调制目标），您可以实时调制参数。 </p>\n<p> Access Virus TI2键盘上的每个补丁都具有自己的琶音模式，具有32个可编程步长（每步可以调整长度和速度），以及摇摆/随机定时和音符长度的全局控制。您可以使用调制矩阵来控制所有这些。</p>\n<p>新的Access病毒TI2 Dark Star保留了优雅的外观 - 所有设计，工程和建造在德国。它还具有更轻的重量，所以病毒TI2黑暗星更为准备的舞台。</p>\n<p> <b> Access Virus TI2 Dark Star 37键合成器功能：</b> </p>\n<ul>\n <li>新效果，包括磁带延迟，频率移位，新失真和字符</li>\n <li>计算能力比病毒TI多25％，并彻底重新设计了</li>\n <li>双DSP系统在平均负载下具有超过80个立体声。 （负载取决于选择的振荡器/滤波器模型）。 </li>\n <li> Virus Control 3.0 VST和Apple Audio Unit Plug-for Mac OS X和Windows XP。远程无缝集成病毒TI到您的音序器，使它感觉就像一个插件。 </li>\n <li>病毒TI的音频和MIDI输入和输出可以由音序器应用程序用作音频和MIDI接口。 </li>\n <li> Virus TI是第一款具有精确的定时和延迟补偿连接到您的音序器的硬件合成器。 </li>\n <li> WaveTable振动器用于一个全新的声音阵列。 WaveTable和常规病毒振荡器和过滤器可以混合使用。 </li>\n <li>具有多达9个锯齿的HyperSaw振荡器 - 每个具有每个声音的并行子振荡器（超过1800个立体声振荡器，100个语音！）。 </li>\n <li>所有16个多模式插槽的独立延迟和混响。 </li>\n <li> 129并行效果。有混响和延迟，合唱，移相器，环形调制器，失真，3频段EQ和模拟升压低音增强器。 </li>\n <li> 2多模式滤波器（HP，LP，BP，BS）和模拟滤波器（在MiniMoog级联滤波器之后建模，具有6-24 dB斜率和自振荡）。 </li>\n <li>专用远程模式将病毒TI转换为适用于VST /AU插件和外部合成器的通用遥控器。 </li>\n <li> 6个平衡输出，具有+4 dB电平和可切换软限位算法。工作室级192 khz D /A转换器与S /PDIF数字I /O。 2x24位输入。环绕声功能</li>\n <li>点击节奏按钮。该算法基于Access的同步Xtreme技术。 </li>\n <li>每个补丁都有可编程的琶音模式。 </li>\n <li>旋钮量化用于创建阶梯式控制器移动。步进会自动同步到病毒时钟或传入的MIDI时钟。 </li>\n <li> 3个LFO，可选择68种波形。 </li>\n <li> 2超快速ADSTR信封。 </li>\n <li>扩展内存：512个RAM修补程序和2048个ROM修补程序（可重写）。 </li>\n <li>自适应控制平滑所有重要参数的无抖动调制。 </li>\n <li>带有嵌入式补丁的多模式。 </li>\n <li>兼容USB 2.0规格，USB和高速USB设备。 </li>\n <li>具有37键，速度响应和触感的伟大的合成键盘。 </li>\n <li> 2踏板输入。</li>\n</ul>\n<p> <span> Access病毒TI2 Dark Star将着名的病毒TI综合器升级到更高级别！</span> </p>"
+                            },
+                            "price": 2915,
+                            "seedId": 0,
+                            "name": "Access Limited Edition Virus TI2 Dark Star",
+                            "from": {
+                                "host": "http://product.mifanfan.cn/",
+                                "source": "Music Fans"
+                            },
+                            "category": [
+                                {
+                                    "en": "Keys",
+                                    "cn": "键盘"
+                                },
+                                {
+                                    "en": "Keyboards & MIDI",
+                                    "cn": "键盘 & MIDI"
+                                },
+                                {
+                                    "en": "Synths / Modules",
+                                    "cn": "合成器/模块"
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 0,
+                                "top": false,
+                                "name": "Access",
+                                "rating": 0,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+                            }
+                        },
+                        "_id": "4",
+                        "_score": 0.35355338
                     }
-                  ],
-                  "features":[
-                        {
-                            "_name": "Sound Engine Type(s)",
-                            "_value": "Analog Modeling"
-                        },
-                        {
-                            "_name": "Polyphony",
-                            "_value": "20 Notes-90 Notes (Depending On the Patch)"
-                        },
-                        {
-                            "_name": "Number of Presets",
-                            "_value": "512 RAM Patches, 3328 ROM Sounds"
-                        },
-                        {
-                            "_name": "Number of Effects",
-                            "_value": "192"
-                        },
-                        {
-                            "_name": "Effects Types",
-                            "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
-                        },
-                        {
-                            "_name": "Arpeggiator",
-                            "_value": "Yes"
-                        },
-                        {
-                            "_name": "Analog Inputs",
-                            "_value": "2 x TS"
-                        },
-                        {
-                            "_name": "Analog Outputs",
-                            "_value": "6 x TS, 1 x TRS (Headphones)"
-                        },
-                        {
-                            "_name": "Digital Inputs",
-                            "_value": "1 x S/PDIF"
-                        },
-                        {
-                            "_name": "Digital Outputs",
-                            "_value": "1 x S/PDIF"
-                        },
-                        {
-                            "_name": "MIDI I/O",
-                            "_value": "In/Out/Thru/USB"
-                        },
-                        {
-                            "_name": "USB",
-                            "_value": "1 x Type B"
-                        },
-                        {
-                            "_name": "Height",
-                            "_value": "3.2\""
-                        },
-                        {
-                            "_name": "Width",
-                            "_value": "18.5\""
-                        },
-                        {
-                            "_name": "Depth",
-                            "_value": "7.4\""
-                        },
-                        {
-                            "_name": "Weight",
-                            "_value": "7.4 lbs."
-                        },
-                        {
-                            "_name": "Power Supply",
-                            "_value": "Power Supply Included"
-                        },
-                        {
-                            "_name": "Manufacturer Part Number",
-                            "_value": "Virus TI2 Desk"
-                        }
-                    ],
-                  "created": "2016-08-10T04:41:12.000Z",
-                  "price": 133.19,
-                  "origin": "http://www.guitarcenter.com/Simmons/Piezo-Drum-Trigger.gc",
-                  "seedId": 3,
-                  "name": "Simmons Piezo Drum Trigger  ",
-                  "description": null,
-                  "category": [
-                    "Drums & Percussion",
-                    "Electronic Drums",
-                    "Acoustic Triggers"
-                  ],
-                  "brand": {
-                    "name": "ADG Productions",
-                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
-                  },
-                  "tags": [],
-                  "rawContent": "<div>  \n <div>\n   Overview \n </div> \n <div>  \n  <p>The Simmons Piezo Drum Trigger enables you to trigger electronic drum sounds, effects, and loops with an acoustic drum. It easily mounts to any drumhead to trigger any electronic drum module. A trigger hat and insulated rim jack mount clip come included. (Electronic drum module not included)<br></p> \n </div>  \n</div>"
-                },
-                "_id": "1",
-                "_score": 1
-              }
-            ],
-            "total": 1
-          },
-          "aggregations": null
+                ],
+                "total": 1
+            }
         }
 
 
@@ -1102,7 +1432,7 @@ HOST: http://192.168.1.228
     + hits.hits[]._source.images[].sizes[] - 图片大小集合 e.g: ['80','220','400','800','1200'], 小于等于原生图片的最大高度或宽度 
     + hits.hits[]._source.features[]._name - 特性名称
     + hits.hits[]._source.features[]._value - 特性值
-    + hits.hits[].highlight.content[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
+    + hits.hits[].highlight.contents.[en|cn].[] - 根据q选择相关度最高的n段句子, 并使用<span class='highlight'>{key}</span>包围关键词
     + aggregations.{name}.buckets - 根据搜索结果实时聚合的数据集合或实体对象
     + aggregations.{name}.buckets[].key - label名称, 会按key名称进行分组[A, B, C..., Z, #]
     + aggregations.{name}.buckets[].doc_count - count统计
@@ -1148,201 +1478,434 @@ HOST: http://192.168.1.228
 + Response 200 (application/json)
 
         {
-          "hits": {
-            "hits": [
-              {
-                "highlight": {
-                  "items.content": [
-                    "Overview Pops' <span class='highlight'>Bass</span> Rosin is packaged in a convenient resealable red tub."
-                  ]
-                },
-                "_source": {
-                  "images": [
+            "hits": {
+                "hits": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
-                      "alt": "Pops' Bass Rosin Bass Rosin",
-                      "width": 180,
-                      "id": 1389,
-                      "height": 180,
-                      "distance": {
-                        "000000": 0.001625050938040724,
-                        "0000FF": 0.0017121483481907281,
-                        "FF0000": 0.002108896256451791,
-                        "FF00FF": 0.002219442528339659,
-                        "00FF00": 0.0018475207605581057,
-                        "00FFFF": 0.002146904123589382,
-                        "FFFF00": 0.0026933843973544424,
-                        "FFFFFF": 0.005582458482860849,
-                      }
+                        "highlight": {
+                            "items.contents.cn": [
+                                "<span class='highlight'>吉他</span>合成器+建模   最新一代的不同的，可编辑的Roland合成器声音   钢琴   字符串   管乐器   声音   复古合成器等   最多可选择并组合两种声音   来自VG-99的完整建模声链（<span class='highlight'>吉他</span>/贝司/合成器/效果/安培）包括虚拟调音拾音器可以输入到建模链   两个合成器声音可以与建模声音组合，合成器声音可以输入模型链（例如蓝调 - 竖琴到失真放大器）   270预设 - 按“lead”，“rhythm”和“others”排序的声音   297个自定义声音程序   USB插槽用于连接USB存储设备   通过脚踏开关播放音频文件   控制脚踏开关和表情踏板（可分配给多种功能）   20秒循环，无穷无尽的   GR-55为音频和MIDI以及常规MIDI输入/输出插座提供USB接口   GK-Pickup - 需要特殊拾音器GK-3（<span class='highlight'>吉他</span>）或GK-3B（低音）或GK-Ready<span class='highlight'>吉他</span>/低音（可选） 包括电源适配器   尺寸（宽x高x深）：405 x 78-106 x 244毫米   重量：3.3公斤"
+                            ],
+                            "items.contents.en": [
+                                "Up to two sounds can be selected and combined Complete modelling sound chain (guitar/bass/synth/effects/amps) from the VG-99 including virtual tuning pickup can be fed into the modelling chain Two synth sounds can be combined with the modelling sounds - synth sounds can be fed into the modellin chain (e.g. blues-harp into distorted amp) 270 Preset-Sounds sorted by \"lead\", \"rhythm\" and \"others\" 297 programs for custom sounds USB slot for connection of a USB-Memory device Playback of audio files via foot switch Control foot-Switch and expression pedal (assignable to a multitude of functions) 20-Second-Loop with an endless amount of overdubs The GR-55 provides a USB-Interface for audio and MIDI, plus conventional MIDI-In/Out sockets GK-Pickup - special pickup GK-3 (guitar) or GK-3B (bass) or GK-Ready <span class='highlight'>Gitar</span>/Bass is required (optionally available) Including power adapter Dimensions (W x H x D): 405 x 78-106 x 244 mm Weight: 3.3 kg"
+                            ]
+                        },
+                        "_source": {
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/226/4/320187.jpg",
+                                    "width": 800,
+                                    "id": 320187,
+                                    "height": 546
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/226/4/320188.jpg",
+                                    "width": 800,
+                                    "id": 320188,
+                                    "height": 366
+                                }
+                            ],
+                            "created": "2016-10-18T00:12:25.000Z",
+                            "name": "GR-55S Black",
+                            "category": [
+                                {
+                                    "en": "Keys",
+                                    "cn": "键盘"
+                                },
+                                {
+                                    "en": "Guitars and Basses",
+                                    "cn": "吉他和贝斯"
+                                },
+                                {
+                                    "en": "Guitar + Bass Effects",
+                                    "cn": "吉他 + 贝斯的影响"
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 7206,
+                                "top": true,
+                                "name": "Roland",
+                                "rating": 0.92,
+                                "logo": "http://static.budee.com/yyren/image/215/14/972687.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 573.4,
+                                    "seedId": 11,
+                                    "origin": "https://www.thomann.de/gb/roland_gr55s_black.htm",
+                                    "rating": 0.92,
+                                    "from": {
+                                        "source": "Thomann",
+                                        "host": "https://www.thomann.de"
+                                    },
+                                    "descriptions": {
+                                        "en": "",
+                                        "cn": ""
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "279996"
+                            ]
+                        },
+                        "_id": "51313",
+                        "_score": 0.17167637
+                    },
+                    {
+                        "highlight": {
+                            "items.contents.cn": [
+                                "Harley Benton<span class='highlight'>吉他</span>拾音器"
+                            ]
+                        },
+                        "_source": {
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/14/10/659174.jpg",
+                                    "width": 486,
+                                    "id": 659174,
+                                    "height": 600
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/14/10/659175.jpg",
+                                    "width": 486,
+                                    "id": 659175,
+                                    "height": 600
+                                }
+                            ],
+                            "created": "2016-10-21T13:44:41.000Z",
+                            "name": "Guitar Pick Thin",
+                            "category": [
+                                {
+                                    "en": "Guitars and Basses",
+                                    "cn": "吉他和贝斯"
+                                },
+                                {
+                                    "en": "Accessories",
+                                    "cn": "附件"
+                                },
+                                {
+                                    "en": "Standard Picks",
+                                    "cn": "标准的选择"
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 103303,
+                                "top": true,
+                                "name": "Harley Benton",
+                                "rating": 0.87,
+                                "logo": "http://static.budee.com/yyren/image/218/14/973387.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 0.27,
+                                    "seedId": 11,
+                                    "origin": "https://www.thomann.de/gb/harley_benton_guitarpick_thin.htm",
+                                    "rating": 0.82,
+                                    "from": {
+                                        "source": "Thomann",
+                                        "host": "https://www.thomann.de"
+                                    },
+                                    "descriptions": {
+                                        "en": "Harley Benton guitar pick - thin",
+                                        "cn": "哈利本顿吉他挑"
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "149393"
+                            ]
+                        },
+                        "_id": "107321",
+                        "_score": 0.13887548
                     }
-                  ],
-                  "features":[
+                ],
+                "total": 44363
+            },
+            "aggregations": {
+                "price": {
+                    "buckets": [
                         {
-                            "_name": "Sound Engine Type(s)",
-                            "_value": "Analog Modeling"
+                            "doc_count": 15722,
+                            "from": "-Infinity",
+                            "to": 100,
+                            "key": "*-100.0"
                         },
                         {
-                            "_name": "Polyphony",
-                            "_value": "20 Notes-90 Notes (Depending On the Patch)"
+                            "doc_count": 6485,
+                            "from": 100,
+                            "to": 200,
+                            "key": "100.0-200.0"
                         },
                         {
-                            "_name": "Number of Presets",
-                            "_value": "512 RAM Patches, 3328 ROM Sounds"
+                            "doc_count": 3870,
+                            "from": 200,
+                            "to": 300,
+                            "key": "200.0-300.0"
                         },
                         {
-                            "_name": "Number of Effects",
-                            "_value": "192"
+                            "doc_count": 4652,
+                            "from": 300,
+                            "to": 500,
+                            "key": "300.0-500.0"
                         },
                         {
-                            "_name": "Effects Types",
-                            "_value": "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                            "doc_count": 6343,
+                            "from": 500,
+                            "to": 1000,
+                            "key": "500.0-1000.0"
                         },
                         {
-                            "_name": "Arpeggiator",
-                            "_value": "Yes"
+                            "doc_count": 4042,
+                            "from": 1000,
+                            "to": 2000,
+                            "key": "1000.0-2000.0"
                         },
                         {
-                            "_name": "Analog Inputs",
-                            "_value": "2 x TS"
+                            "doc_count": 3611,
+                            "from": 2000,
+                            "to": 5000,
+                            "key": "2000.0-5000.0"
                         },
                         {
-                            "_name": "Analog Outputs",
-                            "_value": "6 x TS, 1 x TRS (Headphones)"
+                            "doc_count": 629,
+                            "from": 5000,
+                            "to": 10000,
+                            "key": "5000.0-10000.0"
                         },
                         {
-                            "_name": "Digital Inputs",
-                            "_value": "1 x S/PDIF"
-                        },
-                        {
-                            "_name": "Digital Outputs",
-                            "_value": "1 x S/PDIF"
-                        },
-                        {
-                            "_name": "MIDI I/O",
-                            "_value": "In/Out/Thru/USB"
-                        },
-                        {
-                            "_name": "USB",
-                            "_value": "1 x Type B"
-                        },
-                        {
-                            "_name": "Height",
-                            "_value": "3.2\""
-                        },
-                        {
-                            "_name": "Width",
-                            "_value": "18.5\""
-                        },
-                        {
-                            "_name": "Depth",
-                            "_value": "7.4\""
-                        },
-                        {
-                            "_name": "Weight",
-                            "_value": "7.4 lbs."
-                        },
-                        {
-                            "_name": "Power Supply",
-                            "_value": "Power Supply Included"
-                        },
-                        {
-                            "_name": "Manufacturer Part Number",
-                            "_value": "Virus TI2 Desk"
+                            "doc_count": 1,
+                            "from": 50000,
+                            "to": "Infinity",
+                            "key": "50000.0-*"
                         }
-                    ],
-                  "created": "2016-08-10T04:53:06.000Z",
-                  "items": [
+                    ]
+                },
+                "from": {
+                    "buckets": [
                         {
-                            "rating": 0.80,
-                            "priceUnit": "$", 
-                            "price": 17.98, 
-                            "seedId": 11, 
-                            "origin": "https://www.thomann.de/gb/schott_bassmethode_der_einfache_weg.htm", 
-                            "description": "Schott Bass-Methode by Ed Friedland: An easy bass tutor for beginners; with CD; Over 200 songs, riffs, exercises, tuning, playing positions, shuffle rhythm, major and minor scales, classic blues lines; in German language", 
+                            "doc_count": 10216,
                             "from": {
-                              "source": "Thomann", 
-                              "host": "https://www.thomann.de"
+                                "source": "Music123",
+                                "host": "http://www.music123.com"
+                            },
+                            "key": "1"
+                        },
+                        {
+                            "doc_count": 10637,
+                            "from": {
+                                "source": "Sweetwater",
+                                "host": "http://www.sweetwater.com"
+                            },
+                            "key": "2"
+                        },
+                        {
+                            "doc_count": 3261,
+                            "from": {
+                                "source": "Guitar Center",
+                                "host": "http://www.guitarcenter.com"
+                            },
+                            "key": "3"
+                        },
+                        {
+                            "doc_count": 1345,
+                            "from": {
+                                "source": "Vintage King",
+                                "host": "https://vintageking.com"
+                            },
+                            "key": "4"
+                        },
+                        {
+                            "doc_count": 12949,
+                            "from": {
+                                "source": "Thomann",
+                                "host": "https://www.thomann.de"
+                            },
+                            "key": "11"
+                        },
+                        {
+                            "doc_count": 5168,
+                            "from": {
+                                "source": "B&H Photo Video",
+                                "host": "https://www.bhphotovideo.com"
+                            },
+                            "key": "13"
+                        },
+                        {
+                            "doc_count": 4303,
+                            "from": {
+                                "source": "Musiciansfriend",
+                                "host": "http://www.musiciansfriend.com"
+                            },
+                            "key": "14"
+                        },
+                        {
+                            "doc_count": 1498,
+                            "from": {
+                                "source": "Bax-Shop",
+                                "host": "https://www.bax-shop.co.uk"
+                            },
+                            "key": "15"
+                        }
+                    ]
+                },
+                "category": {
+                    "buckets": {
+                        "A": [
+                            {
+                                "doc_count": 2271,
+                                "key": "Accessories"
                             }
-                          }
-                    ],
-                  "name": "Pops' Bass Rosin Bass Rosin  ",
-                  "category": [
-                    "Orchestral Strings",
-                    "Accessories for Orchestral Strings",
-                    "Bows & Rosin",
-                    "Rosin",
-                    "Double Bass Rosin"
-                  ],
-                  "brand": {
-                    "name": "ADG Productions",
-                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
-                  },
-                  "tags": []
+                        ],
+                        "C": [
+                            {
+                                "doc_count": 489,
+                                "key": "Cables + Plugs"
+                            },
+                            {
+                                "doc_count": 358,
+                                "key": "Cases"
+                            },
+                            {
+                                "doc_count": 102,
+                                "key": "Computer Audio"
+                            }
+                        ],
+                        "D": [
+                            {
+                                "doc_count": 114,
+                                "key": "DJ Equipment"
+                            },
+                            {
+                                "doc_count": 379,
+                                "key": "Drums + Percussion"
+                            }
+                        ],
+                        "E": [
+                            {
+                                "doc_count": 713,
+                                "key": "Effects + Signal Proc."
+                            }
+                        ],
+                        "G": [
+                            {
+                                "doc_count": 33122,
+                                "key": "Guitars and Basses"
+                            }
+                        ],
+                        "K": [
+                            {
+                                "doc_count": 880,
+                                "key": "Keys"
+                            }
+                        ],
+                        "L": [
+                            {
+                                "doc_count": 137,
+                                "key": "Lighting + Stage"
+                            }
+                        ]
+                    }
                 },
-                "_id": "1200",
-                "_score": 2.2920809
-              }
-            ],
-            "total": 16794
-          },
-          "aggregations": {
-            "price": {
-              "buckets": [
-                {
-                  "doc_count": 5898,
-                  "from": "-Infinity",
-                  "to": 100,
-                  "key": "*-100.0"
-                },
-                {
-                  "doc_count": 2138,
-                  "from": 100,
-                  "to": 200,
-                  "key": "100.0-200.0"
+                "brand": {
+                    "buckets": {
+                        "#": [
+                            {
+                                "doc_count": 1,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "2nd SENSE",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "2nd SENSE"
+                            },
+                            {
+                                "doc_count": 3,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "4ms Company",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "4ms Company"
+                            },
+                            {
+                                "doc_count": 3,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "65 Amps",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "65 Amps"
+                            },
+                            {
+                                "doc_count": 32,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "65amps",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "65amps"
+                            },
+                            {
+                                "doc_count": 18,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "8DIO Productions",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "8DIO Productions"
+                            }
+                        ],
+                        "A": [
+                            {
+                                "doc_count": 1,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "A Days Work",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "A Days Work"
+                            },
+                            {
+                                "doc_count": 37,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "A Designs",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "A Designs"
+                            },
+                            {
+                                "doc_count": 9,
+                                "reviews": 201,
+                                "top": true,
+                                "name": "A Gift Republic",
+                                "rating": 0.91,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974051.jpg",
+                                "key": "A Gift Republic"
+                            },
+                            {
+                                "doc_count": 11,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "A&S Crafted Products",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "A&S Crafted Products"
+                            },
+                            {
+                                "doc_count": 5,
+                                "reviews": 0,
+                                "top": false,
+                                "name": "AAS",
+                                "rating": 0,
+                                "logo": null,
+                                "key": "AAS"
+                            }
+                        ]
+                    }
                 }
-              ]
-            },
-            "category": {
-              "buckets": [
-                {
-                  "doc_count": 3692,
-                  "key": "Accessories"
-                },
-                {
-                  "doc_count": 2344,
-                  "key": "Guitars"
-                }
-              ]
-            },
-            "brand": {
-              "buckets": [
-                {
-                  "doc_count": 702,
-                  "logo":"http://static.budee.com/yyren/image/1.jpg",
-                  "key": "Hal Leonard",
-                  "reviews": 999,
-                  "rating": 0.86,
-                  "top": true
-                },
-                {
-                  "doc_count": 549,
-                  "logo":"http://static.budee.com/yyren/image/1.jpg",
-                  "key": "Gator",
-                  "reviews": 543,
-                  "rating": 0.03,
-                  "top": false
-                },
-                {
-                  "doc_count": 59,
-                  "logo":"http://static.budee.com/yyren/image/1.jpg",
-                  "key": "Epiphone",
-                  "reviews": 33,
-                  "rating": 0.99,
-                  "top": false
-                }
-              ]
             }
-          }
         }
     
 
@@ -1366,63 +1929,128 @@ HOST: http://192.168.1.228
 + Response 200 (application/json)
 
         {
-          "hits": {
-            "hits": [
-              {
-                "_source": {
-                  "priceUnit": "$",
-                  "rating": 0.80,
-                  "images": [
+            "hits": {
+                "hits": [
                     {
-                      "image": "http://static.budee.com/yyren/image/201610/10/1.jpg?w=80",
-                      "alt": "Pops' Bass Rosin Bass Rosin",
-                      "width": 180,
-                      "id": 1389,
-                      "height": 180,
-                      "sizes":[
-                        80,
-                        220,
-                        400,
-                        800,
-                        1200
-                      ],
-                      "distance": {
-                        "000000": 0.001625050938040724,
-                        "0000FF": 0.0017121483481907281,
-                        "FF0000": 0.002108896256451791,
-                        "FF00FF": 0.002219442528339659,
-                        "00FF00": 0.0018475207605581057,
-                        "00FFFF": 0.002146904123589382,
-                        "FFFF00": 0.0026933843973544424,
-                        "FFFFFF": 0.005582458482860849,
-                      }
+                        "_source": {
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/45/13/863554.jpg",
+                                    "width": 300,
+                                    "id": 863554,
+                                    "height": 231
+                                }
+                            ],
+                            "created": "2016-10-17T14:02:00.000Z",
+                            "name": "Power Supply Al1012/E",
+                            "category": [
+                                {
+                                    "en": "Keys",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Synthesizers",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Synthesizer Accessories",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "PSU's for Synthesizers",
+                                    "cn": null
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 0,
+                                "top": false,
+                                "name": "Access",
+                                "rating": 0,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 44.68,
+                                    "seedId": 11,
+                                    "origin": "https://www.thomann.de/gb/access_netzteil_al1012_e.htm",
+                                    "rating": 0.91,
+                                    "descriptions": {
+                                        "en": "Access Virus external Power supply AL1012/E for Virus TI/C; 12V DC; 1A; for Virus A, Virus B, Virus Classic, Virus Rack, Virus Rack XL, Virus C, Virus TI Desktop, Virus TI Snow, Virus TI2 Desktop.",
+                                        "cn": "访问病毒外部电源AL1012 / E用于病毒TI / C; 12V DC; 1A;对于病毒A，病毒B，病毒经典，病毒机架，病毒机架XL，病毒C，病毒TI桌面，病毒TI雪，病毒TI2桌面。"
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "191932"
+                            ]
+                        },
+                        "_id": "32529",
+                        "_score": 1.0740348
+                    },
+                    {
+                        "_source": {
+                            "images": [
+                                {
+                                    "image": "http://static.budee.com/yyren/image/96/17/1138761.jpg",
+                                    "width": 1500,
+                                    "id": 1138761,
+                                    "height": 1500
+                                },
+                                {
+                                    "image": "http://static.budee.com/yyren/image/96/17/1138762.jpg",
+                                    "width": 1500,
+                                    "id": 1138762,
+                                    "height": 1500
+                                }
+                            ],
+                            "created": "2016-11-25T02:48:07.000Z",
+                            "name": "Access Virus TI2 Dark Star Limited Edition",
+                            "category": [
+                                {
+                                    "en": "Keys",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Instruments",
+                                    "cn": null
+                                },
+                                {
+                                    "en": "Modular Synths",
+                                    "cn": null
+                                }
+                            ],
+                            "brand": {
+                                "reviews": 0,
+                                "top": false,
+                                "name": "Access",
+                                "rating": 0,
+                                "logo": "http://static.budee.com/yyren/image/220/14/974041.jpg"
+                            },
+                            "items": [
+                                {
+                                    "priceUnit": "$",
+                                    "price": 2104.94,
+                                    "seedId": 15,
+                                    "origin": "https://www.bax-shop.co.uk/synthesizer/access-virus-ti2-dark-star-limited-edition",
+                                    "rating": null,
+                                    "descriptions": {
+                                        "en": "Acces now offers the Virus TI2 Dark Star in a limited black edition! It's a tweaked version of the TI Polar which can easily be integrated into your current stage or studio rig.",
+                                        "cn": "Acces现在提供了一个有限的黑色版病毒TI2黑暗星！这是一个调整版的TI极地，可以很容易地集成到您当前的舞台或工作室钻机。"
+                                    }
+                                }
+                            ],
+                            "tags": [
+                                "9000-0016-0219"
+                            ]
+                        },
+                        "_id": "293841",
+                        "_score": 1.0710148
                     }
-                  ],
-                  "created": "2016-08-12T10:23:21.000Z",
-                  "price": 19.99,
-                  "origin": "http://www.music123.com/drums-percussion/simmons-piezo-drum-trigger",
-                  "seedId": 1,
-                  "name": "  Simmons Piezo Drum Trigger",
-                  "category": [
-                    "Drums & Percussion",
-                    "Electronic Drums",
-                    "Acoustic Triggers"
-                  ],
-                  "brand": {
-                    "name": "ADG Productions",
-                    "logo": "http://static.budee.com/yyren/image/201609/08/EA/D9/C2/74/9A/08/91/17/C6/99/AC/0E/E5/7C/05/B1/EAD9C2749A089117C699AC0EE57C05B1.jpg"
-                  },
-                  "tags": []
-                },
-                "_id": "59297",
-                "_score": 4.1201496
-              }
-            ],
-            "total": 3142
-          },
-          "aggregations": null
+                ],
+                "total": 2321
+            }
         }
-
 
 ## 产品聚合统计搜索 [/product/profile/_search/aggregation?type={type}]
 
