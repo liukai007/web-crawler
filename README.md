@@ -41,7 +41,7 @@ HOST: http://192.168.1.228
         + 原[description, content]名称改动为[descriptions, contents]
         + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions] (contents, features不返回)
         + highlight路径变化, 原[items.content]变更为[items.contents.en, items.contents.cn]. 根据不同的关键词可能会都出现, 也可能只出现其中一个
-    + 产品相似查询API[response]变化 [/profile/_search/mlt] (More Like This)
+    + 产品相似查询API[response]变化 [/profile/_search/mlt] (More Like This).
         + 原[description, content]名称改动为[descriptions, contents].
         + 部分字段增加中英文用于数据检索，改动字段: [category, descriptions].
     + 产品参数对比API[response]变化 [/product/compare?art[]={ids}]
