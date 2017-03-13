@@ -1,7 +1,7 @@
 
 # 项目 JSON API 规范
-
-## 文档中的关键字依据RFC 2119 <a href="https://tools.ietf.org/html/rfc2119">[RFC2119]</a> 规范解释。
+[RFC2119](https://tools.ietf.org/html/rfc2119) 文档中的关键字依据  规范解释。
+[我的博客](http://blog.csdn.net/guodongxiaren)  
 + MUST
 + MUST NOT
 + REQUIRED
@@ -14,7 +14,6 @@
 + OPTIONAL
     
 ## 文档结构 
-<font color=#0099ff size=7 face="黑体">nihao</font>
 JSON 对象必须<font color=red size=5>[MUST]</font>位于每个JSON API文档的根级。这个对象定义文档的"top level"。
 
 文档必须（MUST）包含以下至少一种top-level键：
