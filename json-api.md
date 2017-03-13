@@ -1,7 +1,7 @@
 
 # 项目 JSON API 规范
-[RFC2119](https://tools.ietf.org/html/rfc2119) 文档中的关键字依据  规范解释。
-[我的博客](http://blog.csdn.net/guodongxiaren)  
+
+## 文档中的关键字依据 <a href="https://tools.ietf.org/html/rfc2119">[RFC2119]</a> 规范解释。 
 + MUST
 + MUST NOT
 + REQUIRED
