@@ -275,13 +275,13 @@ Accept: application/json
 {
   "data": {
     "id": "1",
-    "name": "Gretsch Drums Catalina Club",
+    "name": "Gretsch Drums Catalina Club",
     "description": "everything you need to start drumming in one complete package with Pearl's Roadshow 5-piece drum set."
  }
 }
 ```
 
-#### 更新资源关联
+#### 更新关联
 
 #### 响应
 
