@@ -242,24 +242,21 @@ Example:
         * parameter - 指出引起错误的查询对象的字符串。
     * meta - 一个包括关于错误的非标准元信息的元对象。
 
->HTTP/1.1 400 Bad Request
-Content-Type: application/vnd.api+json
+>HTTP/1.1 400 Bad Request<br>
+Content-Type: application/json
 ```json
 {
   "errors": [
     {
       "status": "403",
-      "source": { "pointer": "/data/attributes/secret-powers" },
       "detail": "Editing secret powers is not authorized on Sundays."
     },
     {
       "status": "422",
-      "source": { "pointer": "/data/attributes/volume" },
       "detail": "Volume does not, in fact, go to 11."
     },
     {
       "status": "500",
-      "source": { "pointer": "/data/attributes/reputation" },
       "title": "The backend responded with an error",
       "detail": "Reputation service not responding after three requests."
     }
