@@ -283,9 +283,65 @@ Accept: application/json
 
 #### 更新关联
 
+##### 更新 To-One关联
+
+* PATCH请求必须***[MUST]***包括top-level中的data的成员，data中的数据包含如下其一：
+    * 关联到新资源的资源标识对象
+    * 或null，用来删除关联
+* relationships作为URL中的关键字来表示不同资源之间的关联关系。
+* 如果关联被成功更新，服务器必须***[MUST]***返回一个成功的响应。
+
+Example:下面的请求更新author关联
+
+>PATCH /products/1/relationships/author HTTP/1.1<br>
+Content-Type: application/json<br>
+Accept: application/json
+```json
+{
+  "data": { 
+      "id": "12" 
+  }
+}
+```
+
+Example:下面的请求删除author关联
+
+>PATCH /articles/1/relationships/author HTTP/1.1<br>
+Content-Type: application/vnd.api+json<br>
+Accept: application/vnd.api+json
+```json
+{
+  "data": null
+}
+```
+    
+##### 更新 To-Many关联
+
 #### 响应
 
+##### 202 Accepted
 
+* 如果服务器接受关联更新请求，但在响应时更新处理还未完成，那么服务器必须***[MUST]***返回[202 Accepted]状态码。
+
+##### 204 No Content
+
+* 如果更新成功，并且请求中的资源与更新后的结果一致，那么服务器必须***[MUST]***返回[204 No Content]状态码。
+    * 该状态码适用于向To-Many关联中添加**[POST]**了一个已经存在的关联。
+    * 该状态码同样适用于向To-Many关联中删除**[DELETE]**了一个不存在的关联。
+    
+##### 200 OK
+
+* 如果更新成功，服务器必须***[MUST]***返回200 OK状态码。
+
+##### 403 Forbidden
+
+* 服务器必须***[MUST]***向不支持的更新关联的请求发出[403 Forbidden]响应。
+
+##### 其他响应 
+
+* 服务器可以***[MAY]***响应其他HTTP状态码。
+* 服务器在错误响应(error responses)中可以***[MAY]***包含错误信息(error details)。
+* 服务器与客户端必须***[MUST]***依照[HTTP协议语义](https://tools.ietf.org/html/rfc7231)来准备和解译响应。
 
 ### 删除资源 (暂不支持DELETE方法 POST替代) 
 
