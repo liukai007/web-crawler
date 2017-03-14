@@ -202,19 +202,93 @@ Example:
 
 >GET /products?filter[brand]=Yamaha,EV&filter[category]=guitar HTTP/1.1
 
-## 创建、更新、删除资源(to be continue)
+## 创建、更新、删除资源
 
-### 创建资源(to be continue)
+* 服务器可能***[MAY]***允许对给定类型资源的创建，服务器也可能***[MAY]***允许对已存在资源的修改与删除。
+* 一个请求必须***[MUST]***完全成功或失败（在单一事务中），不允许部分更新成功。
+
+### 创建资源
 
 #### 响应
+
+##### 201 Created
+
+* 请求的资源成功被创建，服务器必须***[MUST]***返回[201 Created]状态码。
+* 响应应该***[SHOULD]***包含[Location]首部，用以表示请求创建的资源的位置。
+* 响应可以***[MAY]***含有一个文档，用以存储所创建的主要资源或其唯一标识符(primary data)。
+
+>HTTP/1.1 201 Created<br>
+Location: http://www.mifan.cn/products/308761<br>
+Content-Type: application/json
+```json
+{
+  "data": {
+    "type": "products",
+    "id": "308761"
+  }
+}
+```
+##### 202 Accepted
+
+* 如果创建资源的请求被接受处理，但在服务器响应时处理并未完成，那么服务器必须***[MUST]***返回[202 Accepted]状态码。
+
+##### 204 No Content
+
+* 请求的资源被创建成功，服务器必须***[MUST]***返回[201 Created]状态码和响应文档(如上所述)，或者只返回[204 No Content]状态码，没有响应文档。
+
+##### 403 Forbidden
+
+* 服务器可能***[MAY]***向不支持的创建资源请求返回[403 Forbidden]的响应。
+
+##### 404 Not Found
+
+* 如果创建请求所引用的相关资源不存在，服务器必须***[MUST]***返回[404 Not Found]的响应。
+
+##### 409 Conflict
+
+* 如果在创建请求中，客户端生成的ID已经存在，服务器必须***[MUST]***返回[409 Conflict]的响应。
+* 如果在创建请求中，资源对象的type不在后端支持的类型里，服务器必须***[MUST]***返回[409 Conflict]的响应。
+* 服务器应该***[SHOULD]***在响应中包括错误详情和足够的信息以识别出冲突的原因。
+
+##### 其他响应 
+
+* 服务器可以***[MAY]***响应其他HTTP状态码。
+* 服务器在错误响应(error responses)中可以***[MAY]***包含错误信息(error details)。
+* 服务器与客户端必须***[MUST]***依照[HTTP协议语义](https://tools.ietf.org/html/rfc7231)来准备和解译响应。
 
 ### 资源更新(to be continue)
 
 #### 响应
 
-### 资源删除(to be continue)
+### 资源删除 (暂不支持DELETE方法) 
+
+* 向资源URL发出DELETE请求即可删除单个资源。
+>DELETE /product/1 HTTP/1.1<br>
+Accept: application/json
 
 #### 响应
+
+##### 202 Accepted
+
+* 如果删除资源的请求被接受处理，但在服务器响应时处理并未完成，那么服务器必须***[MUST]***返回[202 Accepted]状态码。
+
+##### 204 No Content
+
+* 如果删除请求成功，并且没有返回内容，服务器必须***[MUST]***返回[204 No Content]状态码。
+
+##### 200 OK
+
+* 如果删除请求成功，并且top-level中有且仅有元数据(meta)信息作为返回内容，服务器必须***[MUST]***返回[200 OK]状态码。
+
+##### 404 NOT FOUND
+
+* 如果因为资源不存在导致删除请求失败，那么服务器应该***[SHOULD]***返回[404 Not Found]状态码。
+
+##### 其他响应 
+
+* 服务器可以***[MAY]***响应其他HTTP状态码。
+* 服务器在错误响应(error responses)中可以***[MAY]***包含错误信息(error details)。
+* 服务器与客户端必须***[MUST]***依照[HTTP协议语义](https://tools.ietf.org/html/rfc7231)来准备和解译响应。
 
 ## 错误
 
