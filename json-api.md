@@ -13,17 +13,17 @@
 + MAY
 + OPTIONAL
     
-## 文档结构 1
-JSON 对象必须**[MUST]**位于每个JSON API文档的根级。这个对象定义文档的"top level"。
+## 文档结构
+JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象定义文档的"top level"。
 
-文档必须（MUST）包含以下至少一种top-level键：
+文档必须（MUST）包含以下至少一种top-level键，data键和errors键不能***[MUST NOT]***在一个文档中同时存在。：
 
-	1. data: 文档的"primary data"。(对象或数组)
-	2. errors: 错误对象列表。(只可以是数组)
-	3. meta: 包含非标准元信息的元对象。
+* data: 文档的"primary data"。(对象或数组)
+* errors: 错误对象列表。(只可以是数组)
+* meta: 包含非标准元信息的元对象。
 
 
-data键和errors键不能（MUST NOT）在一个文档中同时存在。
+
 
 Errors Objects
 
