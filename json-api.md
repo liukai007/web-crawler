@@ -135,13 +135,13 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 * 如果服务器不支持查询参数sort指定的排序,必须***[MUST]***返回400 Bad Request。
 
 按产品创建时间升序排序
-+ GET /products?sort=created HTTP/1.1
+>GET /products?sort=created HTTP/1.1
 
 按多个字段排序
-+ GET /products?sort=created,rating HTTP/1.1
+>GET /products?sort=created,rating HTTP/1.1
 
 按创建时间降序排序
-+ GET /products?sort=-created HTTP/1.1
+>GET /products?sort=-created HTTP/1.1
 
 ## 分页
 
