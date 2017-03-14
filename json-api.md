@@ -15,9 +15,9 @@
     
 ## 文档结构
 
->JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象定义文档的*top level*。
+JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象定义文档的*top level*。
 
->文档必须***[MUST]***包含以下至少一种*top-level*键，且data键和errors键不能***[MUST NOT]***在一个文档中同时存在。这里取消了原项目中当请求成功后返回的成功状态码，现在使用HTTP（协议语义）状态码替代。
+文档必须***[MUST]***包含以下至少一种*top-level*键，且data键和errors键不能***[MUST NOT]***在一个文档中同时存在。这里取消了原项目中当请求成功后返回的成功状态码，现在使用HTTP（协议语义）状态码替代。
 
 * data: 文档的"primary data"。(对象或数组)
 * errors: 错误对象列表。(只可以是数组)
@@ -116,7 +116,7 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 * 如果服务器不能识别关联路径或不能通过路径支持内联资源，必须***[MUST]***以400 Bad Request状态码响应。
 
 同时请求产品评论与图集, 通过逗号分隔多个关联资源：
-+ GET /products/1?include=comments,images HTTP/1.1
+>GET /products/1?include=comments,images HTTP/1.1
 
 ## 稀疏字段集
 
@@ -125,7 +125,7 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 * 如果客户端请求了一组给定类型的字段集,那么后端不能***[MUST NOT]***在资源对象中包括额外的字段。
 
 只获取产品的标题与内容字段和与其关联资源作者的名称字段
-+ GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
+>GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
 
 ## 排序
 * 服务器可以***[MAY]***选择性支持，根据一个或多个条件(排序字段)对资源集合排序。
@@ -144,6 +144,66 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 >GET /products?sort=-created HTTP/1.1
 
 ## 分页
+
+* 服务器可以***[MAY]***选择性限制响应返回的资源数量，作为所有可获取资源的一个子集("page")。
+* 服务器可以***[MAY]***提供传送分页后数据集的连接("pagination links")。
+* 查询参数***page***是分页的保留字，服务器和客户端应该***[SHOULD]***用这个参数进行分页操作。
+* pagination links必须***[MUST]***出现在集合相关的连接对象中。需要在top-level的links对象中提供pagination links。
+* 下面的键必须***[MUST]***被用于pagination links中
+    * first: 首页
+    * last: 末页
+    * prev: 上一页
+    * next: 下一页
+* 如需表示特定的连接不可用，这些键必须***[MUST]***被省略，或者值为null。
+    * page-based 使用***page[number]***和***page[size]***参数
+    * offset-based 使用***page[offset]***和***page[limit]***参数
+    * cursor-based 使用***page[cursor]***参数
+    
+Example:    
+```json
+{
+  "meta": {
+    "total-pages": 13
+  },
+  "data": [
+    {
+      "type": "articles",
+      "id": "3",
+      "attributes": {
+        "title": "JSON API paints my bikeshed!",
+        "body": "The shortest article. Ever.",
+        "created": "2015-05-22T14:56:29.000Z",
+        "updated": "2015-05-22T14:56:28.000Z"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://example.com/articles?page[number]=3&page[size]=1",
+    "first": "http://example.com/articles?page[number]=1&page[size]=1",
+    "prev": "http://example.com/articles?page[number]=2&page[size]=1",
+    "next": "http://example.com/articles?page[number]=4&page[size]=1",
+    "last": "http://example.com/articles?page[number]=13&page[size]=1"
+  }
+}
+```
+    
+## 过滤
+
+* 查询参数filter是过滤的保留字，服务器和客户端应该***[SHOULD]***用这个参数进行过滤。
+
+## 创建、更新、删除资源(to be continue)
+
+### 创建资源(to be continue)
+
+#### 响应
+
+### 资源更新(to be continue)
+
+#### 响应
+
+### 资源删除(to be continue)
+
+#### 响应
 
 ## Errors Objects
 
