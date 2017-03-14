@@ -113,9 +113,8 @@
 * 关联路径(relationship paths)是由点号分隔符(U+002E FULL-STOP, “.”) 分割的关联名称(relationship names)。
 * 如果服务器不能识别关联路径或不能通过路径支持内联资源，必须***[MUST]***以400 Bad Request状态码响应。
 
->同时请求产品评论与图集, 通过逗号分隔多个关联资源：
-
->GET /products/1?include=comments,images HTTP/1.1
+>同时请求产品评论与图集, 通过逗号分隔多个关联资源：<br>
+>__GET__ /products/1?include=comments,images HTTP/1.1
 
 ## 稀疏字段集
 
@@ -123,9 +122,8 @@
 * fields参数的值必须***[MUST]***用逗号分隔开,用来表示需要返回字段的名称。
 * 如果客户端请求了一组给定类型的字段集,那么后端不能***[MUST NOT]***在资源对象中包括额外的字段。
 
->只获取产品的标题与内容字段和与其关联资源作者的名称字段
-
->GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
+>只获取产品的标题与内容字段和与其关联资源作者的名称字段<br>
+>__GET__ /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
 
 ## 排序
 * 服务器可以***[MAY]***选择性支持，根据一个或多个条件(排序字段)对资源集合排序。
@@ -134,17 +132,14 @@
 * 每个排序字段必须***[MUST]***按升序排列。除非它带有-前缀,这种情况下将按降序排列。
 * 如果服务器不支持查询参数sort指定的排序,必须***[MUST]***返回400 Bad Request。
 
->按产品创建时间升序排序
+>按产品创建时间升序排序<br>
+>__GET__ /products?sort=created HTTP/1.1
 
->GET /products?sort=created HTTP/1.1
+>按多个字段排序<br>
+>__GET__ /products?sort=created,rating HTTP/1.1
 
->按多个字段排序
-
->GET /products?sort=created,rating HTTP/1.1
-
->按创建时间降序排序
-
->GET /products?sort=-created HTTP/1.1
+>按创建时间降序排序<br>
+>__GET__ /products?sort=-created HTTP/1.1
 
 ## 分页
 
@@ -194,13 +189,11 @@ Example:
 
 * 查询参数filter是过滤的保留字，服务器和客户端应该***[SHOULD]***用这个参数进行过滤。
 
->查找品牌为雅马哈的所有产品
+>查找品牌为雅马哈的所有产品<br>
+>__GET__ /products?filter[brand]=Yamaha HTTP/1.1
 
->GET /products?filter[brand]=Yamaha HTTP/1.1
-
->查找品牌为雅马哈或EV, 且类别为guitar所有产品
-
->GET /products?filter[brand]=Yamaha,EV&filter[category]=guitar HTTP/1.1
+>查找品牌为雅马哈或EV, 且类别为guitar所有产品<br>
+>__GET__ /products?filter[brand]=Yamaha,EV&filter[category]=guitar HTTP/1.1
 
 ## 创建、更新、删除资源
 
@@ -268,7 +261,7 @@ Content-Type: application/json
 
 Example:如下请求只更新产品ID=1的数据的标题与描述信息
 
->PATCH /products/1 HTTP/1.1<br>
+>__PATCH__ /products/1 HTTP/1.1<br>
 Content-Type: application/json<br>
 Accept: application/json
 ```json
@@ -293,7 +286,7 @@ Accept: application/json
 
 Example:下面的请求更新author关联
 
->PATCH /products/1/relationships/author HTTP/1.1<br>
+>__PATCH__ /products/1/relationships/author HTTP/1.1<br>
 Content-Type: application/json<br>
 Accept: application/json
 ```json
@@ -306,7 +299,7 @@ Accept: application/json
 
 Example:下面的请求删除author关联
 
->PATCH /articles/1/relationships/author HTTP/1.1<br>
+>__PATCH__ /articles/1/relationships/author HTTP/1.1<br>
 Content-Type: application/json<br>
 Accept: application/json
 ```json
@@ -408,7 +401,7 @@ Accept: application/json
 
 * 向资源URL发出DELETE请求即可删除单个资源。
 
->DELETE /product/1 HTTP/1.1<br>
+>__DELETE__ /product/1 HTTP/1.1<br>
 Accept: application/json
 
 #### 响应
