@@ -60,6 +60,26 @@
 }
 ```
 
+## 元信息 [meta]
+
+meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]***是一个对象("meta object")。任何键都可以包含在meta对象中(e.g:客户端自定义的一些非标准键如分页信息total-page等)。
+```json
+{
+  "meta": {
+    "copyright": "Copyright 2015 Example Corp.",
+    "authors": [
+      "Yehuda Katz",
+      "Steve Klabnik",
+      "Dan Gebhardt",
+      "Tyler Kellen"
+    ]
+  },
+  "data": {
+    // ...
+  }
+}
+```
+
 ## Errors Objects
 
 >错误对象提供执行操作时遇到问题的额外信息。 在JSON API文档顶层，错误对象必须[MUST]被作为errors键对应的数组返回。
