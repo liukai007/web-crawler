@@ -307,15 +307,60 @@ Accept: application/json
 Example:下面的请求删除author关联
 
 >PATCH /articles/1/relationships/author HTTP/1.1<br>
-Content-Type: application/vnd.api+json<br>
-Accept: application/vnd.api+json
+Content-Type: application/json<br>
+Accept: application/json
 ```json
 {
   "data": null
 }
 ```
-    
+
 ##### 更新 To-Many关联
+
+* 对于To-Many关联连接的URL，服务器必须***[MUST]***能够响应 **PATCH**，**POST**，和 **DELETE** 请求。
+* 对于所有请求类型，实体主体(entity-body)必须***[MUST]***包括一个data成员，其值要么是一个空数组，要么是一个资源标识对象数组。
+* 如果客户端向一个to-many关联连接的URL发出**PATCH**请求，服务器必须***[MUST]***完全更改关联的每一个成员，如果资源不存在或者无法使用，返回合适的错误响应，如果服务器不允许完全更改，则返回[403 Forbidden]。(PATCH 相当于先 DELETE ALL，再POST)
+
+Example:替换产品原先与图库的关联为新的关联
+
+>PATCH /products/1/relationships/images HTTP/1.1<br>
+Content-Type: application/json<br>
+Accept: application/json
+```json
+{
+  "data": [
+    {"id": "2" },
+    {"id": "3" }
+  ]
+}
+```
+
+Example:删除商品关联的所有图片
+
+>PATCH /products/1/relationships/images HTTP/1.1<br>
+Content-Type: application/json<br>
+Accept: application/json
+```json
+{
+  "data": []
+}
+```
+
+* 如果客户端向一个to-many关联连接的URL发出**POST**请求，那么服务器必须***[MUST]***向关联添加新增的成员, 除非他们已经存在，如果所给的id已经存在于服务器，则不能再添加他们。
+* 如果所有指定的资源都可以被添加到关联，或者已经存在于关联里，那么服务器必须***[MUST]***返回一个成功响应。
+
+Example:将image ID=123的资源添加到产品ID为1的图集列表中
+
+>POST /products/1/relationships/images HTTP/1.1<br>
+Content-Type: application/json<br>
+Accept: application/json
+```json
+{
+  "data": [
+    {"id": "123" }
+  ]
+}
+```
 
 #### 响应
 
