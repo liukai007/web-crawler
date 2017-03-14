@@ -29,7 +29,7 @@
 * 对于每一个既定API，每个资源对象的id必须***[MUST]***定义一个单独且唯一的资源。
 * 资源对象的属性可以包含任何合法JSON值。
 * Primary data必须***[MUST]***是以下格式的一种：
-    * 如果请求要求单一资源，应该是一个单一资源对象，或一个单一资源标识符，或null。
+    * 如果请求要求单一资源，应该是一个单一资源对象，或一个单一资源标识符，或null。
     * 如果请求要求资源集合，应该是一个资源对象列表，或一个空列表([])。
 
 >以下primary data表示一个单一资源对象
@@ -148,14 +148,14 @@
 * 查询参数***page***是分页的保留字，服务器和客户端应该***[SHOULD]***用这个参数进行分页操作。
 * pagination links必须***[MUST]***出现在集合相关的连接对象中。需要在top-level的links对象中提供pagination links。
 * 下面的键必须***[MUST]***被用于pagination links中
-    * first: 首页
-    * last: 末页
-    * prev: 上一页
-    * next: 下一页
+    * first: 首页
+    * last: 末页
+    * prev: 上一页
+    * next: 下一页
 * 如需表示特定的连接不可用，这些键必须***[MUST]***被省略，或者值为null。
-    * page-based 使用***page[number]***和***page[size]***参数
-    * offset-based 使用***page[offset]***和***page[limit]***参数
-    * cursor-based 使用***page[cursor]***参数
+    * page-based 使用***page[number]***和***page[size]***参数
+    * offset-based 使用***page[offset]***和***page[limit]***参数
+    * cursor-based 使用***page[cursor]***参数
     
 Example:    
 ```json
