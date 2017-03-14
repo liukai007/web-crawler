@@ -21,8 +21,8 @@
     * errors: 错误对象列表。(只可以是数组)
     * meta: 包含非标准元信息的元对象。
 * 文档可以***[MAY]***包含以下任何top-level键：
-    * links: 与primary data相关的连接对象。
-    
+    * links: 与primary data相关的连接对象。（e.g:分页请求）
+    
 ## 资源对象 [data]
 
 * 每个资源对象必须***[MUST]***包含一个id键，且id键的值必须是字符串类型。
@@ -256,11 +256,38 @@ Content-Type: application/json
 * 服务器在错误响应(error responses)中可以***[MAY]***包含错误信息(error details)。
 * 服务器与客户端必须***[MUST]***依照[HTTP协议语义](https://tools.ietf.org/html/rfc7231)来准备和解译响应。
 
-### 资源更新(to be continue)
+### 更新资源  (暂不支持PATCH方法, POST替代) 
+
+* 向表示资源的URL发出PATCH请求，即可进行资源更新。
+* PATCH请求必须包括一个资源对象(resource object)作为主数据(primary data)。资源对象必须***[MUST]***包含id成员。
+
+#### 更新属性
+
+* 资源的任何一个或所有属性，可能***[MAY]***被包含在PATCH请求的资源对象中(resource object)。
+* 如果请求不包括资源所有的属性，那么服务器解译请求时，必须***[MUST]***添加这些属性并赋予其当前的值。服务器不能***[MUST NOT]***给缺失的属性赋值为null。
+
+Example:如下请求只更新产品ID=1的数据的标题与描述信息
+
+>PATCH /products/1 HTTP/1.1<br>
+Content-Type: application/json<br>
+Accept: application/json
+```json
+{
+  "data": {
+    "id": "1",
+    "name": "Gretsch Drums Catalina Club",
+    "description": "everything you need to start drumming in one complete package with Pearl's Roadshow 5-piece drum set."
+ }
+}
+```
+
+#### 更新资源关联
 
 #### 响应
 
-### 资源删除 (暂不支持DELETE方法) 
+
+
+### 删除资源 (暂不支持DELETE方法 POST替代) 
 
 * 向资源URL发出DELETE请求即可删除单个资源。
 
