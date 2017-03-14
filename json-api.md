@@ -21,7 +21,7 @@
     * errors: 错误对象列表。(只可以是数组)
     * meta: 包含非标准元信息的元对象。
 * 文档可以***[MAY]***包含以下任何top-level键：
-    * links: 与primary data相关的连接对象。（e.g:分页请求）
+    * links: 与primary data相关的连接对象。（e.g:分页请求）
     
 ## 资源对象 [data]
 
