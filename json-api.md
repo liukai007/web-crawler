@@ -123,7 +123,7 @@
 * 如果客户端请求了一组给定类型的字段集,那么后端不能***[MUST NOT]***在资源对象中包括额外的字段。
 
 >只获取产品的标题与内容字段和与其关联资源作者的名称字段
->GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
+GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
 
 ## 排序
 * 服务器可以***[MAY]***选择性支持，根据一个或多个条件(排序字段)对资源集合排序。
