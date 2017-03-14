@@ -75,7 +75,6 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
     ]
   },
   "data": {
-    // ...
   }
 }
 ```
@@ -121,7 +120,30 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 
 ## 稀疏字段集
 
+* 客户端可以***[MAY]***通过fields[TYPE]参数,请求后端返回只包含特定字段的响应。
+* fields参数的值必须***[MUST]***用逗号分隔开,用来表示需要返回字段的名称。
+* 如果客户端请求了一组给定类型的字段集,那么后端不能***[MUST NOT]***在资源对象中包括额外的字段。
 
+只获取产品的标题与内容字段和与其关联资源作者的名称字段
++ GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
+
+## 排序
+* 服务器可以***[MAY]***选择性支持，根据一个或多个条件(排序字段)对资源集合排序。
+* 后端可以***[MAY]***支持带有sort查询参数的请求,来排序主数据（primary data）。sort的值必须***[MUST]***代表排序字段。
+* 后端可以***[MAY]***带有多个排序字段的请求,允许用逗号分隔排序字段。排序字段应该***[SHOULD]***被按照特定顺序执行。
+* 每个排序字段必须***[MUST]***按升序排列。除非它带有-前缀,这种情况下将按降序排列。
+* 如果服务器不支持查询参数sort指定的排序,必须***[MUST]***返回400 Bad Request。
+
+按产品创建时间升序排序
++ GET /products?sort=created HTTP/1.1
+
+按多个字段排序
++ GET /products?sort=created,rating HTTP/1.1
+
+按创建时间降序排序
++ GET /products?sort=-created HTTP/1.1
+
+## 分页
 
 ## Errors Objects
 
