@@ -122,7 +122,7 @@
 * fields参数的值必须***[MUST]***用逗号分隔开,用来表示需要返回字段的名称。
 * 如果客户端请求了一组给定类型的字段集,那么后端不能***[MUST NOT]***在资源对象中包括额外的字段。
 
-只获取产品的标题与内容字段和与其关联资源作者的名称字段
+>只获取产品的标题与内容字段和与其关联资源作者的名称字段
 >GET /products?include=author&fields[products]=title,text&fields[author]=name HTTP/1.1 
 
 ## 排序
@@ -132,13 +132,13 @@
 * 每个排序字段必须***[MUST]***按升序排列。除非它带有-前缀,这种情况下将按降序排列。
 * 如果服务器不支持查询参数sort指定的排序,必须***[MUST]***返回400 Bad Request。
 
-按产品创建时间升序排序
+>按产品创建时间升序排序
 >GET /products?sort=created HTTP/1.1
 
-按多个字段排序
+>按多个字段排序
 >GET /products?sort=created,rating HTTP/1.1
 
-按创建时间降序排序
+>按创建时间降序排序
 >GET /products?sort=-created HTTP/1.1
 
 ## 分页
