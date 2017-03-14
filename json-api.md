@@ -263,6 +263,7 @@ Content-Type: application/json
 ### 资源删除 (暂不支持DELETE方法) 
 
 * 向资源URL发出DELETE请求即可删除单个资源。
+
 >DELETE /product/1 HTTP/1.1<br>
 Accept: application/json
 
