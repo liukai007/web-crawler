@@ -1,5 +1,5 @@
 
-# 项目 JSON API 规范
+# 项目 API 规范
 
 ## 文档中的关键字依据 [RFC2119](https://tools.ietf.org/html/rfc2119) 规范解释。 
 + MUST
