@@ -114,6 +114,7 @@
 * 如果服务器不能识别关联路径或不能通过路径支持内联资源，必须***[MUST]***以400 Bad Request状态码响应。
 
 >同时请求产品评论与图集, 通过逗号分隔多个关联资源：
+
 >GET /products/1?include=comments,images HTTP/1.1
 
 ## 稀疏字段集
@@ -134,12 +135,15 @@
 * 如果服务器不支持查询参数sort指定的排序,必须***[MUST]***返回400 Bad Request。
 
 >按产品创建时间升序排序
+
 >GET /products?sort=created HTTP/1.1
 
 >按多个字段排序
+
 >GET /products?sort=created,rating HTTP/1.1
 
 >按创建时间降序排序
+
 >GET /products?sort=-created HTTP/1.1
 
 ## 分页
