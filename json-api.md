@@ -98,14 +98,30 @@ meta键可用于包含非标准的元信息。每个meta键的值必须***[MUST]
 
 ### 404 Not Found 状态码 
 
-* 当通过一个请求获取一个不存在的单独资源时，服务器必须***[MUST]***以404 Not Found状态码响应。如果资源存在，但是资源为空，必须***[MUST]***以200 OK状态码返回一个null作为响应文档的主数据。
+* 当通过一个请求获取一个不存在的单独资源时，服务器必须***[MUST]***以404 Not Found状态码响应。
+* 如果资源存在，但是资源为空，必须***[MUST]***以200 OK状态码返回一个null作为响应文档的主数据。
 
 ### 其他响应码
+
 * 服务器可以***[MAY]***响应其他HTTP状态码。
 * 服务器可以***[MAY]***在错误响应中包含错误详情。
 * 服务器和客户端必须依据[HTTP协议语义](https://tools.ietf.org/html/rfc7231)分别生成和解析响应。
 
-只有当请求URL可能指向、但当前并不指向一个单独资源时，null才应当作为响应。
+## 内联资源
+
+* 后端可以***[MAY]***默认响应与主数据（primary data）相关的资源。
+* 后端也可以***[MAY]***支持**include**请求参数以保证客户端可以指定需要返回的相关资源。
+* 如果后端不支持include参数，必须***[MUST]***以400 Bad Request状态码回复任何包含此参数的请求。
+* include参数的值必须***[MUST]***是一个由逗号分隔符(U+002C COMMA, “,”) 分割的关联路径(relationship paths)列表。
+* 关联路径(relationship paths)是由点号分隔符(U+002E FULL-STOP, “.”) 分割的关联名称(relationship names)。
+* 如果服务器不能识别关联路径或不能通过路径支持内联资源，必须***[MUST]***以400 Bad Request状态码响应。
+
+同时请求产品评论与图集, 通过逗号分隔多个关联资源：
++ GET /products/1?include=comments,images HTTP/1.1
+
+## 稀疏字段集
+
+
 
 ## Errors Objects
 
