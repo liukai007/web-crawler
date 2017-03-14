@@ -15,8 +15,9 @@
     
 ## 文档结构
 
-JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象定义文档的"top level"。
-文档必须（MUST）包含以下至少一种top-level键，data键和errors键不能***[MUST NOT]***在一个文档中同时存在。：
+>JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象定义文档的"top level"。
+
+>>文档必须（MUST）包含以下至少一种top-level键，data键和errors键不能***[MUST NOT]***在一个文档中同时存在。：
 
 * data: 文档的"primary data"。(对象或数组)
 * errors: 错误对象列表。(只可以是数组)
@@ -25,6 +26,7 @@ JSON 对象必须***[MUST]***位于每个JSON API文档的根级，这个对象�
 ## Errors Objects
 
 错误对象提供执行操作时遇到问题的额外信息。 在JSON API文档顶层，错误对象必须[MUST]被作为errors键对应的数组返回。
+
 错误对象可能[MAY]有以下成员:
 
 * id - 特定问题的唯一标识符。
