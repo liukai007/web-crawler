@@ -165,7 +165,7 @@ Example:
   },
   "data": [
     {
-      "type": "products",
+      "type": "products",
       "id": "3",
       "title": "JSON API paints my bikeshed!",
       "content": "The shortest article. Ever.",
