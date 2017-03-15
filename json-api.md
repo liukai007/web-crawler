@@ -15,12 +15,12 @@
     
 ## 文档结构
 
-* JSON 对象必须 ***[MUST]*** 位于每个JSON API文档的根级，这个对象定义文档的_top level_。
-* 文档必须***[MUST]***包含以下至少一种*top-level*键，且data键和errors键不能***[MUST NOT]***在一个文档中同时存在。
+* JSON 对象必须 ***[MUST]*** 位于每个JSON API文档的根级，这个对象定义文档的 *top-level* 。
+* 文档必须 ***[MUST]*** 包含以下至少一种 *top-level* 键，且data键和errors键不能 ***[MUST NOT]*** 在一个文档中同时存在。
     * data: 文档的"primary data"。(对象或数组)
     * errors: 错误对象列表。(只可以是数组)
     * meta: 包含非标准元信息的元对象。
-* 文档可以***[MAY]***包含以下任何top-level键：
+* 文档可以 ***[MAY]*** 包含以下任何 *top-level* 键：
     * links: 与primary data相关的连接对象。（e.g:分页请求）
 
 ## 资源对象 [data]
