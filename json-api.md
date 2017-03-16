@@ -84,17 +84,14 @@
     },
     "data": [
         {
-            "docId": "Zynaptiq",
             "name": "Zynaptiq",
             "id": 4
         },
         {
-            "docId": "Zupan",
             "name": "Zupan",
             "id": 5
         },
         {
-            "docId": "ZT Amplifiers",
             "name": "ZT Amplifiers",
             "id": 6
         }
