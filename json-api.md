@@ -63,17 +63,49 @@
 >meta键可用于包含非标准的元信息。每个meta键的值必须 ***[MUST]*** 是一个对象("meta object")。任何键都可以包含在meta对象中(e.g:客户端自定义的一些非标准键如分页信息total-page等)。
 ```json
 {
-  "meta": {
-    "copyright": "Copyright 2015 Example Corp.",
-    "authors": [
-      "Yehuda Katz",
-      "Steve Klabnik",
-      "Dan Gebhardt",
-      "Tyler Kellen"
-    ]
-  },
-  "data": {
-  }
+    "meta": {
+        "number": 2,
+        "size": 3,
+        "numberOfElements": 3,
+        "last": false,
+        "totalPages": 631,
+        "sort": [
+            {
+                "direction": "ASC",
+                "property": "created",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "descending": false,
+                "ascending": true
+            }
+        ],
+        "first": false,
+        "totalElements": 1892
+    },
+    "data": [
+        {
+            "docId": "Zynaptiq",
+            "name": "Zynaptiq",
+            "id": 4
+        },
+        {
+            "docId": "Zupan",
+            "name": "Zupan",
+            "id": 5
+        },
+        {
+            "docId": "ZT Amplifiers",
+            "name": "ZT Amplifiers",
+            "id": 6
+        }
+    ],
+    "links": {
+        "self": "/api/brands?fields[brands]=id,name&sort=created&page[number]=2&page[size]=3",
+        "first": "/api/brands?fields[brands]=id,name&sort=created&page[number]=1&page[size]=3",
+        "prev": "/api/brands?fields[brands]=id,name&sort=created&page[number]=1&page[size]=3",
+        "next": "/api/brands?fields[brands]=id,name&sort=created&page[number]=3&page[size]=3",
+        "last": "/api/brands?fields[brands]=id,name&sort=created&page[number]=631&page[size]=3"
+    }
 }
 ```
 
