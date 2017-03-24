@@ -1,3 +1,4 @@
++ 2017年3月24日 修正描述
 
 # 项目 API 规范
 
@@ -492,17 +493,31 @@ Content-Type: application/json
 {
   "errors": [
     {
-      "status": "403",
-      "detail": "Editing secret powers is not authorized on Sundays."
+      "status": "400",
+      "code": "Pattern.Users.username",
+      "title": "Bad Request",
+      "detail": "用户名必须是手机号或邮箱格式",
+      "source": {
+        "pointer": "Users -> username"
+      }
     },
     {
-      "status": "422",
-      "detail": "Volume does not, in fact, go to 11."
+      "status": "400",
+      "code": "Size.Users.password",
+      "title": "Bad Request",
+      "detail": "密码长度必须在6到32之间",
+      "source": {
+        "pointer": "Users -> password"
+      }
     },
     {
-      "status": "500",
-      "title": "The backend responded with an error",
-      "detail": "Reputation service not responding after three requests."
+      "status": "400",
+      "code": "Past.UserProfiles.birthday",
+      "title": "Bad Request",
+      "detail": "生日日期必须是一个过去时间",
+      "source": {
+        "pointer": "Users -> userProfile.birthday"
+      }
     }
   ]
 }
