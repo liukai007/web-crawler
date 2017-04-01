@@ -1,6 +1,3 @@
-FORMAT: 1A
-HOST: http://www.mifan.com/
-
 # user center
 
 ## 关于响应
