@@ -521,7 +521,7 @@ Content-Type: application/json
       "status": "400",
       "code": "Past.UserProfiles.birthday",
       "title": "Bad Request",
-      "detail": "生日日期必须是一个过去时间",
+      "detail": "生日日期必须是一个过去时间",
       "source": {
         "pointer": "Users -> userProfile.birthday"
       }
