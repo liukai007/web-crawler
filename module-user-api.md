@@ -10,8 +10,8 @@
 
 + DELETE
     + [MUST] 如果删除资源的请求被接受处理，但在服务器响应时处理并未完成，那么服务器必须返回[202 Accepted]状态码。
-    + [MUST] 如果删除请求成功，并且top-level中有且仅有元数据(meta)信息作为返回内容，服务器必须返回[200 OK]状态码。
-    + [MUST] 如果删除请求成功，并且没有返回内容，服务器必须返回[204 No Content]状态码。
+    + [MUST] 如果删除请求成功，并且top-level中有且仅有元数据(meta)信息作为返回内容，服务器必须返回[200 OK]状态码。
+    + [MUST] 如果删除请求成功，并且没有返回内容，服务器必须返回[204 No Content]状态码。
     + [SHOULD] 如果因为资源不存在导致删除请求失败，那么服务器应该返回[404 Not Found]状态码。
 
 + PATCH
@@ -23,6 +23,7 @@
 ## 关于 HTTP method
 
 + 兼容性
+    + 可以使用HTTP method.
     + 所有非GET方法可以使用POST方法并在URL中增加参数_method=[POST|PATCH|DELETE]来请求一个资源。
         
 用户服务 APIs
@@ -37,14 +38,14 @@
     + [MAY] 查询列表时降序排序 __/api/addresses?sort=-priority__
 
 + Fields
-    + code [NOT NULL] - 行政区划代码
-    + province - 省
-    + city - 市
-    + district - 区
-    + mobile [NOT NULL] - 手机号
-    + consignee [NOT NULL] - 收件人/收货人
-    + address [NOT NULL] - 收货地址
-    + priority [NOT NULL] - 1:默认地址, 0:非默认
+    + code (int) [NOT NULL] - 行政区划代码
+    + province (string) - 省
+    + city (string) - 市
+    + district (string) - 区
+    + mobile (string) [NOT NULL] - 手机号
+    + consignee (string) [NOT NULL] - 收件人/收货人
+    + address (string) [NOT NULL] - 收货地址
+    + priority (int) [NOT NULL] - 1:默认地址, 0:非默认
     
 + Meta
     + number (int) - 当前页
@@ -176,14 +177,14 @@
     + NOTE : PATCH要在资源对象(Primary Data)中明确指定id
 
 + Fields
-    + code [NOT NULL] - 行政区划代码
-    + province - 省
-    + city - 市
-    + district - 区
-    + mobile [NOT NULL] - 手机号
-    + consignee [NOT NULL] - 收件人/收货人
-    + address [NOT NULL] - 收货地址
-    + priority [NOT NULL] - 1:默认地址, 0:非默认
+    + code (int) [NOT NULL] - 行政区划代码
+    + province (string) - 省
+    + city (string) - 市
+    + district (string) - 区
+    + mobile (string) [NOT NULL] - 手机号
+    + consignee (string) [NOT NULL] - 收件人/收货人
+    + address (string) [NOT NULL] - 收货地址
+    + priority (int) [NOT NULL] - 1:默认地址, 0:非默认
 
 + Parameters
     + id (string) - 资源标识符
@@ -238,4 +239,156 @@
 
 + Response 204 (application/json)
 
+## 查询(GET)用户积分/米粒日志集合 [/api/grains]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+    + [MAY] 只查询需要用到的字段 
+        + fields[grains]=score,action,created
+    + [MAY] 按日期降序排序
+        + sort=-created
+        
++ Fields
+    + created (date) - 时间
+    + score (int) - [+|-]积分/米粒
+    + action (string) - 行为/动作
+
+### 查询集合 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "number": 1,
+                "size": 10,
+                "numberOfElements": 7,
+                "last": true,
+                "totalPages": 1,
+                "sort": [
+                    {
+                        "direction": "DESC",
+                        "property": "created",
+                        "ignoreCase": false,
+                        "nullHandling": "NATIVE",
+                        "ascending": false,
+                        "descending": true
+                    }
+                ],
+                "first": true,
+                "totalElements": 7
+            },
+            "links": {
+                "self": "/api/grains?fields[grains]=score,action,created&sort=-created&page[number]=1&page[size]=10",
+                "first": "/api/grains?fields[grains]=score,action,created&sort=-created&page[number]=1&page[size]=10",
+                "last": "/api/grains?fields[grains]=score,action,created&sort=-created&page[number]=1&page[size]=10"
+            },
+            "data": [
+                {
+                    "created": "2017-04-01 11:35:50",
+                    "score": 5,
+                    "action": "邀请好友"
+                },
+                {
+                    "created": "2017-04-01 11:35:49",
+                    "score": 5,
+                    "action": "邀请好友"
+                },
+                {
+                    "created": "2017-04-01 11:35:48",
+                    "score": 2,
+                    "action": "连续签到"
+                },
+                {
+                    "created": "2017-04-01 11:35:47",
+                    "score": 2,
+                    "action": "连续签到"
+                },
+                {
+                    "created": "2017-04-01 11:35:46",
+                    "score": 10,
+                    "action": "每日签到"
+                },
+                {
+                    "created": "2017-04-01 11:35:45",
+                    "score": 10,
+                    "action": "每日签到"
+                },
+                {
+                    "created": "2017-04-01 11:35:44",
+                    "score": 10,
+                    "action": "每日签到"
+                }
+            ]
+        }
+
+## 查询(GET)/修改(PATCH)用户资料 [/api/profiles/{id}]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+    + [MAY] 只查询需要用到的字段 
+        + fields[profiles]=id,fullname,nickname,gender,birthday,city_id,company,profession,email,user_karma,user_avatar
+
++ Fields 
+    + gender (int) [NOT NULL] - 性别 0:保密 1:男 2:女
+    + birthday (date) - 生日
+    + nickname (string) - 昵称
+    + fullname (string) - 全名
+    + email (string) - 邮箱
+    + userKarma (int) [NOT NULL] - 用户积分/米粒
+    + userAvatar (string) - 头像
+    + cityId (int) - 城市编码
+    + company (string) - 公司
+    + profession (string) - 职位
+    + signCount (int) [NOT NULL] - 签到总次数
+    + signCountContinuos (int) [NOT NULL] - 连续签到次数
+    + signTime (date) - 最后签到时间
+
+### 查询用户资料 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": 12,
+                "gender": 2,
+                "birthday": 1474560000000,
+                "nickname": "失落的乖乖",
+                "fullname": "请求222",
+                "email": "651742081@qq.com",
+                "userKarma": 435,
+                "userAvatar": "http://static.budee.com/iyyren/image/201610/21/1452/132943086757232640.jpg",
+                "cityId": 445100,
+                "company": "请求ee",
+                "profession": "录音师",
+                "signCount": 43,
+                "signCountContinuos": 1,
+                "signTime": 1490687401000
+            }
+        }
+
+### 修改用户资料 [PATCH]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "id": 12,
+                "gender": 2,
+                "birthday": 1474560000000,
+                "nickname": "失落的乖乖",
+                "fullname": "请求222",
+                "email": "651742081@qq.com",
+                "userKarma": 435,
+                "userAvatar": "http://static.budee.com/iyyren/image/201610/21/1452/132943086757232640.jpg",
+                "cityId": 445100,
+                "company": "请求ee",
+                "profession": "录音师",
+            }
+        }
+        
++ Response 200 (application/json)
+
++ Response 204 (application/json)
 
