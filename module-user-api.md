@@ -392,3 +392,35 @@
 
 + Response 204 (application/json)
 
+## OAuth2.0 Token [/oauth/token]
+
++ Description
+    + Resource Owner Password Credentials Grant
+    
++ Fields
+    + access_token (string) - 访问令牌
+    + token_type (string) - 此处固定位bearer
+    + expires_in (int) - 令牌过期时间
+
+### TOKEN [POST]
+
++ Request (application/x-www-form-urlencoded)
+            
+    + Body
+
+            + grant_type=password&username=13611019209&password=admin
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Cache-Control: no-store
+            Pragma: no-cache
+
+    + Body
+
+            {
+                "access_token": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoiMTIiLCJ1c2VyX25hbWUiOiIxMzYxMTAxOTIwOSIsImNyZWF0ZWQiOjE0OTEwMzk4MTE2NDIsImV4cCI6MTQ5MTA0NzAxMX0.crzuNVKs25BZDCfR0leBq70upQAT8XeAFFO4XAcuH9NSq03KBdzcXUjSvNN304s01jia2ajQ0KWX8egJBNMy4Q",
+                "token_type": "bearer",
+                "expires_in": 7199
+            }
