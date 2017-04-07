@@ -429,7 +429,7 @@
 
 ### TOKEN [POST]
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
             
     + Body
     
