@@ -392,6 +392,31 @@
 
 + Response 204 (application/json)
 
+## 修改用户密码(PATCH) [/api/users/{id}]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+    
++ Fields
+    + password (string) - 新密码
+    + oldPassword (string) - 原始密码
+
++ Parameters
+    + id (string) - 资源标识符
+
+### 修改用户资料 [PATCH]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "id": 12,
+                "password": "newPassword",
+                "oldPassword": "oldPassword"
+            }
+        }
+
 ## OAuth2.0 Token [/oauth/token]
 
 + Description
@@ -404,11 +429,14 @@
 
 ### TOKEN [POST]
 
-+ Request (application/x-www-form-urlencoded)
++ Request (application/json)
             
     + Body
-
-            + grant_type=password&username=13611019209&password=admin
+    
+            {
+                "username": "13611019209",
+                "password": "admin123"
+            }
 
 + Response 200 (application/json)
 
