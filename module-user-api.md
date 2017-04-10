@@ -4,8 +4,8 @@ HOST: http://www.mifan.com/
 # user center
 
 + 2017年4月10日
-    + 新增用户签到 API
-    + 新增查询被邀请人列表 API
+    + 新增用户签到 API
+    + 新增查询被邀请人列表 API
 
 ## 关于响应
 
