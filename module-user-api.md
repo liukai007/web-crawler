@@ -1,4 +1,11 @@
+FORMAT: 1A
+HOST: http://www.mifan.com/
+
 # user center
+
++ 2017年4月10日
+    + 新增用户签到 API
+    + 新增查询被邀请人列表 API
 
 ## 关于响应
 
@@ -239,7 +246,7 @@
 
 + Response 204 (application/json)
 
-## 查询(GET)用户积分/米粒日志集合 [/api/grains]
+## 查询(GET)/签到(POST)用户积分/米粒集合 [/api/grains]
 
 + Description
     + [MUST] Authenticated
@@ -321,7 +328,44 @@
                 }
             ]
         }
+        
+### 签到 [POST]
 
++ Request (application/json)
+
+        {
+            "data": {
+                "userId": 11
+            }
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/grains/36
+
+    + Body
+
+            {
+                "data": {
+                    "id": 35,
+                    "type": "grains"
+                }
+            }
+   
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "title": "Bad Request",
+                    "detail": "今天已签到!"
+                }
+            ]
+        }
+        
 ## 查询(GET)/修改(PATCH)用户资料 [/api/profiles/{id}]
 
 + Description
@@ -405,7 +449,7 @@
 + Parameters
     + id (string) - 资源标识符
 
-### 修改用户资料 [PATCH]
+### 修改用户密码 [PATCH]
 
 + Request (application/json)
 
@@ -416,7 +460,85 @@
                 "oldPassword": "oldPassword"
             }
         }
+        
+## 被邀请人列表 [/api/invitations?sort=-created]
 
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+
++ Fields
+    + userId (int) - 邀请人ID
+    + created (date) - 创建时间
+    + target - (object) 被邀请人信息
+    + target.nickname (string) - 被邀请人昵称
+
+### 获取列表 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "number": 1,
+                "size": 10,
+                "numberOfElements": 3,
+                "last": true,
+                "totalPages": 1,
+                "sort": [
+                    {
+                        "direction": "DESC",
+                        "property": "created",
+                        "ignoreCase": false,
+                        "nullHandling": "NATIVE",
+                        "ascending": false,
+                        "descending": true
+                    }
+                ],
+                "first": true,
+                "totalElements": 3
+            },
+            "links": {
+                "self": "/api/invitations?sort=-created&page[number]=1&page[size]=10",
+                "first": "/api/invitations?sort=-created&page[number]=1&page[size]=10",
+                "last": "/api/invitations?sort=-created&page[number]=1&page[size]=10"
+            },
+            "data": [
+                {
+                    "id": 3,
+                    "created": "2017-04-07 18:37:23",
+                    "userId": 12,
+                    "targetId": 10335,
+                    "target": {
+                        "id": 10335,
+                        "nickname": "13000000010",
+                        "completed": false
+                    }
+                },
+                {
+                    "id": 2,
+                    "created": "2017-04-07 18:01:47",
+                    "userId": 12,
+                    "targetId": 10333,
+                    "target": {
+                        "id": 10333,
+                        "nickname": "13000000007",
+                        "completed": false
+                    }
+                },
+                {
+                    "id": 1,
+                    "created": "2017-04-07 18:00:45",
+                    "userId": 12,
+                    "targetId": 10332,
+                    "target": {
+                        "id": 10332,
+                        "nickname": "13000000006",
+                        "completed": false
+                    }
+                }
+            ]
+        }
+        
 ## OAuth2.0 Token [/oauth/token]
 
 + Description
