@@ -550,9 +550,9 @@ HOST: http://www.mifan.com/
     + [MUST] 用户只能操作自己的资源
 
 + Fields
-    + code (string, NN) - 固定值
-    + isPublic (int, NN) - 固定值
-    + time (long, NN) - 时间戳
+    + code (string) - 固定值
+    + isPublic (int) - 固定值
+    + time (long) - 时间戳
     + userId (long) - 当前用户ID
     + key (string) - 验证串
 
