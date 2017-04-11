@@ -3,6 +3,10 @@ HOST: http://www.mifan.com/
 
 # user center
 
++ 2017年4月11日
+    + 新增上传文件验证 API
+    + 新增上传文件文档
+
 + 2017年4月10日
     + 新增用户签到 API
     + 新增查询被邀请人列表 API
@@ -539,6 +543,63 @@ HOST: http://www.mifan.com/
             ]
         }
         
+## 获取上传文件验证 [/api/upload]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+
++ Fields
+    + code (string, NN) - 固定值
+    + isPublic (int, NN) - 固定值
+    + time (long, NN) - 时间戳
+    + userId (long) - 当前用户ID
+    + key (string) - 验证串
+
+### 获取验证 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "code": "20160725001",
+                "isPublic": 1,
+                "time": 1491885189308,
+                "userId": 12,
+                "key": "afb66afa0404f92ac4670f6f4a721779"
+            }
+        }
+        
+## 上传文件 [/upload/image]
+
++ Description
+    + 文件服务器提供的 API, restful格式不受项目规范影响
+    + 测试服务器: 192.168.1.248
+
+### 上传文件 [POST]
+
++ Request (application/form-data)
+
+        {
+            "code": "20160725001",
+            "isPublic": 1,
+            "time": 1491885189308,
+            "userId": 12,
+            "key": "afb66afa0404f92ac4670f6f4a721779"
+            "file": "avatar.jpg"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "code": 100,
+            "message": null,
+            "data": {
+                "url": "http://static.budee.com/iyyren/image/201704/11/1234/195238888195899392.jpg"
+            },
+            "error": null
+        }
+
 ## OAuth2.0 Token [/oauth/token]
 
 + Description
