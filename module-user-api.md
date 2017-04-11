@@ -547,7 +547,6 @@ HOST: http://www.mifan.com/
 
 + Description
     + [MUST] Authenticated
-    + [MUST] 用户只能操作自己的资源
 
 + Fields
     + code (string) - 固定值
