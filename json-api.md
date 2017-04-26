@@ -10,16 +10,23 @@
 # 项目 API 规范
 
 ## 文档中的关键字依据 [RFC2119](https://tools.ietf.org/html/rfc2119) 规范解释。 
-+ MUST
-+ MUST NOT
-+ REQUIRED
-+ SHALL
-+ SHALL NOT
-+ SHOULD
-+ SHOULD NOT
-+ RECOMMENDED
-+ MAY
-+ OPTIONAL
++ 标准RFC2119对表示“要求”（Requirement）的动词的涵义，做出了规定。
++ 表示绝对要求这样做
+    + MUST
+    + REQUIRED
+    + SHALL
++ 表示绝对不要求这样做
+    + MUST NOT
+    + SHALL NOT
++ 表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。
+    + SHOULD
+    + RECOMMENDED
++ 表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。
+    + SHOULD NOT
+    + NOT RECOMMENDED
++ 表示这个要求完全是可选的（optional），你可以这样做，也可以不这样做。
+    + MAY
+    + OPTIONAL
     
 ## 文档结构
 
