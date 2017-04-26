@@ -14,16 +14,16 @@
 + 表示绝对要求这样做
     + MUST
     + REQUIRED
-    + SHALL
+    + SHALL
 + 表示绝对不要求这样做
     + MUST NOT
-    + SHALL NOT
+    + SHALL NOT
 + 表示一般情况下应该这样做，但是在某些特定情况下可以忽视这个要求。
     + SHOULD
     + RECOMMENDED
 + 表示一般情况下不应该这样做，但是在某些特定情况下可以忽视这个要求。
     + SHOULD NOT
-    + NOT RECOMMENDED
+    + NOT RECOMMENDED
 + 表示这个要求完全是可选的（optional），你可以这样做，也可以不这样做。
     + MAY
     + OPTIONAL
