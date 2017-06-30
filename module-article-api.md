@@ -16,11 +16,11 @@ HOST: http://www.mifan.com/
     + 不写meta的话:/users/{userId}/relationships/topics/hide
     
 + Data
-    + id (long) - 主题资源唯一标识符
-    + remark (string, nullable) - 隐藏原因
+    + id (long) - 主题资源唯一标识符
+    + remark (string, nullable) - 隐藏原因
 
 + Meta
-    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_隐藏关联_
+    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_隐藏关联_
 
 + Parameters
     + userId (long) - 用户ID
@@ -145,14 +145,14 @@ HOST: http://www.mifan.com/
 + Description
     + [MUST] Authenticated
     + [MUST] 用户只能操作自己的资源
-    + 不写meta的话:/users/{userId}/relationships/topics/like
+    + 不写meta的话:/users/{userId}/relationships/topics/like
 
 + Data
-    + id (long) - 主题资源唯一标识符
-    + up (boolean) - true:喜欢, false:不喜欢
+    + id (long) - 主题资源唯一标识符
+    + up (boolean) - true:喜欢, false:不喜欢
 
 + Meta
-    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_喜欢关联_
+    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_喜欢关联_
 
 + Parameters
     + userId (long) - 用户ID
@@ -277,25 +277,25 @@ HOST: http://www.mifan.com/
 + Description
     + [MUST] Authenticated
     + [MUST] 用户只能操作自己的资源
-    + 不写meta:/users/{userId}/relationships/channels/watch
-    + 当type=users, 要先update[user_profile]表的用户是否开通频道字段（条件中需要带上该字段=false）
+    + 不写meta:/users/{userId}/relationships/channels/watch
+    + 当type=users, 要先update[user_profile]表的用户是否开通频道字段（条件中需要带上该字段=false）
         + 如果返回1, 说明是首次开通频道, 需要创建一个用户频道;
         + 如果返回0, 说明已开通, 直接根据userId查找用户频道;
-            + 如果没有找到用户频道, 抛出异常, 稍后在请求, 原因可能是并发请求时, 创建用户频道的事务还没有提交;
-            + 如果找到用户频道, 就建立关联关系;
+        + 如果没有找到用户频道, 抛出异常, 稍后在请求, 原因可能是并发请求时, 创建用户频道的事务还没有提交;
+        + 如果找到用户频道, 就建立关联关系;
     + NOTE: 这是典型的SELECT FOR UPDATE应用场景, 转换为效率更高的先UPDATE, 再执行其他逻辑;
     + NOTE: 这是分布式事务, 先更新用户限界上下文, 再处理文章限界上下文, 先UPDATE可以确保用户频道的唯一性;
-    + 对于频道来说是【订阅/取消】, 对于用户频道来说是【关注/取消关注】;
-    + 资源与资源的多对多关联中, 可以存在多个多对多关联, 通过meta元数据区分他们;
+    + 对于频道来说是【订阅/取消】, 对于用户频道来说是【关注/取消关注】;
+    + 资源与资源的多对多关联中, 可以存在多个多对多关联, 通过meta元数据区分他们;
     + meta中的relationships表明的是在用户(users)与频道(channels)的多对多关联中，这是一个watch多对多关联;
     
 + Data
-    + id (long) - 关联资源ID. type=channels时, id为频道id; type=users时, id为用户标识符, 后端会为该用户创建频道再进行关联; 
-    + type (string, nullable) - 缺省值:channels, 可选值:[users|channels]资源类型, 关注用户或订阅频道;
-    + displayOrder (int, nullable) - 缺省值:0, 排序字段;
+    + id (long) - 关联资源ID. type=channels时, id为频道id; type=users时, id为用户标识符, 后端会为该用户创建频道再进行关联; 
+    + type (string, nullable) - 缺省值:channels, 可选值:[users|channels]资源类型, 关注用户或订阅频道;
+    + displayOrder (int, nullable) - 缺省值:0, 排序字段;
 
 + Meta
-    + relationships (string) - hide:表明这是用户与频道资源多对多关系中的_关注关联_
+    + relationships (string) - hide:表明这是用户与频道资源多对多关系中的_关注关联_
 
 + Parameters
     + userId (long) - 用户ID
@@ -427,21 +427,21 @@ HOST: http://www.mifan.com/
     + 不加过滤条件查询所有频道集合
     + filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)
     + filter[users\_channels\_watch.user_id]={userId} : 查询用户订阅的频道
-        + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
+        + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
         + 只要参数中有该过滤条件, 不管其值是什么, 后端都会强制设置为当前登录用户;
-        + 只要参数中有该过滤条件, 后端需要进行联表查询;
-        + 超级管理员ROLE_ADMIN, 可以查询任意过滤参数;
+        + 只要参数中有该过滤条件, 后端需要进行联表查询;
+        + 超级管理员ROLE_ADMIN, 可以查询任意过滤参数;
     + 后端强制添加enabled=1过滤条件
     + 排序:sort=users\_channels\_watch.displayOrder, 按用户设置的顺序排序(需要配合用户过滤条件使用);
     + 排序:sort=-watched, 按关注热度降序排序;
 
 + Data
-    + channelType (int) - 频道类型, 1:系统频道, 2:订阅频道, 3:用户频道
-    + channelName (string) - 频道名称, 用户频道的话就是用户昵称, 订阅频道就是标签名, 系统频道就是固定的那几个类别名称;
-    + tag (string, nullable) - 前端用不到;
+    + channelType (int) - 频道类型, 1:系统频道, 2:订阅频道, 3:用户频道
+    + channelName (string) - 频道名称, 用户频道的话就是用户昵称, 订阅频道就是标签名, 系统频道就是固定的那几个类别名称;
+    + tag (string, nullable) - 前端用不到;
     + description (string, nullable) - 前端用不到;
-    + watched (int) - 订阅数/关注数
-    + subscribed (boolean, nullable) - 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段;
+    + watched (int) - 订阅数/关注数
+    + subscribed (boolean, nullable) - 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段;
     + displayOrder (int) - 排序, 用户登录时增加该显示字段
 
 ### 查询频道集合 [GET]
@@ -484,7 +484,7 @@ HOST: http://www.mifan.com/
 
 + Description
     + [MUST] Authenticated (添加评论时)
-    + 或直接访问资源并添加过滤参数/comments?filter[themeId]=1
+    + 或直接访问资源并添加过滤参数/comments?filter[themeId]=1
     + 添加品论时, 后端需要检查topicId是否被锁定, 是否允许回复
     + 根节点按热度(点赞数与评论数), 创建时间降序排序
     + 各种过滤条件与排序组合：
