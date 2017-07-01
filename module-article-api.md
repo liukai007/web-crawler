@@ -4,7 +4,7 @@ HOST: http://www.mifan.com/
 # topics
 
 + 2017年6月30日
-    + API初始化
+    + API初始化
 
 文章主题模块
 
