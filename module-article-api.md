@@ -1,7 +1,13 @@
 FORMAT: 1A
-HOST: http://www.mifan.com/
+HOST: http://polls.apiblueprint.org/
 
 # topics
+
++ 2017年7月12日
+    + 多对多关联关系API调整, 由于数据绑定实现问题, 不依赖于具体的实体对象属性, 增加了attributes对象;
+    + 链接API重构为符合rest规范的格式;
+    + 颜色API重构为符合rest规范的格式;
+    + 评论API移动到评论模块文档中;
 
 + 2017年6月30日
     + API初始化
@@ -13,14 +19,15 @@ HOST: http://www.mifan.com/
 + Description
     + [MUST] Authenticated
     + [MUST] 用户只能操作自己的资源
-    + 不写meta的话:/users/{userId}/relationships/topics/hide
+    + [OPTIONAL] 不写meta的话:/users/{userId}/relationships/topics/hide
+    
++ Meta
+    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_隐藏关联_
     
 + Data
     + id (long) - 主题资源唯一标识符
-    + remark (string, nullable) - 隐藏原因
-
-+ Meta
-    + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_隐藏关联_
+    + attributes (object, nullable) - 资源属性
+    + attributes.ableremark (string, nullable) - 隐藏原因
 
 + Parameters
     + userId (long) - 用户ID
@@ -35,12 +42,16 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "id": "2",
-                    "remark": "文章好烂!"
+                    "id": "88",
+                    "attributes": {
+                        "remark": "文章抄袭!"
+                    }
                 },
                 {
-                    "id": "3",
-                    "remark": "文章抄袭!"
+                    "id": "90",
+                    "attributes": {
+                        "remark": "文章涉及政治与暴力!"
+                    }
                 }
             ]
         }
@@ -103,6 +114,8 @@ HOST: http://www.mifan.com/
         
 ### 修改关联 [PATCH]
 
+如果data数组为空则删除所有关联关系
+
 + Request (application/json)
 
         {
@@ -111,12 +124,16 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "id": "2",
-                    "remark": "文章好烂!"
+                    "id": "88",
+                    "attributes": {
+                        "remark": "文章抄袭!"
+                    }
                 },
                 {
-                    "id": "3",
-                    "remark": "文章抄袭!"
+                    "id": "90",
+                    "attributes": {
+                        "remark": "文章涉及政治与暴力!"
+                    }
                 }
             ]
         }
@@ -145,14 +162,15 @@ HOST: http://www.mifan.com/
 + Description
     + [MUST] Authenticated
     + [MUST] 用户只能操作自己的资源
-    + 不写meta的话:/users/{userId}/relationships/topics/like
-
-+ Data
-    + id (long) - 主题资源唯一标识符
-    + up (boolean) - true:喜欢, false:不喜欢
+    + [OPTIONAL] 不写meta的话:/users/{userId}/relationships/topics/like
 
 + Meta
     + relationships (string) - hide:表明这是用户与主题资源多对多关系中的_喜欢关联_
+
++ Data
+    + id (long) - 主题资源唯一标识符
+    + attributes (object) - 资源属性
+    + attributes.up (int) - 1:喜欢, 0:不喜欢
 
 + Parameters
     + userId (long) - 用户ID
@@ -167,12 +185,16 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "id": "2",
-                    "up": true
+                    "id": "88",
+                    "attributes": {
+                        "up": 1
+                    }
                 },
                 {
-                    "id": "3",
-                    "up": false
+                    "id": "90",
+                    "attributes": {
+                        "up": 0
+                    }
                 }
             ]
         }
@@ -235,6 +257,8 @@ HOST: http://www.mifan.com/
         
 ### 修改关联 [PATCH]
 
+如果data数组为空则删除所有关联关系
+
 + Request (application/json)
 
         {
@@ -243,12 +267,16 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "id": "2",
-                    "up": true
+                    "id": "88",
+                    "attributes": {
+                        "up": 1
+                    }
                 },
                 {
-                    "id": "3",
-                    "up": false
+                    "id": "90",
+                    "attributes": {
+                        "up": 0
+                    }
                 }
             ]
         }
@@ -271,13 +299,13 @@ HOST: http://www.mifan.com/
                 }
             ]
         }
-           
+        
 ## (POST|DELETE|PATCH)用户与频道关联关系(订阅/关注) [/users/{userId}/relationships/channels]
 
 + Description
     + [MUST] Authenticated
     + [MUST] 用户只能操作自己的资源
-    + 不写meta:/users/{userId}/relationships/channels/watch
+    + [OPTIONAL] 不写meta的话:/users/{userId}/relationships/channels/watch
     + 当type=users, 要先update[user_profile]表的用户是否开通频道字段（条件中需要带上该字段=false）
         + 如果返回1, 说明是首次开通频道, 需要创建一个用户频道;
         + 如果返回0, 说明已开通, 直接根据userId查找用户频道;
@@ -289,13 +317,14 @@ HOST: http://www.mifan.com/
     + 资源与资源的多对多关联中, 可以存在多个多对多关联, 通过meta元数据区分他们;
     + meta中的relationships表明的是在用户(users)与频道(channels)的多对多关联中，这是一个watch多对多关联;
     
-+ Data
-    + id (long) - 关联资源ID. type=channels时, id为频道id; type=users时, id为用户标识符, 后端会为该用户创建频道再进行关联; 
-    + type (string, nullable) - 缺省值:channels, 可选值:[users|channels]资源类型, 关注用户或订阅频道;
-    + displayOrder (int, nullable) - 缺省值:0, 排序字段;
-
 + Meta
-    + relationships (string) - hide:表明这是用户与频道资源多对多关系中的_关注关联_
+    + relationships (string) - watch:表明这是用户与频道资源多对多关系中的_订阅关联_
+    
++ Data
+    + id (long) - 被关联的资源ID. type=channels时, id为频道标识符; type=users时, id为用户标识符; 后端会为该用户创建频道再进行关联; 
+    + type (string, nullable) - 缺省值:channels, 可选值:[users|channels]资源类型, 关注用户或订阅频道;
+    + attributes (object, nullable) - 资源属性
+    + attributes.displayOrder (int, nullable) - 缺省值:0, 排序字段;
 
 + Parameters
     + userId (long) - 用户ID
@@ -310,14 +339,18 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "type": "users"
-                    "id": "2",
-                    "displayOrder": 88
+                    "type": "users",
+                    "id": "20",
+                    "attributes": {
+                        "displayOrder": 81
+                    }
                 },
                 {
-                    "type": "channels"
-                    "id": "3",
-                    "displayOrder": 89
+                    "type": "channels",
+                    "id": "4",
+                    "attributes": {
+                        "displayOrder": 89
+                    }
                 }
             ]
         }
@@ -390,14 +423,18 @@ HOST: http://www.mifan.com/
             },
             "data": [
                 {
-                    "type": "users"
-                    "id": "2",
-                    "displayOrder": 88
+                    "type": "users",
+                    "id": "20",
+                    "attributes": {
+                        "displayOrder": 81
+                    }
                 },
                 {
-                    "type": "channels"
-                    "id": "3",
-                    "displayOrder": 89
+                    "type": "channels",
+                    "id": "4",
+                    "attributes": {
+                        "displayOrder": 89
+                    }
                 }
             ]
         }
@@ -428,7 +465,7 @@ HOST: http://www.mifan.com/
     + filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)
     + filter[users\_channels\_watch.user_id]={userId} : 查询用户订阅的频道
         + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
-        + 只要参数中有该过滤条件, 不管其值是什么, 后端都会强制设置为当前登录用户;
+        + 只要参数中有该过滤条件, 如果不是当前登录用户ID, 抛出未认证异常;
         + 只要参数中有该过滤条件, 后端需要进行联表查询;
         + 超级管理员ROLE_ADMIN, 可以查询任意过滤参数;
     + 后端强制添加enabled=1过滤条件
@@ -480,251 +517,19 @@ HOST: http://www.mifan.com/
             ]
         }
         
-## (POST|GET)评论(待定接口???) [/topics/{topicId}/comments]
+## (GET)链接集合 [/links?filter[type]={typeId}]
 
 + Description
-    + [MUST] Authenticated (添加评论时)
-    + 或直接访问资源并添加过滤参数/comments?filter[themeId]=1
-    + 添加品论时, 后端需要检查topicId是否被锁定, 是否允许回复
-    + 根节点按热度(点赞数与评论数), 创建时间降序排序
-    + 各种过滤条件与排序组合：
-        + 【sort】按热度排序
-        + 【sort】是创建时间排序
-        + 【filter】是否是根节点
-    + 点赞数?
-    + 回复数?
-    + parameters 通过设置此参数控制返回数据, 也可实现默认行为
-        + include=tags 返回的结果中有标签
-        + include=comments 返回的结果中有非根节点
-        + include=tags,comments 都返回
+    + 各种链接
 
 + Data
-    + themeId (long) - topicId
-    + topId (long) - root id
-    + replayId (long) - parent id
-
-### 增加评论 [POST]
-
-+ Request (application/json)
-
-        {
-            "data": {
-                "themeId": 1,
-                "topId": 0,
-                "replayId": 0,
-                "content": "回复内容, 啊啊啊",
-                "relationships": {
-                    "tags": {
-                        "data": [
-                            {
-                                "type": "tags",
-                                "id": 1
-                            },
-                            {
-                                "type": "tags",
-                                "id": 2
-                            }
-                        ]
-                    }
-                }
-            }
-        }
-        
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /api/comments/33
-
-    + Body
-
-            {
-                "data": {
-                    "id": 3,
-                    "type": "comments"
-                }
-            }
-            
-+ Response 202 (application/json)
-
-+ Response 204 (application/json)
-
-### 查询评论集合 [GET]
-
-+ Response 200 (application/json)
-
-        {
-            "meta": {
-                "number": 1,
-                "size": 2,
-                "numberOfElements": 2,
-                "last": false,
-                "totalPages": 2,
-                "sort": null,
-                "first": true,
-                "totalElements": 4
-            },
-            "links": {
-                "self": "/api/comments?page[number]=1&page[size]=2",
-                "first": "/api/comments?page[number]=1&page[size]=2",
-                "next": "/api/comments?page[number]=2&page[size]=2",
-                "last": "/api/comments?page[number]=2&page[size]=2"
-            },
-            "data": [
-                {
-                    "id": 444,
-                    "themeId": 1,
-                    "topId": 0,
-                    "content": "回复内容, 啊啊啊",
-                    "relationships": {
-                        "tags": {
-                            "data": [
-                                {
-                                    "id": 1,
-                                    "tag": "好吃"
-                                },
-                                {
-                                    "id": 2,
-                                    "tag": "真不错"
-                                }
-                            ]
-                        },
-                        "comments": {
-                            "meta": {
-                                "number": 1,
-                                "size": 2,
-                                "numberOfElements": 2,
-                                "last": false,
-                                "totalPages": 2,
-                                "sort": null,
-                                "first": true,
-                                "totalElements": 4
-                            },
-                            "links": {
-                                "self": "/api/comments?page[number]=1&page[size]=2&filter[replayId]=22",
-                                "first": "/api/comments?page[number]=1&page[size]=2&filter[replayId]=22",
-                                "next": "/api/comments?page[number]=2&page[size]=2&filter[replayId]=22",
-                                "last": "/api/comments?page[number]=2&page[size]=2&filter[replayId]=22"
-                            },
-                            "data": [
-                                {
-                                    "id": 1,
-                                    "themeId": 1,
-                                    "topId": 10,
-                                    "replayId": 444,
-                                    "content": "回复的内容1",
-                                    "relationships": {
-                                        "tags": {
-                                            "data": []
-                                        },
-                                        "comments": {
-                                            "data": []
-                                        }
-                                    }
-                                },
-                                {
-                                    "id": 2,
-                                    "themeId": 1,
-                                    "topId": 10,
-                                    "replayId": 444,
-                                    "content": "回复的内容2",
-                                    "relationships": {
-                                        "tags": {
-                                            "data": []
-                                        },
-                                        "comments": {
-                                            "data": []
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "id": 4,
-                    "themeId": 1,
-                    "topId": 10,
-                    "content": "根节点内容, 啊啊啊",
-                    "relationships": {
-                        "tags": {
-                            "data": []
-                        },
-                        "comments": {
-                            "data": []
-                        }
-                    }
-                }
-            ]
-        }
-        
-## (DELETE)删除评论 [/comments/{id}]
-
-+ Description
-    + [MUST] Authenticated
-    + [MUST] 用户只能操作自己的资源
-    + 逻辑删除?
-
-+ Parameters
-    + id (long) - comment id
-
-### 删除评论 [DELETE]
-
-+ Response 204 (application/json)
-
-## (GET)评论标签集合 [/comments/tags/]
-
-+ Description
-    + 
-
-+ Data
-    + 
-
-### 查询评论集合 [GET]
-
-+ Response 200 (application/json)
-
-        {
-            "meta": {
-                "number": 1,
-                "size": 2,
-                "numberOfElements": 2,
-                "last": false,
-                "totalPages": 2,
-                "sort": null,
-                "first": true,
-                "totalElements": 4
-            },
-            "links": {
-                "self": "/api/tags?page[number]=1&page[size]=2",
-                "first": "/api/tags?page[number]=1&page[size]=2",
-                "next": "/api/tags?page[number]=2&page[size]=2",
-                "last": "/api/tags?page[number]=2&page[size]=2"
-            },
-            "data": [
-                {
-                    "id": 1,
-                    "tagName": "标签1",
-                    "description": "标签描述1"
-                },
-                {
-                    "id": 2,
-                    "tagName": "标签2",
-                    "description": "标签描述2"
-                }
-            ]
-        }
-        
-## (GET)友情链接 [/links?filter[type]={typeId}]
-
-+ Description
-    + 
-
-+ Data
-    + 
+    + image (string) - image url
+    + description (string) - 描述
+    + href (string) - 链接
+    + blank (int) - 1:新窗口, 0:当前窗口
     
 + Parameters
-    + typeId (int) - 友情链接类型ID
+    + typeId (int) - 1:PC导航, 2:手机???, 3:手机导航 4:友情链接
 
 ### 查询评论集合 [GET]
 
@@ -780,8 +585,42 @@ HOST: http://www.mifan.com/
                 }
             ]
         }
+        
+## (GET)产品主题颜色集合 [/topics/colors]
 
-## (GET)主题 [/api/topics/1]
++ Description
+    + 
+
++ Data
+
+### 查询颜色集合 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "number": 1,
+                "size": 0,
+                "numberOfElements": 8,
+                "last": true,
+                "totalPages": 1,
+                "sort": null,
+                "first": true,
+                "totalElements": 8
+            },
+            "data": [
+                "000000",
+                "0000FF",
+                "00FF00",
+                "00FFFF",
+                "FF0000",
+                "FF00FF",
+                "FFFF00",
+                "FFFFFF"
+            ]
+        }
+
+## (GET)主题(待定???) [/topics/1]
 
 + Description
     + topic类型 : [产品|新闻|评测|原创]
