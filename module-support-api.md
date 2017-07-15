@@ -1,6 +1,6 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
-> hhhh
+
 # support
 
 + 2017年7月12日
@@ -73,72 +73,66 @@ HOST: http://polls.apiblueprint.org/
             ]
         }
 
-## (GET)评论集合 [/comments/list?page[number]=1&page[size]=10&confId=1&themeId=1&topId=0]
+## (GET)评论集合 [/comments?page[number]=1&page[size]=2&filter[confId]=1&filter[themeId]=1&filter[topId]=0]
 
 ### 查询评论集合 [GET]
 
 + Response 200 (application/json)
 
         {
-            "meta": {
-                "number": 1,
-                "size": 5,
-                "numberOfElements": 5,
-                "last": false,
-                "totalPages": 6,
-                "sort": [
-                    {
-                        "direction": "DESC",
-                        "property": "created",
-                        "ignoreCase": false,
-                        "nullHandling": "NATIVE",
-                        "descending": true,
-                        "ascending": false
-                    }
-                ],
-                "first": true,
-                "totalElements": 26
+          "meta": {
+            "number": 1,
+            "size": 2,
+            "numberOfElements": 2,
+            "last": false,
+            "totalPages": 13,
+            "sort": [
+              {
+                "direction": "DESC",
+                "property": "created",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": false,
+                "descending": true
+              }
+            ],
+            "first": true,
+            "totalElements": 26
+          },
+          "links": {
+            "self": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=1&page[size]=2",
+            "first": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=1&page[size]=2",
+            "next": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=2&page[size]=2",
+            "last": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=13&page[size]=2"
+          },
+          "data": [
+            {
+              "id": 51,
+              "creator": 1031,
+              "created": "2017-06-06 16:16:35",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 0,
+              "content": "hello word zyw",
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "replayCount": 0,
+              "reComments": []
             },
-            "links": {
-                "self": "/api/comment/list?confId=1&themeId=1&topId=0&page[number]=1&page[size]=5",
-                "first": "/api/comment/list?confId=1&themeId=1&topId=0&page[number]=1&page[size]=5",
-                "next": "/api/comment/list?confId=1&themeId=1&topId=0&page[number]=2&page[size]=5",
-                "last": "/api/comment/list?confId=1&themeId=1&topId=0&page[number]=6&page[size]=5"
-            },
-            "data": [
-                {
-                    "id": 51,
-                    "enabled": 1,
-                    "creator": 1031,
-                    "created": "2017-06-06 16:16:35",
-                    "themeId": 1,
-                    "confId": 1,
-                    "topId": 0,
-                    "content": "hello word zyw",
-                    "isAnonymous": 0,
-                    "state": 0,
-                    "praiseCount": 0,
-                    "_praiseCount": 0,
-                    "replayCount": 0,
-                    "reComments": []
-                },
-                {
-                    "id": 41,
-                    "enabled": 1,
-                    "creator": 1031,
-                    "created": "2017-06-06 13:59:26",
-                    "themeId": 1,
-                    "confId": 1,
-                    "topId": 0,
-                    "content": "222hello word zyw",
-                    "isAnonymous": 0,
-                    "state": 0,
-                    "praiseCount": 0,
-                    "_praiseCount": 0,
-                    "replayCount": 0,
-                    "reComments": []
-                }
-            ]
+            {
+              "id": 41,
+              "creator": 1031,
+              "created": "2017-06-06 13:59:26",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 0,
+              "content": "222hello word zyw",
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "replayCount": 0,
+              "reComments": []
+            }
+          ]
         }
         
 ## (DELETE)评论 [/comments/{id}]
@@ -171,7 +165,7 @@ HOST: http://polls.apiblueprint.org/
             ]
         }
         
-## (GET)评论标签集合 [/commentConf/{id}]
+## (GET)评论标签集合 [/commentConfs/{id}]
 
 + Description
     + 
