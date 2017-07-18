@@ -1,7 +1,10 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://192.168.1.138/
 
 # topics
+
++ 2017年7月18日
+    + 主题详情API结构变化
 
 + 2017年7月12日
     + 多对多关联关系API调整, 由于数据绑定实现问题, 不依赖于具体的实体对象属性, 增加了attributes对象;
@@ -620,34 +623,79 @@ HOST: http://polls.apiblueprint.org/
             ]
         }
 
-## (GET)主题(待定???) [/topics/1]
+## (GET)主题 [/topics/{id}]
 
 + Description
     + topic类型 : [产品|新闻|评测|原创]
     + post 类型 : [原创|爬取|精翻|机翻]
+    + forumId = [1], 有product数据;
+    + forumId = [3|4], 有document数据;
     
 + Meta
     + aggregations (object) - 原聚合数据, 结构不变;
     + clusters (array) - 原聚类数据, 结构不变;
 
 + Data
-    + meta.highlight - 原高亮数据, 结构不变
-    + post (object) - 页面主要显示数据。可翻译的内容文本数据， 标题 摘要 参数 内容等
-        + 精翻|原创 > 机翻 > 爬取
+    + meta.highlight (object, nullable) - 原高亮数据, 结构不变
+    + forumId (long) - 版块ID, 1:产品, 2:品牌, 3:新闻, 4:评测. @see forumName
+    + forumName (string) - 版块名称, @see forumId
+    + topicType (int) - 主题类型, 0:正常, 1:置顶, 2:公告. @see topicTypeValue
+    + topicTypeValue (String) - 主题类型值, @see topicType
+    + reviews (int) - 检阅数/浏览数
+    + replies (int) - 评论数
+    + thumbsUp (int) - 喜欢数
+    + thumbsDown (int) - 不喜欢数
+    + thumbs (int) - thumbsUp 减去 thumbsDown
+    + locked (int) - 是否锁定, 0:否,1:是, 被锁定主题不能被评论
+    + moderated (int) - _保留字段_, 是否审核此主题, 0:否, 1:是
+    + imageSingle (boolean) - 是否是单图
+    + imageRotation (boolean) - 是否有旋转图
+    + userLike (boolean) - 当前登录用户是否喜欢过
+    + rotations (array) - 旋转图集合
+    + images (array) - 图片集合
+    + audios (array) - 音频集合
+    + videos (array) - 视频集合
+    + from (object, nullable) - 来源, 只有爬取的数据才有该数据
+    + from.seedId (int) - 种子ID
+    + from.origin (int) - 数据来源URL
+    + from.rating (double, nullable) - 爬取的评分 区间[0, 1]
+    + from.reviews (int, nullable) - 爬取的浏览数 区间[0, 1]
+    + from.host (string) - 网站地址
+    + from.source (string) - 网站简称
+    + document (object, nullable) - 新闻和评测相关数据; 
+    + document.postDate (date, nullable) - 文章发表时间
+    + document.author (string, nullable) - 文章作者
+    + document.brands (array) - 文章关联的品牌
+    + product (object, nullable) - 产品相关数据;
+    + product.price (decimal, nullable) - [MUST]Authenticated, 价格
+    + product.priceUnit (string, nullable) - [MUST]Authenticated, 价格单位
+    + product.brand (string, nullable) - 品牌名称
+    + product.brandInfo (object, nullable) - 品牌详细
+    + product.brandInfo.name (string) - 品牌名称
+    + product.brandInfo.logo (string) - 品牌LOGO
+    + product.brandInfo.rating (int) - 品牌评分 区间[0, 1]
+    + product.brandInfo.reviews (int) - 品牌浏览数 区间[0, 1]
+    + product.histories (array) - [MUST]Authenticated, 品牌历史价格
+    + product.histories.price (decimal) - 价格
+    + product.histories.effectiveDate (date) - 生效时间
+    + post (object) - 内容文本数据; 标题, 摘要, 参数, 内容等.
+        + 优先级:精翻|原创 > 机翻 > 爬取
+    + post.postTypeValue (string) - 类型:精翻, 原创, 机翻, 爬取
+    + post.priority (int) - 机器翻译默认为50, 按翻译质量降序排序
+    + post.title (string) - 主题标题
+    + post.description (string, nullable) - 摘要/描述
+    + post.content (string， nullable) - 内容富文本
+    + post.categories (array) - 分类, 有可能是机器学习出来的
+    + post.tags (array) - 标签/关键词/等等
+    + post.features (array) - 特性集合
     + post.parent (object) - post的parent节点
-        + 如果post是翻译数据, 这里指向其parent节点, 即原文
-    + relationships (object) - 关系数据对象
-    + relationships.attachments (object) - 附件对象
-    + relationships.topics (object) - 排重后的相同主题数据;
+        + 如果post是[机翻|精翻], 那么post.parent指向其原文节点
+    + items (object, 此结构待定???) - 排重后的相同主题数据;
         + 如果该topic是clustering数据, 会返回相同数据来源不同的topics
-        + 如果存在这个对象, 那么post对象里存放的是翻译合并的数据
-    + relationships.products (object) - 产品相关数据;
-    + relationships.documents (object) - 新闻和评测相关数据;
-    + relationships.brands (object) - 品牌相关数据;
-    + relationships.comments (object) - 评论相关数据;
+        + 如果存在这个对象, 那么post对象里存放的是翻译合并的数
 
 + Parameters
-    + id (long) - comment id
+    + id (long) - topic id
 
 ### 查询主题 [GET]
 
@@ -714,304 +762,126 @@ HOST: http://polls.apiblueprint.org/
                         ]
                     }
                 },
-                "type": "topics",
-                "id": 1,
-                "views": 99,
-                "replies": 88,
-                "thumbsUp": 90,
-                "thumbsDown": 10,
-                "thumbs": 80,
-                "rating": 1,
-                "forum": "产品|新闻|评测|视频",
-                "topicType": "正常|置顶|公告",
-                "locked": false,
-                "moderated": false,
-                "clustered": false,
-                "created": "2016-10-12T01: 55: 37.000Z",
-                "from": {
-                    "seedId": 0,
-                    "origin": "http: //product.mifanfan.cn/product/1",
-                    "host": "http: //product.mifanfan.cn/",
-                    "source": "MusicFans"
-                },
-                "post": {
-                    "postType": "原创|爬取|精翻|机翻",
-                    "category": [
-                        "Keys"
-                    ],
-                    "tags": [
-                        "VirusTI2Desk"
-                    ],
-                    "title": "（精翻, 如果有的话, 否则这里放原文）AccessVirusTI2Desktop",
-                    "features": [
-                        {
-                            "_name": "SoundEngineType(s)",
-                            "_value": "AnalogModeling"
-                        }
-                    ],
-                    "descriptions": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface",
-                    "contents": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface",
-                    "parent": {
-                        "postType": "原创|爬取",
-                        "category": [
-                            "Keys"
-                        ],
-                        "tags": [
-                            "VirusTI2Desk"
-                        ],
-                        "title": "（精翻, 如果有的话, 否则这里放原文）AccessVirusTI2Desktop",
-                        "features": [
-                            {
-                                "_name": "SoundEngineType(s)",
-                                "_value": "AnalogModeling"
-                            }
-                        ],
-                        "descriptions": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface",
-                        "contents": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface"
+                "id": 49226,
+                "creator": 0,
+                "modifier": 0,
+                "created": "2016-10-18 07:10:16",
+                "modified": "2017-04-05 13:55:33",
+                "forumId": 1,
+                "topicType": 0,
+                "reviews": 0,
+                "replies": 0,
+                "thumbsUp": 0,
+                "thumbsDown": 0,
+                "thumbs": 0,
+                "locked": 0,
+                "moderated": 0,
+                "forumName": "产品",
+                "topicTypeValue": "正常",
+                "imageSingle": false,
+                "imageRotation": true,
+                "userLike": true,
+                "rotations": [
+                    {
+                        "mime": "image/jpeg",
+                        "filename": "http://static.budee.com/yyren/image/79/18/1199986.jpg"
+                    },
+                    {
+                        "mime": "image/jpeg",
+                        "filename": "http://static.budee.com/yyren/image/79/18/1199987.jpg"
                     }
-                }
-            },
-            "relationships": {
-                "attachments": {
-                    "data": [
-                        {
-                            "type": "images",
-                            "id": 1745,
-                            "image": "http: //static.budee.com/yyren/image/6/1745.jpg",
-                            "width": 1800,
-                            "height": 500
-                        },
-                        {
-                            "type": "images",
-                            "id": 1746,
-                            "image": "http: //static.budee.com/yyren/image/6/1746.jpg",
-                            "width": 1600,
-                            "height": 794
-                        }
-                    ]
+                ],
+                "images": [
+                    {
+                        "mime": "image/jpeg",
+                        "filename": "http://static.budee.com/yyren/image/176/4/307350.jpg"
+                    },
+                    {
+                        "mime": "image/jpeg",
+                        "filename": "http://static.budee.com/yyren/image/176/4/307351.jpg"
+                    }
+                ],
+                "audios": [],
+                "videos": [],
+                "from": {
+                    "id": 49226,
+                    "seedId": 11,
+                    "origin": "https://www.thomann.de/gb/rode_nt2a_studio_solution_set.htm",
+                    "rating": 0.94,
+                    "reviews": 0,
+                    "host": "https://www.thomann.de/gb/cat_brands.html",
+                    "source": "Thomann"
                 },
-                "topics": {
-                    "data": [
-                        {
-                            "meta": {
-                                "_score": 0.987653
-                            },
-                            "type": "topics",
-                            "id": 1,
-                            "views": 99,
-                            "replies": 88,
-                            "thumbsUp": 90,
-                            "thumbsDown": 10,
-                            "thumbs": 80,
-                            "rating": 1,
-                            "created": "2016-10-12T01: 55: 37.000Z",
-                            "from": {
-                                "seedId": 0,
-                                "origin": "http: //product.mifanfan.cn/product/1",
-                                "host": "http: //product.mifanfan.cn/",
-                                "source": "MusicFans"
-                            },
-                            "post": {
-                                "category": [
-                                    "Keys"
-                                ],
-                                "tags": [
-                                    "VirusTI2Desk"
-                                ],
-                                "title": "AccessVirusTI2Desktop",
-                                "features": [
-                                    {
-                                        "_name": "SoundEngineType(s)",
-                                        "_value": "AnalogModeling"
-                                    }
-                                ],
-                                "descriptions": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface",
-                                "contents": "AnalogModelingDesktopSynthesizerand24-bit/192kHzAudio/MIDIInterface"
-                            }
-                        },
-                        {
-                            "meta": {
-                                "_score": 0.8876643
-                            },
-                            "type": "posts",
-                            "id": 2
-                        }
+                "document": {
+                    "postDate": "2017-07-07",
+                    "author": "作者",
+                    "brands": [
+                        "2Box",
+                        "EV",
+                        "Yamaha"
                     ]
                 },
                 "product": {
-                    "data": {
-                        "type": "products",
-                        "id": "11"
-                    }
-                },
-                "document": {
-                    "data": {
-                        "type": "documents",
-                        "id": "21"
-                    }
-                },
-                "brand": {
-                    "data": {
-                        "type": "brands",
-                        "id": "Yamaha"
-                    }
-                },
-                "comments": {
-                    "meta": {
-                        "number": 1,
-                        "size": 2,
-                        "numberOfElements": 2,
-                        "last": false,
-                        "totalPages": 2,
-                        "sort": null,
-                        "first": true,
-                        "totalElements": 4
-                    },
-                    "links": {
-                        "self": "/api/comments?page[number]=1&page[size]=2",
-                        "first": "/api/comments?page[number]=1&page[size]=2",
-                        "next": "/api/comments?page[number]=2&page[size]=2",
-                        "last": "/api/comments?page[number]=2&page[size]=2"
-                    },
-                    "data": [
+                    "id": 49226,
+                    "topicId": 49226,
+                    "price": 329,
+                    "priceUnit": "EUR",
+                    "brand": "Rode",
+                    "histories": [
                         {
-                            "id": 444,
-                            "themeId": 1,
-                            "topId": 0,
-                            "content": "回复内容, 啊啊啊",
-                            "relationships": {
-                                "tags": {
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "tag": "好吃"
-                                        },
-                                        {
-                                            "id": 2,
-                                            "tag": "真不错"
-                                        }
-                                    ]
-                                },
-                                "comments": {
-                                    "meta": {
-                                        "number": 1,
-                                        "size": 2,
-                                        "numberOfElements": 2,
-                                        "last": false,
-                                        "totalPages": 2,
-                                        "sort": null,
-                                        "first": true,
-                                        "totalElements": 4
-                                    },
-                                    "links": {
-                                        "self": "/api/comments?page[number]=1&page[size]=2&filter[replayId]=22",
-                                        "first": "/api/comments?page[number]=1&page[size]=2&filter[replayId]=22",
-                                        "next": "/api/comments?page[number]=2&page[size]=2&filter[replayId]=22",
-                                        "last": "/api/comments?page[number]=2&page[size]=2&filter[replayId]=22"
-                                    },
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "themeId": 1,
-                                            "topId": 10,
-                                            "replayId": 444,
-                                            "content": "回复的内容1",
-                                            "relationships": {
-                                                "tags": {
-                                                    "data": []
-                                                },
-                                                "comments": {
-                                                    "data": []
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "id": 2,
-                                            "themeId": 1,
-                                            "topId": 10,
-                                            "replayId": 444,
-                                            "content": "回复的内容2",
-                                            "relationships": {
-                                                "tags": {
-                                                    "data": []
-                                                },
-                                                "comments": {
-                                                    "data": []
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
+                            "price": 329,
+                            "effectiveDate": "2017-03-23"
                         },
                         {
-                            "id": 4,
-                            "themeId": 1,
-                            "topId": 10,
-                            "content": "根节点内容, 啊啊啊",
-                            "relationships": {
-                                "tags": {
-                                    "data": []
-                                },
-                                "comments": {
-                                    "data": []
-                                }
-                            }
+                            "price": 299,
+                            "effectiveDate": "2016-12-22"
+                        },
+                        {
+                            "price": 299,
+                            "effectiveDate": "2016-11-04"
+                        },
+                        {
+                            "price": 339,
+                            "effectiveDate": "2016-10-19"
+                        },
+                        {
+                            "price": 339,
+                            "effectiveDate": "2016-10-18"
+                        }
+                    ]
+                },
+                "post": {
+                    "id": 49226,
+                    "parent": null,
+                    "enabled": 1,
+                    "creator": 0,
+                    "modifier": 0,
+                    "created": "2016-10-18 07:10:16",
+                    "modified": "2017-04-05 13:55:33",
+                    "parentId": 0,
+                    "postTypeValue": "爬取",
+                    "topicId": 49226,
+                    "priority": 0,
+                    "title": "NT2-A Studio Solution Set",
+                    "description": "",
+                    "content": "",
+                    "categories": [
+                        "Microphones",
+                        "Large-diaphragm Mics"
+                    ],
+                    "tags": [
+                        "256707"
+                    ],
+                    "features": [
+                        {
+                            "_name": "Media",
+                            "_value": "<div></div>"
+                        },
+                        {
+                            "_name": "Category",
+                            "_value": "<a href=\"https://www.thomann.de/gb/large_diaphragm_mics.html\">Large-diaphragm Microphones</a>"
                         }
                     ]
                 }
-            },
-            "included": [
-                {
-                    "type": "brands",
-                    "id": "Yamaha",
-                    "attributes": {
-                        "reviews": 0,
-                        "top": false,
-                        "name": "Access",
-                        "rating": 0,
-                        "logo": "http: //static.budee.com/yyren/image/220/14/974041.jpg"
-                    }
-                },
-                {
-                    "type": "documents",
-                    "id": "21",
-                    "attributes": {
-                        "postDate": "2017-07-07 12:12:11",
-                        "author": "作者",
-                        "brand": [
-                            "2Box",
-                            "EV",
-                            "Yamaha"
-                        ]
-                    }
-                },
-                {
-                    "type": "products",
-                    "id": "31",
-                    "attributes": {
-                        "price": 2185.02,
-                        "priceUnit": "USD",
-                        "range": [
-                            2185.02,
-                            2193.11,
-                            2198.98
-                        ],
-                        "history": [
-                            {
-                                "date": "2017-01-01",
-                                "price": 2000.01
-                            },
-                            {
-                                "date": "2017-04-01",
-                                "price": 2050.02
-                            },
-                            {
-                                "date": "2017-07-01",
-                                "price": 2198.98
-                            }
-                        ]
-                    }
-                }
-            ]
+            }
         }
