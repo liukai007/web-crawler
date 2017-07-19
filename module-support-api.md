@@ -14,14 +14,21 @@ HOST: http://polls.apiblueprint.org/
     + [MUST] Authenticated
     
 + Data
-    + confId (long) - 
-    + themeId (long) - 
-    + topId (long) - 
-    + replayId (long) -
-    + reUserId (long) - 
+    + confId (long) - 评论配置标识，必填
+    + themeId (long) - 主题标识，必填
+    + topId (long) - 一级评论标识，必填
+    + replayId (long) - 被回复的评论标识
+    + reUserId (long) - 被回复的用户标识
     + content (string) - 评论内容
-    + isAnonymous (int) - 
-    + tagIds (array) - 
+    + isAnonymous (int) - 是否匿名
+    + tagIds (array) - 评论时填写的标签
+    + praiseCount (long) - 点赞数
+    + _praiseCount (long) - 踩数
+    + replayCount (long) - 回复数
+    + currentScore (int) - 当前用户赞踩状态，1：赞，-1：踩
+    + nickName (String) - 昵称
+    + userAvatar (String) - 头像
+    + reUserNickName (String) - 被回复的用户昵称
 
 ### 增加评论 [POST]
 
@@ -31,7 +38,7 @@ HOST: http://polls.apiblueprint.org/
             "data": {
                 "confId": 1,
                 "themeId": 1,
-                "topId": 0,
+                "topId": 1,
                 "replayId": 1,
                 "reUserId": 1031,
                 "content": "回复内容, 啊啊啊",
@@ -73,7 +80,7 @@ HOST: http://polls.apiblueprint.org/
             ]
         }
 
-## (GET)评论集合 [/comments?page[number]=1&page[size]=2&filter[confId]=1&filter[themeId]=1&filter[topId]=0]
+## (GET)评论集合 [/comments?page[number]=1&page[size]=5&filter[confId]=1&filter[themeId]=1&filter[topId]=1]
 
 ### 查询评论集合 [GET]
 
@@ -82,10 +89,10 @@ HOST: http://polls.apiblueprint.org/
         {
           "meta": {
             "number": 1,
-            "size": 2,
-            "numberOfElements": 2,
+            "size": 5,
+            "numberOfElements": 5,
             "last": false,
-            "totalPages": 13,
+            "totalPages": 2,
             "sort": [
               {
                 "direction": "DESC",
@@ -97,40 +104,97 @@ HOST: http://polls.apiblueprint.org/
               }
             ],
             "first": true,
-            "totalElements": 26
+            "totalElements": 7
           },
           "links": {
-            "self": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=1&page[size]=2",
-            "first": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=1&page[size]=2",
-            "next": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=2&page[size]=2",
-            "last": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=0&page[number]=13&page[size]=2"
+            "self": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=1&page[number]=1&page[size]=5",
+            "first": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=1&page[number]=1&page[size]=5",
+            "next": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=1&page[number]=2&page[size]=5",
+            "last": "/comments?filter[confId]=1&filter[themeId]=1&filter[topId]=1&page[number]=2&page[size]=5"
           },
           "data": [
             {
-              "id": 51,
-              "creator": 1031,
-              "created": "2017-06-06 16:16:35",
+              "id": 38,
+              "created": "2017-06-05 17:39:27",
               "themeId": 1,
               "confId": 1,
-              "topId": 0,
-              "content": "hello word zyw",
+              "topId": 1,
+              "reUserId": 222,
+              "replayId": 1,
+              "content": "hello wwwww",
+              "isAnonymous": 1,
               "praiseCount": 0,
               "_praiseCount": 0,
-              "replayCount": 0,
-              "reComments": []
+              "reUserNickName": "quzile0.763264954859064"
             },
             {
-              "id": 41,
-              "creator": 1031,
-              "created": "2017-06-06 13:59:26",
+              "id": 37,
+              "creator": 11,
+              "created": "2017-06-05 17:39:18",
               "themeId": 1,
               "confId": 1,
-              "topId": 0,
-              "content": "222hello word zyw",
+              "topId": 1,
+              "reUserId": 222,
+              "replayId": 1,
+              "content": "hello wwwww",
+              "isAnonymous": 0,
               "praiseCount": 0,
               "_praiseCount": 0,
-              "replayCount": 0,
-              "reComments": []
+              "nickName": "e",
+              "userAvatar": "http://static.budee.com/iyyren/image/201610/21/1452/132943086757232640.jpg",
+              "reUserNickName": "quzile0.763264954859064"
+            },
+            {
+              "id": 36,
+              "creator": 11,
+              "created": "2017-06-05 17:18:48",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 1,
+              "reUserId": 222,
+              "replayId": 1,
+              "content": "hello wwwww",
+              "isAnonymous": 0,
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "nickName": "e",
+              "userAvatar": "http://static.budee.com/iyyren/image/201610/21/1452/132943086757232640.jpg",
+              "reUserNickName": "quzile0.763264954859064"
+            },
+            {
+              "id": 35,
+              "creator": 11,
+              "created": "2017-06-05 17:17:30",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 1,
+              "reUserId": 222,
+              "replayId": 1,
+              "content": "hello wwwww",
+              "isAnonymous": 0,
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "nickName": "e",
+              "userAvatar": "http://static.budee.com/iyyren/image/201610/21/1452/132943086757232640.jpg",
+              "reUserNickName": "quzile0.763264954859064"
+            },
+            {
+              "id": 16,
+              "creator": 1031,
+              "created": "2017-05-31 14:28:20",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 1,
+              "reUserId": 1030,
+              "replayId": 14,
+              "content": "5.31 5.31 5.31",
+              "isAnonymous": 0,
+              "praiseCount": 0,
+              "_praiseCount": 1,
+              "currentScore": -1,
+              "nickName": "张永伟",
+              "userAvatar": "http://static.budee.com/o2o/image/201605/25/1303/78919913401630720.jpg",
+              "reUserNickName": "赵洪阳"
             }
           ]
         }
