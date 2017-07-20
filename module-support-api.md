@@ -256,5 +256,11 @@ HOST: http://polls.apiblueprint.org/
             }
         }
 
-
+ ## 用户标识模块
+ 
+ >头的名称暂为ssid,前缀暂用mifan&nbsp，值类型为String，长度最大100，长度不固定。
+ 
+     {
+         "ssid" : "mifan dghpsdhipoiwtehgdfsgfasjdsklgjs"
+     }
 
