@@ -6,9 +6,9 @@ HOST: http://polls.apiblueprint.org/
 + 2017年7月12日
     + API初始化
 
-文章主题模块
+## 评论模块
 
-## (POST)评论 [/comments]
+## 评论 [/comments]
 
 + Description
     + [MUST] Authenticated
@@ -256,11 +256,70 @@ HOST: http://polls.apiblueprint.org/
             }
         }
 
- ## 用户标识模块
+
+
+ ## 日志模块
  
- >头的名称暂为ssid,前缀暂用mifan&nbsp，值类型为String，长度最大100，长度不固定。
+ ## 自定义header
+ >头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
  
      {
-         "ssid" : "mifan dghpsdhipoiwtehgdfsgfasjdsklgjs"
+         "X-User-ssid" : "dghpsdhipoiwtehgdfsgfasjdsklgjs"
      }
+     
+  ## 日志 [/eventLogs]
+  
+  + Data
+    + source (String) - 来源
+    + sourceTitle (String) - 来源标题
+    + eventCode (String) - 自定义编码，定义在event_dic中
+    + urlLog (String) - 请求的url
+    + methodType (String) - 请求类型
+    + params (json) - 参数，json格式的字符串
+    + isSuccess (int) - 是否成功
 
+   ### 增加日志 [POST]
+
+   + Request (application/json)
+
+    {
+        "data": {
+            "source": "/",
+            "sourceTitle": "米饭-首页",
+            "eventCode": "open_page",
+            "urlLog": "/topics/1",
+            "methodType": "get",
+            "params": "{}",
+            "isSuccess": 1
+        }
+    }
+
+   + Response 201 (application/json)
+
+        + Headers
+
+            Location: /eventLogs/1
+
+        + Body
+
+            {
+                "data": {
+                    "id": 1,
+                    "type": "eventLogs"
+                }
+            }
+            
+    + Response 204 (application/json)
+
+ + Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
