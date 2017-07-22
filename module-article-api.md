@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年7月22日
+    + 修复channels API描述
+
 + 2017年7月18日
     + 主题详情API结构变化
 
@@ -466,7 +469,7 @@ HOST: http://192.168.1.138/
 + Description
     + 不加过滤条件查询所有频道集合
     + filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)
-    + filter[users\_channels\_watch.user_id]={userId} : 查询用户订阅的频道
+    + filter[UsersChannelsWatch.userId]={userId}&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,watched&include=UsersChannelsWatch : 查询用户订阅的频道
         + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
         + 只要参数中有该过滤条件, 如果不是当前登录用户ID, 抛出未认证异常;
         + 只要参数中有该过滤条件, 后端需要进行联表查询;
@@ -481,7 +484,7 @@ HOST: http://192.168.1.138/
     + tag (string, nullable) - 前端用不到;
     + description (string, nullable) - 前端用不到;
     + watched (int) - 订阅数/关注数
-    + subscribed (boolean, nullable) - 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段;
+    + subscribed (int, nullable) - 0否, 1是 : 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段; 
     + displayOrder (int) - 排序, 用户登录时增加该显示字段
 
 ### 查询频道集合 [GET]
@@ -514,7 +517,7 @@ HOST: http://192.168.1.138/
                     "tag": "tag",
                     "description": "description",
                     "watched": 11889,
-                    "subscribed": "true",
+                    "subscribed": 1,
                     "displayOrder": 1
                 }
             ]
