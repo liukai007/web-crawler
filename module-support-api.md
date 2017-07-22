@@ -9,9 +9,6 @@ HOST: http://polls.apiblueprint.org/
 ## 评论模块
 
 ## 评论 [/comments]
-
-+ Description
-    + [MUST] Authenticated
     
 + Data
     + confId (long) - 评论配置标识，必填
@@ -31,6 +28,9 @@ HOST: http://polls.apiblueprint.org/
     + reUserNickName (String) - 被回复的用户昵称
 
 ### 增加评论 [POST]
+
++ Description
+    + [MUST] Authenticated
 
 + Request (application/json)
 
@@ -258,7 +258,7 @@ HOST: http://polls.apiblueprint.org/
 
 
 
- ## 日志模块
+## 日志模块
  
  ## 自定义header
  >头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
@@ -267,7 +267,7 @@ HOST: http://polls.apiblueprint.org/
          "X-User-ssid" : "dghpsdhipoiwtehgdfsgfasjdsklgjs"
      }
      
-  ## 日志 [/eventLogs]
+## 日志 [/eventLogs]
   
   + Data
     + source (String) - 来源
@@ -278,13 +278,13 @@ HOST: http://polls.apiblueprint.org/
     + params (json) - 参数，json格式的字符串
     + isSuccess (int) - 是否成功
 
-   ### 增加日志 [POST]
+### 增加日志 [POST]
 
    + Request (application/json)
 
     {
         "data": {
-            "source": "/",
+            "source": "http://www.mifanfan.cn/",
             "sourceTitle": "米饭-首页",
             "eventCode": "open_page",
             "urlLog": "/topics/1",
@@ -323,3 +323,14 @@ HOST: http://polls.apiblueprint.org/
                 }
             ]
         }
+    
+### 埋点位置
+    
+   + 进入、关闭产品、文章、评测、视频详情的操作
+   + 进入、关闭图库详情操作
+   + 进入、关闭品牌详情的操作
+   + 进入、关闭分类详情的操作
+   + 频道点击、收藏、取消收藏操作
+   + 不喜欢操作
+   + 刷新频道列表操作 
+   + 搜索关键字
