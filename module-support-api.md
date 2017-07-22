@@ -284,7 +284,7 @@ HOST: http://polls.apiblueprint.org/
 
     {
         "data": {
-            "source": "/",
+            "source": "http://www.mifanfan.cn/",
             "sourceTitle": "米饭-首页",
             "eventCode": "open_page",
             "urlLog": "/topics/1",
@@ -323,3 +323,14 @@ HOST: http://polls.apiblueprint.org/
                 }
             ]
         }
+
+### 埋点位置
+    
+   + 进入、关闭产品、文章、评测、视频详情的操作
+   + 进入、关闭图库详情操作
+   + 进入、关闭品牌详情的操作
+   + 进入、关闭分类详情的操作
+   + 频道点击、收藏、取消收藏操作
+   + 不喜欢操作
+   + 刷新频道列表操作 
+   + 搜索关键字
