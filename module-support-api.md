@@ -260,8 +260,8 @@ HOST: http://polls.apiblueprint.org/
 
 ## 日志模块
  
- ## 自定义header
- >头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
+## 自定义header
+>头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
  
      {
          "X-User-ssid" : "dghpsdhipoiwtehgdfsgfasjdsklgjs"
@@ -269,7 +269,7 @@ HOST: http://polls.apiblueprint.org/
      
 ## 日志 [/eventLogs]
   
-  + Data
++ Data
     + source (String) - 来源
     + sourceTitle (String) - 来源标题
     + eventCode (String) - 自定义编码，定义在event_dic中
@@ -280,7 +280,7 @@ HOST: http://polls.apiblueprint.org/
 
 ### 增加日志 [POST]
 
-   + Request (application/json)
++ Request (application/json)
 
     {
         "data": {
@@ -294,7 +294,7 @@ HOST: http://polls.apiblueprint.org/
         }
     }
 
-   + Response 201 (application/json)
++ Response 201 (application/json)
 
         + Headers
 
@@ -309,9 +309,9 @@ HOST: http://polls.apiblueprint.org/
                 }
             }
             
-    + Response 204 (application/json)
++ Response 204 (application/json)
 
- + Response 400 (application/json)
++ Response 400 (application/json)
 
         {
             "errors": [
@@ -323,7 +323,7 @@ HOST: http://polls.apiblueprint.org/
                 }
             ]
         }
-    
+
 ### 埋点位置
     
    + 进入、关闭产品、文章、评测、视频详情的操作
