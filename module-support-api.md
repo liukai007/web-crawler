@@ -9,9 +9,6 @@ HOST: http://polls.apiblueprint.org/
 ## 评论模块
 
 ## 评论 [/comments]
-
-+ Description
-    + [MUST] Authenticated
     
 + Data
     + confId (long) - 评论配置标识，必填
@@ -31,6 +28,9 @@ HOST: http://polls.apiblueprint.org/
     + reUserNickName (String) - 被回复的用户昵称
 
 ### 增加评论 [POST]
+
++ Description
+    + [MUST] Authenticated
 
 + Request (application/json)
 
