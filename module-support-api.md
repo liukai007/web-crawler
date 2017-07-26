@@ -32,6 +32,16 @@ HOST: http://polls.apiblueprint.org/
 + Description
     + [MUST] Authenticated
 
++ Parameters
+    + confId (long) - 必填
+    + themeId () - 必填
+    + topId () - 必填，值为0时为一级评论
+    + replayId () - 非必填
+    + reUserId () - 非必填
+    + content () - 必填
+    + isAnonymous () - 必填
+    + tagIds () - 非必填，评论时带的标签
+
 + Request (application/json)
 
         {
@@ -83,6 +93,11 @@ HOST: http://polls.apiblueprint.org/
 ## (GET)评论集合 [/comments?page[number]=1&page[size]=5&filter[confId]=1&filter[themeId]=1&filter[topId]=1]
 
 ### 查询评论集合 [GET]
+
++ Parameters
+    + filter[confId] (long) - 必填
+    + filter[themeId] (long) - 必填
+    + filter[topId] (long) - 必填
 
 + Response 200 (application/json)
 
@@ -228,14 +243,71 @@ HOST: http://polls.apiblueprint.org/
                 }
             ]
         }
-        
-## (GET)评论标签集合 [/commentConfs/{id}]
 
-+ Description
-    + 
+## (GET)评论详情 [/comments/{id}]
+
 
 + Parameters
-    + id (long) - 
+    + id (long) - 评论标识
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "id": 80,
+            "enabled": 1,
+            "creator": 1031,
+            "created": "2017-07-25 10:53:52",
+            "themeId": 10,
+            "confId": 1,
+            "topId": 0,
+            "content": "22222222222222",
+            "isAnonymous": 0,
+            "state": 0,
+            "praiseCount": 0,
+            "_praiseCount": 0,
+            "replayCount": 3,
+            "reComments": [],
+            "nickName": "张永伟",
+            "userAvatar": "http://static.budee.com/o2o/image/201605/25/1303/78919913401630720.jpg"
+          }
+        }
+        
+
+## (GET)主题统计信息 [/comments/theme?confId=1&themeId=1]
+
+
++ Parameters
+    + confId (long) - 必填
+    + themeId (long) - 必填
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "tag_summarys": [
+              {
+                "tagId": 1,
+                "tagName": "质量不错",
+                "sum": 6
+              },
+              {
+                "tagId": 2,
+                "tagName": "222222222",
+                "sum": 6
+              }
+            ],
+            "praise_count": 0,
+            "theme_comment_count": 33,
+            "_praise_count": 0
+          }
+        }
+
+## (GET)评论标签集合 [/commentConfs/{id}]
+
+
++ Parameters
+    + id (long) - 标签配置标识
 
 + Response 200 (application/json)
 
@@ -260,8 +332,8 @@ HOST: http://polls.apiblueprint.org/
 
 ## 日志模块
  
-## 自定义header
->头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
+ ## 自定义header
+ >头的名称暂为ssid，值类型为String，长度最大100，长度不固定。
  
      {
          "X-User-ssid" : "dghpsdhipoiwtehgdfsgfasjdsklgjs"
@@ -269,7 +341,7 @@ HOST: http://polls.apiblueprint.org/
      
 ## 日志 [/eventLogs]
   
-+ Data
+  + Data
     + source (String) - 来源
     + sourceTitle (String) - 来源标题
     + eventCode (String) - 自定义编码，定义在event_dic中
@@ -280,21 +352,29 @@ HOST: http://polls.apiblueprint.org/
 
 ### 增加日志 [POST]
 
-+ Request (application/json)
+  + Parameters
+    + source (String) - 非必填
+    + sourceTitle (String) - 非必填
+    + eventCode (String) - 必填
+    + methodType (String) - 非必填
+    + params (String) - 非必填
+    + isSuccess (String) - 非必填
 
-    {
-        "data": {
-            "source": "http://www.mifanfan.cn/",
-            "sourceTitle": "米饭-首页",
-            "eventCode": "open_page",
-            "urlLog": "/topics/1",
-            "methodType": "get",
-            "params": "{}",
-            "isSuccess": 1
+    + Request (application/json)
+
+            {
+            "data": {
+                "source": "http://www.mifanfan.cn/",
+                "sourceTitle": "米饭-首页",
+                "eventCode": "open_page",
+                "urlLog": "/topics/1",
+                "methodType": "get",
+                "params": "{}",
+                "isSuccess": 1
+            }
         }
-    }
 
-+ Response 201 (application/json)
+   + Response 201 (application/json)
 
         + Headers
 
@@ -309,9 +389,9 @@ HOST: http://polls.apiblueprint.org/
                 }
             }
             
-+ Response 204 (application/json)
+    + Response 204 (application/json)
 
-+ Response 400 (application/json)
+ + Response 400 (application/json)
 
         {
             "errors": [
@@ -323,7 +403,7 @@ HOST: http://polls.apiblueprint.org/
                 }
             ]
         }
-
+    
 ### 埋点位置
     
    + 进入、关闭产品、文章、评测、视频详情的操作
