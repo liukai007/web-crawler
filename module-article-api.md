@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年7月26日
+    + 增加搜索/聚合API /topics/search (未完成)
+
 + 2017年7月22日
     + 修复channels API描述
 
@@ -633,10 +636,6 @@ HOST: http://192.168.1.138/
     + post 类型 : [原创|爬取|精翻|机翻]
     + forumId = [1], 有product数据;
     + forumId = [3|4], 有document数据;
-    
-+ Meta
-    + aggregations (object) - 原聚合数据, 结构不变;
-    + clusters (array) - 原聚类数据, 结构不变;
 
 + Data
     + meta.highlight (object, nullable) - 原高亮数据, 结构不变
@@ -705,66 +704,7 @@ HOST: http://192.168.1.138/
 + Response 200 (application/json)
 
         {
-            "meta": {
-                "aggregations": {
-                    "image": "http://static.budee.com/yyren/image/202/51840.jpg",
-                    "category": {
-                        "buckets": [
-                            {
-                                "image": "http://static.budee.com/yyren/image/203/52038.jpg",
-                                "doc_count": 53773,
-                                "key": "吉他/贝斯"
-                            }
-                        ]
-                    }
-                },
-                "clusters": [
-                    {
-                        "score": 37.7698711496348,
-                        "subgroups": [],
-                        "otherTopics": false,
-                        "documentReferences": [
-                            "97189",
-                            "105539",
-                            "105455",
-                            "105516",
-                            "56437"
-                        ],
-                        "id": 0,
-                        "label": "String Set for E- Span Class",
-                        "phrases": [
-                            "String Set for E- Span Class"
-                        ]
-                    },
-                    {
-                        "score": 29.360514351279697,
-                        "subgroups": [],
-                        "otherTopics": false,
-                        "documentReferences": [
-                            "41945",
-                            "100401",
-                            "43061",
-                            "110672",
-                            "76835",
-                            "41897"
-                        ],
-                        "id": 1,
-                        "label": "Acoustic Span Class",
-                        "phrases": [
-                            "Acoustic Span Class"
-                        ]
-                    }
-                ]
-            },
             "data": {
-                "meta": {
-                    "_score": 1,
-                    "highlight": {
-                        "items.contents": [
-                            "RockcaseRC20809B柔光钢琴<spanclass='highlight'>吉他</span>"
-                        ]
-                    }
-                },
                 "id": 49226,
                 "creator": 0,
                 "modifier": 0,
@@ -887,4 +827,198 @@ HOST: http://192.168.1.138/
                     ]
                 }
             }
+        }
+        
+## (GET)搜索主题集合 [/topics/search]
+
++ Description
+    + topic类型 : [产品|新闻|评测|原创]
+    + post 类型 : [原创|爬取|精翻|机翻]
+    + forumId = [1], 有product数据;
+    + forumId = [3|4], 有document数据;
+    
++ Meta
+    + aggregations (object) - 原聚合数据, 结构不变;
+    + clusters (array) - 原聚类数据, 结构不变;
+
++ Data
+    + 结构同/topics, 是其子集（字段更少一些）
+    + 字段在此基础上可能有删减
+    
++ 过滤
+    + filter[categories]=吉他,贝斯,鼓; 按类别过滤;
+    + filter[brand]=EV,Yamaha; 按品牌过滤;
+    + filter[forumId]=1; 按版块ID过滤;
+    + 其他未完成
+    
++ 给定某个品牌, 按所有类别聚合
+    + 待定
+    
++ 给定某个品牌, 按一级类别聚合
+    + 待定
+
+### 搜索主题 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "number": 1,
+                "size": 1,
+                "numberOfElements": 1,
+                "last": false,
+                "totalPages": 1318,
+                "sort": null,
+                "first": true,
+                "totalElements": 1318,
+                "aggregations": {
+                    "image": "http://static.budee.com/yyren/image/202/51840.jpg",
+                    "category": {
+                        "buckets": [
+                            {
+                                "image": "http://static.budee.com/yyren/image/203/52038.jpg",
+                                "doc_count": 53773,
+                                "key": "吉他/贝斯"
+                            }
+                        ]
+                    }
+                },
+                "clusters": [
+                    {
+                        "score": 37.7698711496348,
+                        "subgroups": [],
+                        "otherTopics": false,
+                        "documentReferences": [
+                            "97189",
+                            "105539",
+                            "105455",
+                            "105516",
+                            "56437"
+                        ],
+                        "id": 0,
+                        "label": "String Set for E- Span Class",
+                        "phrases": [
+                            "String Set for E- Span Class"
+                        ]
+                    },
+                    {
+                        "score": 29.360514351279697,
+                        "subgroups": [],
+                        "otherTopics": false,
+                        "documentReferences": [
+                            "41945",
+                            "100401",
+                            "43061",
+                            "110672",
+                            "76835",
+                            "41897"
+                        ],
+                        "id": 1,
+                        "label": "Acoustic Span Class",
+                        "phrases": [
+                            "Acoustic Span Class"
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "/topics/search?page[number]=1&page[size]=1",
+                "first": "/topics/search?page[number]=1&page[size]=1",
+                "next": "/topics/search?page[number]=2&page[size]=1",
+                "last": "/topics/search?page[number]=1318&page[size]=1"
+            },
+            "data": [
+                {
+                    "meta": {
+                        "_score": 1,
+                        "highlight": {
+                            "items.contents": [
+                                "RockcaseRC20809B柔光钢琴<spanclass='highlight'>吉他</span>"
+                            ]
+                        }
+                    },
+                    "id": 49226,
+                    "creator": 0,
+                    "modifier": 0,
+                    "created": "2016-10-18 07:10:16",
+                    "modified": "2017-04-05 13:55:33",
+                    "forumId": 1,
+                    "topicType": 0,
+                    "reviews": 0,
+                    "replies": 0,
+                    "thumbsUp": 0,
+                    "thumbsDown": 0,
+                    "thumbs": 0,
+                    "locked": 0,
+                    "moderated": 0,
+                    "forumName": "产品",
+                    "topicTypeValue": "正常",
+                    "imageSingle": false,
+                    "imageRotation": true,
+                    "userLike": true,
+                    "rotations": [
+                        {
+                            "mime": "image/jpeg",
+                            "filename": "http://static.budee.com/yyren/image/79/18/1199986.jpg"
+                        },
+                        {
+                            "mime": "image/jpeg",
+                            "filename": "http://static.budee.com/yyren/image/79/18/1199987.jpg"
+                        }
+                    ],
+                    "images": [
+                        {
+                            "mime": "image/jpeg",
+                            "filename": "http://static.budee.com/yyren/image/176/4/307350.jpg"
+                        },
+                        {
+                            "mime": "image/jpeg",
+                            "filename": "http://static.budee.com/yyren/image/176/4/307351.jpg"
+                        }
+                    ],
+                    "audios": [],
+                    "videos": [],
+                    "from": {
+                        "id": 49226,
+                        "seedId": 11,
+                        "origin": "https://www.thomann.de/gb/rode_nt2a_studio_solution_set.htm",
+                        "rating": 0.94,
+                        "reviews": 0,
+                        "host": "https://www.thomann.de/gb/cat_brands.html",
+                        "source": "Thomann"
+                    },
+                    "post": {
+                        "id": 49226,
+                        "enabled": 1,
+                        "creator": 0,
+                        "modifier": 0,
+                        "created": "2016-10-18 07:10:16",
+                        "modified": "2017-04-05 13:55:33",
+                        "parentId": 0,
+                        "postTypeValue": "爬取",
+                        "topicId": 49226,
+                        "priority": 0,
+                        "title": "NT2-A Studio Solution Set",
+                        "description": "",
+                        "content": "",
+                        "categories": [
+                            "Microphones",
+                            "Large-diaphragm Mics"
+                        ],
+                        "tags": [
+                            "256707"
+                        ],
+                        "features": [
+                            {
+                                "_name": "Media",
+                                "_value": "<div></div>"
+                            },
+                            {
+                                "_name": "Category",
+                                "_value": "<a href=\"https://www.thomann.de/gb/large_diaphragm_mics.html\">Large-diaphragm Microphones</a>"
+                            }
+                        ]
+                    }
+                }
+            ]
         }
