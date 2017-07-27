@@ -26,6 +26,8 @@ HOST: http://polls.apiblueprint.org/
     + nickName (String) - 昵称
     + userAvatar (String) - 头像
     + reUserNickName (String) - 被回复的用户昵称
+    + reComments (String) - 二级评论
+    + hotComments (String) - 热门评论
 
 ### 增加评论 [POST]
 
@@ -33,14 +35,14 @@ HOST: http://polls.apiblueprint.org/
     + [MUST] Authenticated
 
 + Parameters
-    + confId (long) - 必填
-    + themeId () - 必填
-    + topId () - 必填，值为0时为一级评论
-    + replayId () - 非必填
-    + reUserId () - 非必填
-    + content () - 必填
-    + isAnonymous () - 必填
-    + tagIds () - 非必填，评论时带的标签
+    + confId - 必填
+    + themeId - 必填
+    + topId - 必填，值为0时为一级评论
+    + replayId - 非必填
+    + reUserId - 非必填
+    + content - 必填
+    + isAnonymous - 必填
+    + tagIds - 非必填，评论时带的标签
 
 + Request (application/json)
 
@@ -268,6 +270,7 @@ HOST: http://polls.apiblueprint.org/
             "_praiseCount": 0,
             "replayCount": 3,
             "reComments": [],
+            "hotComments": [],
             "nickName": "张永伟",
             "userAvatar": "http://static.budee.com/o2o/image/201605/25/1303/78919913401630720.jpg"
           }
@@ -328,6 +331,58 @@ HOST: http://polls.apiblueprint.org/
             }
         }
 
+
+
+## 赞踩 [/praises]
+    
++ Data
+    + type (int) - 类型，0：对主题点赞，1：对评论点赞
+    + confId (long) - 评论配置标识
+    + themeId (long) - 主题标识
+    + score (int) - 分数，1：点赞，-1：踩
+    + commentId (long) - 评论标识
+
+### 增加赞踩 [POST]
+
++ Description
+    + [MUST] Authenticated
+
++ Parameters
+    + type - 必填
+    + confId - 必填
+    + themeId - 必填
+    + score - 必填
+    + commentId - 当type=1时必填，当type=0时必须为空
+    
+
++ Request (application/json)
+
+        {
+            "data":{
+                "type":1,
+                "confId":1,
+                "themeId":10,
+                "commentId":69,
+                "score":1
+            }
+        }
+
++ Response 201 (application/json)
+            
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
 
 
 ## 日志模块
