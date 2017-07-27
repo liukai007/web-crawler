@@ -216,6 +216,58 @@ HOST: http://polls.apiblueprint.org/
           ]
         }
         
+## (GET)热门评论 [http://localhost/comments/hots?confId=1&themeId=1]
+
+### 查询热门评论 [GET]
+
++ Parameters
+    + filter[confId] (long) - 必填
+    + filter[themeId] (long) - 必填
+
+
++ Response 200 (application/json)
+    
+        {
+          "data": [
+            {
+              "id": 2,
+              "creator": 1031,
+              "created": "2017-05-24 15:31:27",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 0,
+              "content": "woshi我是 yizhi一直 chouxiaoya丑小鸭 ya呀 ，yiyayiya咿呀咿呀 yo哟 ！",
+              "isAnonymous": 0,
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "currentScore": 1,
+              "hotComments": [],
+              "reComments": [],
+              "nickName": "张永伟",
+              "userAvatar": "http://static.budee.com/o2o/image/201605/25/1303/78919913401630720.jpg"
+            },
+            {
+              "id": 1,
+              "creator": 1031,
+              "created": "2017-05-24 15:31:00",
+              "themeId": 1,
+              "confId": 1,
+              "topId": 0,
+              "content": "woshi我是 yizhi一直 chouxiaoya丑小鸭 ya呀 ，yiyayiya咿呀咿呀 yo哟 ！",
+              "isAnonymous": 0,
+              "praiseCount": 0,
+              "_praiseCount": 0,
+              "currentScore": 1,
+              "hotComments": [],
+              "reComments": [],
+              "nickName": "张永伟",
+              "userAvatar": "http://static.budee.com/o2o/image/201605/25/1303/78919913401630720.jpg"
+            }
+          ]
+        } 
+
+
+        
 ## (DELETE)评论 [/comments/{id}]
 
 + Description
