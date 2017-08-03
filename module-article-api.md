@@ -5,6 +5,7 @@ HOST: http://192.168.1.138/
 
 + 2017年8月3日
     + 搜索引擎API更新
+    + 原聚合API结构全部更新, 前查看搜索API
 
 + 2017年7月26日
     + 增加搜索/聚合API /topics/search (未完成)
@@ -871,29 +872,35 @@ HOST: http://192.168.1.138/
     + agg[size] (int, nullable) - 该参数控制返回聚合数的大小, 不写该参数返回所有聚合数据. 
     + agg[sort] (string, nullable) - 聚合排序, 只能在[term|count]中选择, term按字母排序, count按统计数排序
     + agg[image] (boolean, nullable) - 聚合的数据是否需要查找一个代表性图片. 缺省false.
-    + agg[group] (boolean, nullable) - 是否按首字母分组显示.
+    + agg[group] (boolean, nullable) - 是否按首字母分组显示. 
     + aggregation[{name}] (string, nullable) - 如果有该请求参数, 其他聚合参数才有效, {name}为聚合的名称, 其值为聚合的字段 e.g aggregation[category]=categories.en.raw
     
 + 给定某个品牌, 按所有类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&filter[brand.name]=A-Gift-Republic&agg[group]=false&agg[image]=true&aggregation[category]=categories.en.raw
+    + categories.en.raw | categories.cn.raw
     
 + 给定某个品牌, 按一级类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&filter[brand.name]=A-Gift-Republic&agg[group]=false&agg[image]=true&aggregation[category]=level_0.en.raw
+    + level\_0.en.raw | level\_0.cn.raw
     
 + 给定某个品牌与一级类别, 按二级类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&filter[brand.name]=A-Gift-Republic&filter[level\_0.en.raw]=Accessories&agg[group]=false&agg[image]=true&aggregation[category]=level\_0.en.raw-level\_1.en.raw
 
 + 按一级类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&agg[group]=false&agg[image]=true&aggregation[category]=level_0.en.raw
 
 + 给定一级类别, 按二级类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&filter[level\_0.en.raw]=Guitars%20and%20Basses&agg[group]=false&agg[image]=true&aggregation[category]=level_1.en.raw
 
 + 给定二级类别, 按三级类别聚合
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&filter[level\_1.en.raw]=Accessories&agg[group]=false&agg[image]=true&aggregation[category]=level_2.en.raw
 
 + 按品牌聚合, 显示所有品牌集合, 按count降序
-    + 待定
+    + /topics/search?page[size]=0&filter[forumId]=1&agg[group]=true&aggregation[brand]=brand.name
+    + 增加 agg[size]=10 参数控制聚合结果大小
+    
++ 给定分类，查找流行度排行前{n}的品牌 (该API暂时数据有问题, 待修复)
+    + http://localhost/topics/search?page[size]=0&filter[forumId]=1&filter[category]=Guitars and Basses&aggregation[brand]=brand.name
 
 ### 搜索主题 [GET]
 
