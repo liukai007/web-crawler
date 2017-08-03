@@ -6,6 +6,7 @@ HOST: http://192.168.1.138/
 + 2017年8月3日
     + 搜索引擎API更新
     + 原聚合API结构全部更新, 前查看搜索API
+    + 相加相关主题API
 
 + 2017年7月26日
     + 增加搜索/聚合API /topics/search (未完成)
@@ -1114,4 +1115,19 @@ HOST: http://192.168.1.138/
                     "similarities": []
                 }
             ]
+        }
+        
+## (GET) 查询与特定主题相关的数据集合 [/topics/{id}/relates]
+
++ Description
+    + 结构同搜索API
+
++ Parameters
+    + id (long) - 主题ID
+    
+### 搜索主题 [GET]
+
++ Response 200 (application/json)
+
+        {
         }
