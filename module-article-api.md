@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月3日
+    + 搜索引擎API更新
+
 + 2017年7月26日
     + 增加搜索/聚合API /topics/search (未完成)
 
@@ -638,7 +641,6 @@ HOST: http://192.168.1.138/
     + forumId = [3|4], 有document数据;
 
 + Data
-    + meta.highlight (object, nullable) - 原高亮数据, 结构不变
     + forumId (long) - 版块ID, 1:产品, 2:品牌, 3:新闻, 4:评测. @see forumName
     + forumName (string) - 版块名称, @see forumId
     + topicType (int) - 主题类型, 0:正常, 1:置顶, 2:公告. @see topicTypeValue
@@ -648,7 +650,7 @@ HOST: http://192.168.1.138/
     + thumbsUp (int) - 喜欢数
     + thumbsDown (int) - 不喜欢数
     + thumbs (int) - thumbsUp 减去 thumbsDown
-    + locked (int) - 是否锁定, 0:否,1:是, 被锁定主题不能被评论
+    + locked (int) - _保留字段_, 是否锁定, 0:否,1:是, 被锁定主题不能被评论
     + moderated (int) - _保留字段_, 是否审核此主题, 0:否, 1:是
     + imageSingle (boolean) - 是否是单图
     + imageRotation (boolean) - 是否有旋转图
@@ -836,25 +838,61 @@ HOST: http://192.168.1.138/
     + post 类型 : [原创|爬取|精翻|机翻]
     + forumId = [1], 有product数据;
     + forumId = [3|4], 有document数据;
+    + 结构同/topics, 是其子集（字段更少一些）
     
 + Meta
-    + aggregations (object) - 原聚合数据, 结构不变;
-    + clusters (array) - 原聚类数据, 结构不变;
+    + aggregations (object, nullable) - 原聚合数据, 结构不变, 所有一级对象为每个聚类的名称;
+    + clusters (array, nullable) - 【保留】只有在聚类查询时才返回数据或空数组, 原聚类数据, 结构不变;
 
 + Data
-    + 结构同/topics, 是其子集（字段更少一些）
-    + 字段在此基础上可能有删减
+    + meta.highlight (object, nullable) - 只有在请求中有filter[q]参数时才会有. 高亮对象, 结构较之前发生变化
+    + meta.highlight.content (string) - 根据原数组推荐的一条高亮内容
     
-+ 过滤
-    + filter[categories]=吉他,贝斯,鼓; 按类别过滤;
-    + filter[brand]=EV,Yamaha; 按品牌过滤;
-    + filter[forumId]=1; 按版块ID过滤;
-    + 其他未完成
++ 过滤参数
+    + filter[q] (string, nullable) - 按关键词过滤
+    + filter[category] (string, nullable) - 按类别过滤
+    + filter[brand] (string, nullable) - 按品牌过滤, e.g : EV,Yamaha 
+    + filter[tag] (string, nullable) - 按标签过滤
+    + filter[from] (int, nullable) - 按来源过滤, 抓取的数据都有一个来源seedId
+    + filter[forum] (int, nullable) - 按版块过滤;
+    + filter[topicType] (int, nullable) - 主题类型过滤
+    + filter[postType] (int, nullable) - 内容类型过滤
+    + filter[channel] (int, nullable) - _暂未实现_ 按频道过滤
+
++ 排序参数
+    + sort=-images.distance.FFFFFF - 按颜色降序排序, [000000|0000FF|00FF00|00FFFF|FF0000|FF00FF|FFFF00|FFFFFF]
+        + alias : 暂无待定
+    + sort=-items.price - 按价格降序排序
+        + alias : 暂无待定
+    + sort=-created - 按主题创建时间降序排序
+    + sort=-modified - 按主题修改时间降序排序
+    
++ 聚合参数
+    + agg[size] (int, nullable) - 该参数控制返回聚合数的大小, 不写该参数返回所有聚合数据. 
+    + agg[sort] (string, nullable) - 聚合排序, 只能在[term|count]中选择, term按字母排序, count按统计数排序
+    + agg[image] (boolean, nullable) - 聚合的数据是否需要查找一个代表性图片. 缺省false.
+    + agg[group] (boolean, nullable) - 是否按首字母分组显示.
+    + aggregation[{name}] (string, nullable) - 如果有该请求参数, 其他聚合参数才有效, {name}为聚合的名称, 其值为聚合的字段 e.g aggregation[category]=categories.en.raw
     
 + 给定某个品牌, 按所有类别聚合
     + 待定
     
 + 给定某个品牌, 按一级类别聚合
+    + 待定
+    
++ 给定某个品牌与一级类别, 按二级类别聚合
+    + 待定
+
++ 按一级类别聚合
+    + 待定
+
++ 给定一级类别, 按二级类别聚合
+    + 待定
+
++ 给定二级类别, 按三级类别聚合
+    + 待定
+
++ 按品牌聚合, 显示所有品牌集合, 按count降序
     + 待定
 
 ### 搜索主题 [GET]
@@ -867,12 +905,47 @@ HOST: http://192.168.1.138/
                 "size": 1,
                 "numberOfElements": 1,
                 "last": false,
-                "totalPages": 1318,
+                "totalPages": 88800,
                 "sort": null,
                 "first": true,
-                "totalElements": 1318,
+                "totalElements": 88800,
                 "aggregations": {
-                    "image": "http://static.budee.com/yyren/image/202/51840.jpg",
+                    "price": {
+                        "buckets": [
+                            {
+                                "doc_count": 40744,
+                                "from": "-Infinity",
+                                "to": 100,
+                                "key": "*-100.0"
+                            },
+                            {
+                                "doc_count": 13366,
+                                "from": 100,
+                                "to": 200,
+                                "key": "100.0-200.0"
+                            }
+                        ]
+                    },
+                    "from": {
+                        "buckets": [
+                            {
+                                "doc_count": 26979,
+                                "from": {
+                                    "host": "http://www.sweetwater.com",
+                                    "source": "Sweetwater"
+                                },
+                                "key": "2"
+                            },
+                            {
+                                "doc_count": 61821,
+                                "from": {
+                                    "host": "https://www.thomann.de",
+                                    "source": "Thomann"
+                                },
+                                "key": "11"
+                            }
+                        ]
+                    },
                     "category": {
                         "buckets": [
                             {
@@ -881,6 +954,38 @@ HOST: http://192.168.1.138/
                                 "key": "吉他/贝斯"
                             }
                         ]
+                    },
+                    "brand": {
+                        "buckets": {
+                            "#": [
+                                {
+                                    "doc_count": 1,
+                                    "reviews": 0,
+                                    "top": true,
+                                    "rating": 0,
+                                    "logo": "http://static.budee.com/yyren/image/188/21/1424546.jpg",
+                                    "key": "1stClassRock"
+                                }
+                            ],
+                            "A": [
+                                {
+                                    "doc_count": 100,
+                                    "reviews": 320,
+                                    "top": true,
+                                    "rating": 0.9,
+                                    "logo": "http://static.budee.com/yyren/image/17.jpg",
+                                    "key": "A-Gift-Republic"
+                                },
+                                {
+                                    "doc_count": 2,
+                                    "reviews": 0,
+                                    "top": true,
+                                    "rating": 0,
+                                    "logo": "http://static.budee.com/yyren/image/188/21/1424547.jpg",
+                                    "key": "AA Craaft"
+                                }
+                            ]
+                        }
                     }
                 },
                 "clusters": [
@@ -925,100 +1030,81 @@ HOST: http://192.168.1.138/
                 "self": "/topics/search?page[number]=1&page[size]=1",
                 "first": "/topics/search?page[number]=1&page[size]=1",
                 "next": "/topics/search?page[number]=2&page[size]=1",
-                "last": "/topics/search?page[number]=1318&page[size]=1"
+                "last": "/topics/search?page[number]=88800&page[size]=1"
             },
             "data": [
                 {
+                    "id": 31839,
                     "meta": {
-                        "_score": 1,
+                        "score": 1.282559,
                         "highlight": {
-                            "items.contents": [
-                                "RockcaseRC20809B柔光钢琴<spanclass='highlight'>吉他</span>"
-                            ]
+                            "content": "Ueberschall Urbanic <span class='highlight'>Guitars</span> (ESD); Elastik player instrument; <span class='highlight'>guitar</span> library for Urban, RnB und Hip Hop music consists of 125 themes with 780 loops and samples between 60 and 130 BPM; an acoustical and two different electrical <span class='highlight'>guitars</span> play various melodies, riffs and licks; Ueberschall Elastik Player with loopeye functions offers timestretch and pitchshift in best quality; browser features multiple filter search and tagging; prelisten in sync; sequence mode with loads of edtiting features per slice; realtime sync to host; multiple outs; supported formats: standalone/VST2/AU/AAXnative/RTAS; system requirements: Win7 (64-Bit) min., Mac OSX 10.9 min., 1.8 GB HD, internet connection"
                         }
                     },
-                    "id": 49226,
-                    "creator": 0,
-                    "modifier": 0,
-                    "created": "2016-10-18 07:10:16",
-                    "modified": "2017-04-05 13:55:33",
                     "forumId": 1,
-                    "topicType": 0,
-                    "reviews": 0,
-                    "replies": 0,
-                    "thumbsUp": 0,
-                    "thumbsDown": 0,
-                    "thumbs": 0,
-                    "locked": 0,
-                    "moderated": 0,
                     "forumName": "产品",
+                    "topicType": 0,
                     "topicTypeValue": "正常",
                     "imageSingle": false,
                     "imageRotation": true,
-                    "userLike": true,
+                    "creator": 0,
+                    "created": "2016-10-17 21:08:35",
+                    "modified": "2017-04-05 12:33:54",
+                    "userLike": false,
+                    "reviews": 22,
+                    "replies": 21,
+                    "thumbsUp": 44,
+                    "thumbsDown": 56,
+                    "thumbs": -12,
+                    "brand": {
+                        "reviews": 0,
+                        "name": "Tractel",
+                        "rating": 0,
+                        "logo": null
+                    },
                     "rotations": [
                         {
-                            "mime": "image/jpeg",
-                            "filename": "http://static.budee.com/yyren/image/79/18/1199986.jpg"
+                            "filename": "http://static.budee.com/yyren/image/88/19/1267942.jpg"
                         },
                         {
-                            "mime": "image/jpeg",
-                            "filename": "http://static.budee.com/yyren/image/79/18/1199987.jpg"
+                            "filename": "http://static.budee.com/yyren/image/88/19/1267943.jpg"
                         }
                     ],
                     "images": [
                         {
-                            "mime": "image/jpeg",
-                            "filename": "http://static.budee.com/yyren/image/176/4/307350.jpg"
+                            "filename": "http://static.budee.com/yyren/image/15/3/200569.jpg"
                         },
                         {
-                            "mime": "image/jpeg",
-                            "filename": "http://static.budee.com/yyren/image/176/4/307351.jpg"
+                            "filename": "http://static.budee.com/yyren/image/15/3/200570.jpg"
                         }
                     ],
-                    "audios": [],
-                    "videos": [],
                     "from": {
-                        "id": 49226,
                         "seedId": 11,
-                        "origin": "https://www.thomann.de/gb/rode_nt2a_studio_solution_set.htm",
-                        "rating": 0.94,
-                        "reviews": 0,
-                        "host": "https://www.thomann.de/gb/cat_brands.html",
+                        "origin": "https://www.thomann.de/gb/jbl_c26c.htm",
+                        "rating": 0.95,
+                        "host": "https://www.thomann.de",
                         "source": "Thomann"
                     },
                     "post": {
-                        "id": 49226,
-                        "enabled": 1,
-                        "creator": 0,
-                        "modifier": 0,
-                        "created": "2016-10-18 07:10:16",
-                        "modified": "2017-04-05 13:55:33",
-                        "parentId": 0,
+                        "postType": 1,
                         "postTypeValue": "爬取",
-                        "topicId": 49226,
-                        "priority": 0,
-                        "title": "NT2-A Studio Solution Set",
+                        "title": "C 26 C",
                         "description": "",
-                        "content": "",
                         "categories": [
-                            "Microphones",
-                            "Large-diaphragm Mics"
+                            "PA Equipment",
+                            "Loudspeakers",
+                            "Speakers for Installation",
+                            "Ceiling Speakers"
                         ],
                         "tags": [
-                            "256707"
-                        ],
-                        "features": [
-                            {
-                                "_name": "Media",
-                                "_value": "<div></div>"
-                            },
-                            {
-                                "_name": "Category",
-                                "_value": "<a href=\"https://www.thomann.de/gb/large_diaphragm_mics.html\">Large-diaphragm Microphones</a>"
-                            }
+                            "131786"
                         ]
-                    }
+                    },
+                    "product": {
+                        "price": 358,
+                        "priceUnit": "EUR"
+                    },
+                    "similarities": []
                 }
             ]
         }
