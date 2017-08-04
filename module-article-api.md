@@ -5,6 +5,7 @@ HOST: http://192.168.1.138/
 
 + 2017年8月4日
     + 增加产品比较API, 用来替换旧API
+    + 增加搜索API按价按区间过滤条件描述
 
 + 2017年8月3日
     + 搜索引擎API更新
@@ -862,6 +863,7 @@ HOST: http://192.168.1.138/
     + filter[forum] (int, nullable) - 按版块过滤;
     + filter[topicType] (int, nullable) - 主题类型过滤
     + filter[postType] (int, nullable) - 内容类型过滤
+    + filter[items.price:range] - 按价格范围过滤, e.g=[20,30]; =[20,\*]; 两个数值不能同时为\*, 不同于数据库过滤, 搜索API由于部分实现问题, 必须使用闭区间过滤, 内部实现为(20,30] 
     + filter[channel] (int, nullable) - _暂未实现_ 按频道过滤
 
 + 排序参数
