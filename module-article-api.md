@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月4日
+    + 增加产品比较API, 用来替换旧API
+
 + 2017年8月3日
     + 搜索引擎API更新
     + 原聚合API结构全部更新, 前查看搜索API
@@ -1130,4 +1133,334 @@ HOST: http://192.168.1.138/
 + Response 200 (application/json)
 
         {
+        }
+        
+## (GET) 产品比较集合 [/topics/compare?art[]={ids}]
+
++ Description
+    + 
+    
++ Meta 
+    + features (array) - 原产品参数比较数组, 结构不变
+    + prices (array) - 原产品价格比较数组, 结构不变
+    
++ Data
+    + 结构同主题详情
+
++ Parameters
+    + ids (long) - 主题ID e.g: 123,125,126
+    
+### 搜索主题 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "totalPages": 1,
+                "totalElements": 2,
+                "size": 2,
+                "number": 1,
+                "numberOfElements": 2,
+                "first": true,
+                "last": true,
+                "sort": null,
+                "features": [
+                    {
+                        "columns": [
+                            "Analog Inputs",
+                            "2 x TS",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Analog Outputs",
+                            "6 x TS, 1 x TRS (Headphones)",
+                            "-"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Arpeggiator",
+                            "Yes",
+                            "Yes"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Audio Inputs",
+                            "-",
+                            "2 x TS"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Audio Outputs",
+                            "-",
+                            "6 x TS, 1 x TRS (Headphones)"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Depth",
+                            "7.4\"",
+                            "14.6\""
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Digital Inputs",
+                            "1 x S/PDIF",
+                            "1 x S/PDIF"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Digital Outputs",
+                            "1 x S/PDIF",
+                            "1 x S/PDIF"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Effects Types",
+                            "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod",
+                            "Reverb, Chorus, Delay, Phaser, EQ, Ring Mod"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Height",
+                            "3.2\"",
+                            "4.6\""
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "MIDI I/O",
+                            "In/Out/Thru/USB",
+                            "In/Out/Thru/USB"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Manufacturer Part Number",
+                            "Virus TI2 Desk",
+                            "Virus TI2 Key"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Number of Effects",
+                            "192",
+                            "192"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Number of Keys",
+                            "-",
+                            "61"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Number of Presets",
+                            "512 RAM Patches, 3328 ROM Sounds",
+                            "512 RAM Patches, 3328 ROM Sounds"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Other Controllers",
+                            "-",
+                            "Pitchbend, Mod Wheel"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Pedal Inputs",
+                            "-",
+                            "1 x Hold, 1 x Control"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Polyphony",
+                            "20 Notes-90 Notes (Depending On the Patch)",
+                            "20 Notes-90 Notes (Depending On the Patch)"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Power Supply",
+                            "Power Supply Included",
+                            "Included"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Sound Engine Type(s)",
+                            "Analog Modeling",
+                            "Analog Modeling"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Type of Keys",
+                            "-",
+                            "Semi-weighted"
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "USB",
+                            "1 x Type B",
+                            "1 x Type B"
+                        ],
+                        "collapsible": true
+                    },
+                    {
+                        "columns": [
+                            "Weight",
+                            "7.4 lbs.",
+                            "30.6 lbs."
+                        ],
+                        "collapsible": false
+                    },
+                    {
+                        "columns": [
+                            "Width",
+                            "18.5\"",
+                            "39.2\""
+                        ],
+                        "collapsible": false
+                    }
+                ],
+                "prices": [
+                    {
+                        "columns": [
+                            "Sweetwater",
+                            "USD 2185.00",
+                            "USD 2915.00"
+                        ],
+                        "collapsible": false
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "forumId": 1,
+                    "forumName": "产品",
+                    "topicType": 0,
+                    "topicTypeValue": "正常",
+                    "imageSingle": true,
+                    "imageRotation": false,
+                    "creator": 0,
+                    "created": "2016-10-12 09:55:37",
+                    "modified": "2017-04-05 22:46:40",
+                    "userLike": false,
+                    "reviews": 22,
+                    "replies": 21,
+                    "thumbsUp": 44,
+                    "thumbsDown": 56,
+                    "thumbs": -12,
+                    "brand": null,
+                    "rotations": [],
+                    "images": [
+                        {
+                            "filename": "http://static.budee.com/yyren/image/111/24/1601492.jpg"
+                        }
+                    ],
+                    "from": {
+                        "seedId": 2,
+                        "origin": "http://www.sweetwater.com/store/detail/VirusTI2Desk",
+                        "rating": 0.9,
+                        "host": "http://www.sweetwater.com",
+                        "source": "Sweetwater"
+                    },
+                    "post": {
+                        "postType": 1,
+                        "postTypeValue": "爬取",
+                        "title": "Virus TI2 Desktop",
+                        "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                        "categories": [
+                            "Keyboards & MIDI",
+                            "Synths / Modules"
+                        ],
+                        "tags": [
+                            "VirusTI2Desk"
+                        ]
+                    },
+                    "similarities": [],
+                    "id": 1
+                },
+                {
+                    "forumId": 1,
+                    "forumName": "产品",
+                    "topicType": 0,
+                    "topicTypeValue": "正常",
+                    "imageSingle": true,
+                    "imageRotation": false,
+                    "creator": 0,
+                    "created": "2016-10-12 09:55:38",
+                    "modified": "2017-04-05 22:46:38",
+                    "userLike": false,
+                    "reviews": 22,
+                    "replies": 21,
+                    "thumbsUp": 44,
+                    "thumbsDown": 56,
+                    "thumbs": -12,
+                    "brand": null,
+                    "rotations": [],
+                    "images": [
+                        {
+                            "filename": "http://static.budee.com/yyren/image/111/24/1601490.jpg"
+                        }
+                    ],
+                    "from": {
+                        "seedId": 2,
+                        "origin": "http://www.sweetwater.com/store/detail/VirusTI2Key",
+                        "rating": 1,
+                        "host": "http://www.sweetwater.com",
+                        "source": "Sweetwater"
+                    },
+                    "post": {
+                        "postType": 1,
+                        "postTypeValue": "爬取",
+                        "title": "Virus TI2 Keyboard",
+                        "description": "61-key Analog Modeling Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                        "categories": [
+                            "Keyboards & MIDI",
+                            "Synths / Modules"
+                        ],
+                        "tags": [
+                            "VirusTI2Key"
+                        ]
+                    },
+                    "similarities": [],
+                    "id": 2
+                }
+            ]
         }
