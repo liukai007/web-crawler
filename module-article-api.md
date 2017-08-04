@@ -9,7 +9,7 @@ HOST: http://192.168.1.138/
 + 2017年8月3日
     + 搜索引擎API更新
     + 原聚合API结构全部更新, 前查看搜索API
-    + 相加相关主题API
+    + 相加相关主题API, 用来替换旧的more like this API
 
 + 2017年7月26日
     + 增加搜索/聚合API /topics/search (未完成)
