@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月10日
+    + /links API 增加了一个新的字段 blank ,用来表明是否在新窗口打开
+    + /links API 增加了广告类型
+
 + 2017年8月4日
     + 增加产品比较API, 用来替换旧API
     + 增加搜索API按价按区间过滤条件描述
@@ -540,6 +544,7 @@ HOST: http://192.168.1.138/
 
 + Description
     + 各种链接
+    + typeId 1,2,3不变, 还是之前的类型, 增加了友情链接与广告类型
 
 + Data
     + image (string) - image url
@@ -548,7 +553,7 @@ HOST: http://192.168.1.138/
     + blank (int) - 1:新窗口, 0:当前窗口
     
 + Parameters
-    + typeId (int) - 1:PC导航, 2:手机???, 3:手机导航 4:友情链接
+    + typeId (int) - 1:PC导航?, 2:手机?, 3:手机导航?, 4:友情链接, 5:广告
 
 ### 查询评论集合 [GET]
 
@@ -581,6 +586,7 @@ HOST: http://192.168.1.138/
                     "sort": 1,
                     "title": "概述",
                     "type": 1,
+                    "blank": 1,
                     "enabled": 1,
                     "parentId": 0,
                     "modified": 1480909654000,
@@ -596,6 +602,7 @@ HOST: http://192.168.1.138/
                     "sort": 2,
                     "title": "品牌",
                     "type": 1,
+                    "blank": 0,
                     "enabled": 1,
                     "parentId": 0,
                     "modified": 1480909654000,
