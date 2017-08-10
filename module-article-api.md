@@ -3,6 +3,12 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月11日
+    + 主题详情与搜索API（改动）
+        + 增加postType属性, 对应于postTypeValue的整型枚举值;
+        + 增加similarities, 相似主题列表;
+        + 修改属性 userLike -> liked, 由boolean -> int类型: -1:踩, 0:缺省, 1:赞
+
 + 2017年8月10日
     + /links API 增加了一个新的字段 blank ,用来表明是否在新窗口打开
     + /links API 增加了广告类型
@@ -668,7 +674,7 @@ HOST: http://192.168.1.138/
     + moderated (int) - _保留字段_, 是否审核此主题, 0:否, 1:是
     + imageSingle (boolean) - 是否是单图
     + imageRotation (boolean) - 是否有旋转图
-    + userLike (boolean) - 当前登录用户是否喜欢过
+    + liked (int) - -1:踩, 0:无, 1:赞
     + rotations (array) - 旋转图集合
     + images (array) - 图片集合
     + audios (array) - 音频集合
@@ -693,11 +699,13 @@ HOST: http://192.168.1.138/
     + product.brandInfo.logo (string) - 品牌LOGO
     + product.brandInfo.rating (int) - 品牌评分 区间[0, 1]
     + product.brandInfo.reviews (int) - 品牌浏览数 区间[0, 1]
+    + product.brandInfo.top (boolean) - true: 品牌有详情, false: 无详情
     + product.histories (array) - [MUST]Authenticated, 品牌历史价格
     + product.histories.price (decimal) - 价格
     + product.histories.effectiveDate (date) - 生效时间
     + post (object) - 内容文本数据; 标题, 摘要, 参数, 内容等.
         + 优先级:精翻|原创 > 机翻 > 爬取
+    + post.postType (int) - 1:爬取, 2:机翻, 3:精翻, 4:原创
     + post.postTypeValue (string) - 类型:精翻, 原创, 机翻, 爬取
     + post.priority (int) - 机器翻译默认为50, 按翻译质量降序排序
     + post.title (string) - 主题标题
@@ -708,9 +716,8 @@ HOST: http://192.168.1.138/
     + post.features (array) - 特性集合
     + post.parent (object) - post的parent节点
         + 如果post是[机翻|精翻], 那么post.parent指向其原文节点
-    + items (object, 此结构待定???) - 排重后的相同主题数据;
+    + similarities (array) - 排重后的相同主题数据;
         + 如果该topic是clustering数据, 会返回相同数据来源不同的topics
-        + 如果存在这个对象, 那么post对象里存放的是翻译合并的数
 
 + Parameters
     + id (long) - topic id
@@ -739,7 +746,7 @@ HOST: http://192.168.1.138/
                 "topicTypeValue": "正常",
                 "imageSingle": false,
                 "imageRotation": true,
-                "userLike": true,
+                "liked": 1,
                 "rotations": [
                     {
                         "mime": "image/jpeg",
@@ -1072,7 +1079,7 @@ HOST: http://192.168.1.138/
                     "creator": 0,
                     "created": "2016-10-17 21:08:35",
                     "modified": "2017-04-05 12:33:54",
-                    "userLike": false,
+                    "liked": 1,
                     "reviews": 22,
                     "replies": 21,
                     "thumbsUp": 44,
@@ -1161,7 +1168,7 @@ HOST: http://192.168.1.138/
 + Parameters
     + ids (long) - 主题ID e.g: 123,125,126
     
-### 搜索主题 [GET]
+### 产品比较集合 [GET]
 
 + Response 200 (application/json)
 
@@ -1391,7 +1398,7 @@ HOST: http://192.168.1.138/
                     "creator": 0,
                     "created": "2016-10-12 09:55:37",
                     "modified": "2017-04-05 22:46:40",
-                    "userLike": false,
+                    "liked": 1,
                     "reviews": 22,
                     "replies": 21,
                     "thumbsUp": 44,
@@ -1437,7 +1444,7 @@ HOST: http://192.168.1.138/
                     "creator": 0,
                     "created": "2016-10-12 09:55:38",
                     "modified": "2017-04-05 22:46:38",
-                    "userLike": false,
+                    "liked": 0,
                     "reviews": 22,
                     "replies": 21,
                     "thumbsUp": 44,
