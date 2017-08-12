@@ -3,6 +3,13 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月12日
+    + 聚合统计相关API, 参数进行了简化, 优先使用指定语言, 否则服务器选择一个默认语言;
+        + [OPTIONAL] catetories.en.raw 可简化为 catetories.raw
+        + [OPTIONAL] level\_0.en.raw 可简化为 level\_0.raw
+    + 增加一个品牌专属的详情API, 原可[OPTIONAL]选方案为/topics/{id}
+        + /brands/{name}
+
 + 2017年8月11日
     + 主题详情与搜索API（改动）
         + 增加postType属性, 对应于postTypeValue的整型枚举值;
@@ -1481,4 +1488,19 @@ HOST: http://192.168.1.138/
                     "id": 2
                 }
             ]
+        }
+        
+## (GET) 查询品牌详情 [/brands/{name}]
+
++ Description
+    + 结构同主题详情API
+
++ Parameters
+    + name (string) - 品牌名称, 区分大小写
+    
+### 搜索主题 [GET]
+
++ Response 200 (application/json)
+
+        {
         }
