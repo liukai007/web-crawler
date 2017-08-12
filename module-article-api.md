@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月12日 (BUG FIXED)
+    + [FIXED] 修改建立索引时查询附件的错误, 正文中的图片附件不参与索引;
+    + [FIXED] 搜索API与MLT API增加过滤用户隐藏的功能
+
 + 2017年8月12日
     + 聚合统计相关API, 参数进行了简化, 优先使用指定语言, 否则服务器选择一个默认语言;
         + [OPTIONAL] catetories.en.raw 可简化为 catetories.raw
