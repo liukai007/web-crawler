@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月15日
+    + 修改/channels API, 详细信息请看描述
+    + 增加/channels/{id} API
+    + [FIXED] 修复watch不能正常计数的BUG
+
 + 2017年8月12日 (BUG FIXED)
     + [FIXED] 修改建立索引时查询附件的错误, 正文中的图片附件不参与索引;
     + [FIXED] 搜索API与MLT API增加过滤用户隐藏的功能
@@ -501,9 +506,12 @@ HOST: http://192.168.1.138/
 ## (GET)频道集合 [/channels]
 
 + Description
+    + 删除tag字段, 删除user_id字段;
+    + 增加cancellable字段, 增加channelImage字段;
     + 不加过滤条件查询所有频道集合
-    + filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)
-    + filter[UsersChannelsWatch.userId]={userId}&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,watched&include=UsersChannelsWatch : 查询用户订阅的频道
+    + ~~filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)~~
+    + filter[UsersChannelsWatch.userId]={userId}&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder
+        + 查询用户订阅的频道, 并按displayOrder字段排序;
         + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
         + 只要参数中有该过滤条件, 如果不是当前登录用户ID, 抛出未认证异常;
         + 只要参数中有该过滤条件, 后端需要进行联表查询;
@@ -513,12 +521,14 @@ HOST: http://192.168.1.138/
     + 排序:sort=-watched, 按关注热度降序排序;
 
 + Data
-    + channelType (int) - 频道类型, 1:系统频道, 2:订阅频道, 3:用户频道
+    + channelType (int) - 频道类型, 1:版面频道, 2:标签频道, 3:用户频道, 4:来源频道
+    + channelTypeValue (string) - 与channelType对应的枚举值
     + channelName (string) - 频道名称, 用户频道的话就是用户昵称, 订阅频道就是标签名, 系统频道就是固定的那几个类别名称;
-    + tag (string, nullable) - 前端用不到;
+    + channelImage (string, nullable) - 频道图片
     + description (string, nullable) - 前端用不到;
     + watched (int) - 订阅数/关注数
-    + subscribed (int, nullable) - 0否, 1是 : 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段; 
+    + cancellable (int) - 0否, 1是 : 是否可取消订阅/关注;
+    + subscribed (boolean, nullable) - false否, true是 : 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段; 
     + displayOrder (int) - 排序, 用户登录时增加该显示字段
 
 ### 查询频道集合 [GET]
@@ -527,35 +537,66 @@ HOST: http://192.168.1.138/
 
         {
             "meta": {
+                "totalPages": 1,
+                "totalElements": 1,
+                "size": 10,
                 "number": 1,
-                "size": 2,
-                "numberOfElements": 2,
-                "last": false,
-                "totalPages": 2,
-                "sort": null,
+                "numberOfElements": 1,
                 "first": true,
-                "totalElements": 4
+                "last": true,
+                "sort": [
+                    {
+                        "direction": "ASC",
+                        "property": "users_channels_watch.display_order",
+                        "ignoreCase": false,
+                        "nullHandling": "NATIVE",
+                        "ascending": true,
+                        "descending": false
+                    }
+                ]
             },
             "links": {
-                "self": "/api/channels?page[number]=1&page[size]=2",
-                "first": "/api/channels?page[number]=1&page[size]=2",
-                "next": "/api/channels?page[number]=2&page[size]=2",
-                "last": "/api/channels?page[number]=2&page[size]=2"
+                "self": "/channels?filter[UsersChannelsWatch.userId]=11&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder&page[number]=1&page[size]=10",
+                "first": "/channels?filter[UsersChannelsWatch.userId]=11&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder&page[number]=1&page[size]=10",
+                "last": "/channels?filter[UsersChannelsWatch.userId]=11&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder&page[number]=1&page[size]=10"
             },
             "data": [
                 {
-                    "id": "1",
-                    "userId": "22",
-                    "channelType": 2,
-                    "channelName": "新闻",
-                    "tag": "tag",
-                    "description": "description",
-                    "watched": 11889,
-                    "subscribed": 1,
-                    "displayOrder": 1
+                    "id": 2,
+                    "channelType": 1,
+                    "channelTypeValue": "版面频道",
+                    "channelName": "产品",
+                    "channelImage": "http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/idgxqp5n_df00d1d1.jpg&amp;type=thumbnail_300x300",
+                    "description": "频道描述",
+                    "watched": 7,
+                    "cancellable": 0,
+                    "displayOrder": 272,
+                    "subscribed": true
                 }
             ]
         }
+        
+## (GET)频道详细信息 [/channels/{id}]
+
+### 查询频道详细 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": 2,
+                "channelType": 1,
+                "channelTypeValue": "版面频道",
+                "channelName": "产品",
+                "channelImage": "http://i1.go2yd.com/image.php?url=http://s.go2yd.com/b/idgxqp5n_df00d1d1.jpg&amp;type=thumbnail_300x300",
+                "description": "频道描述",
+                "watched": 7,
+                "cancellable": 0,
+                "displayOrder": 272,
+                "subscribed": true
+            }
+        }
+
         
 ## (GET)链接集合 [/links?filter[type]={typeId}]
 
