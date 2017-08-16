@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月16日
+    + 增加 /channels/users/{userId} API, 根据用户ID获取频道信息
+    + /channels API 增加根据订阅类型过滤并查看是否订阅功能
+
 + 2017年8月15日
     + 修改/channels API, 详细信息请看描述
     + 增加/channels/{id} API
@@ -519,6 +523,10 @@ HOST: http://192.168.1.138/
     + 后端强制添加enabled=1过滤条件
     + 排序:sort=users\_channels\_watch.displayOrder, 按用户设置的顺序排序(需要配合用户过滤条件使用);
     + 排序:sort=-watched, 按关注热度降序排序;
+    + filter[targetId]=1,2,3,4,5,10&filter[channelType]=4
+        + 查看当前用户在多个来源频道中是否已经订阅
+        + targetId为seedId, 即网站种子来源的ID
+        + channelType为在来源频道
 
 + Data
     + channelType (int) - 频道类型, 1:版面频道, 2:标签频道, 3:用户频道, 4:来源频道
@@ -576,7 +584,14 @@ HOST: http://192.168.1.138/
             ]
         }
         
-## (GET)频道详细信息 [/channels/{id}]
+## (GET)频道详细信息 [/channels/{channelId}]
+
++ Description 
+    + 获得用户频道 /channels/users/{userId}
+        + 返回结构同直接获取频道API
+    
++ Parameters
+    + channelId (long) - 频道ID
 
 ### 查询频道详细 [GET]
 
