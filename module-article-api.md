@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月18日
+    + 搜索API /topics/search 增加按频道过滤 e.g /topics/search?filter[channel]={channelId}
+        + filter[channel] | filter[channelId]
+
 + 2017年8月16日
     + 增加 /channels/users/{userId} API, 根据用户ID获取频道信息
     + /channels API 增加根据订阅类型过滤并查看是否订阅功能
@@ -947,7 +951,7 @@ HOST: http://192.168.1.138/
     + filter[postType] (int, nullable) - 内容类型过滤
     + filter[items.price:range] - 按价格范围过滤, e.g=[20,30]; =[20,\*]; 两个数值不能同时为\*, 不同于数据库过滤, 搜索API由于部分实现问题, 必须使用闭区间过滤, 内部实现为(20,30] 
     + filter[created:gt] - 查找大于指定时间的新数据, 时间格式yyyy-MM-dd HH:mm:ss
-    + filter[channel] (int, nullable) - _暂未实现_ 按频道过滤
+    + filter[channel] (int, nullable) - 按频道过滤, 过滤参数可以是 channel 或 channelId
 
 + 排序参数
     + sort=-images.distance.FFFFFF - 按颜色降序排序, [000000|0000FF|00FF00|00FFFF|FF0000|FF00FF|FFFF00|FFFFFF]
