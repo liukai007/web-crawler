@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月19日
+    + 增加用户浏览历史API  /topics/histories
+
 + 2017年8月18日
     + 搜索API /topics/search 增加按频道过滤 e.g /topics/search?filter[channel]={channelId}
         + filter[channel] | filter[channelId]
@@ -1563,6 +1566,24 @@ HOST: http://192.168.1.138/
     + name (string) - 品牌名称, 区分大小写
     
 ### 搜索主题 [GET]
+
++ Response 200 (application/json)
+
+        {
+        }
+        
+## (GET) 查询浏览主题历史记录列表 [/topics/histories?page[size]=10&page[number]=1]
+
++ Description
+    + 如果登陆使用登陆用户信息
+    + 如果没有登录, 使用header
+    + 结构同主题搜索API
+    
++ Parameters
+    + page[size] (int) - 默认10
+    + page[number]=1 (int) - 默认1
+    
+### 查询浏览主题历史记录 [GET]
 
 + Response 200 (application/json)
 
