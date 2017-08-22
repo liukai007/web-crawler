@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月22日
+    + 增加搜索热词API /topics/keywords
+        + 算法有待调整
+
 + 2017年8月19日
     + 增加用户浏览历史API  /topics/histories
 
@@ -1588,4 +1592,46 @@ HOST: http://192.168.1.138/
 + Response 200 (application/json)
 
         {
+        }
+        
+## (GET) 查询主题搜索热词列表 [/topics/keywords?page[size]=10]
+
++ Description
+    + 统计某一个时间段内的搜索指数高的词组或短语等
+
++ Data
+    + rank (int) - 排名
+    + keyword (string) - 热词
+    + value (int) - _保留字段_ 搜索指数
+    
++ Parameters
+    + page[size]=10 (int) - 默认10
+    
+### 查询主题搜索热词列表 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "rank": 1,
+                    "keyword": "guitars",
+                    "value": 0
+                },
+                {
+                    "rank": 2,
+                    "keyword": "bass",
+                    "value": 0
+                },
+                {
+                    "rank": 3,
+                    "keyword": "yamaha",
+                    "value": 0
+                },
+                {
+                    "rank": 4,
+                    "keyword": "ev",
+                    "value": 0
+                }
+            ]
         }
