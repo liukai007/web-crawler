@@ -3,12 +3,13 @@ HOST: http://192.168.1.138/
 
 # topics
 
-+ 2017年8月22日
++ 2017年8月23日
     + 增加搜索热词API /topics/keywords
         + 算法有待调整
-    + /topics/search 搜索API增加新的排序参数 (数据目前为测试数据)
+    + /topics/search 搜索API增加新的排序参数 
         + sort=-hot, 按热度降序排序
         + sort=-new, 按新品降序排序
+        + sort=-best, 按精选降序排序
 
 + 2017年8月19日
     + 增加用户浏览历史API  /topics/histories
@@ -972,6 +973,7 @@ HOST: http://192.168.1.138/
     + sort=-modified - 按主题修改时间降序排序
     + sort=-hot - 按热度降序排序, 当sort为hot时, 只有filter[forumId]参数起作用
     + sort=-new - 按新品降序排序, 当sort为new时, 只有filter[forumId]参数起作用
+    + sort=-best - 按精选降序排序, 当sort为best时, 只有filter[forumId]参数起作用
     
 + 聚合参数
     + agg[size] (int, nullable) - 该参数控制返回聚合数的大小, 不写该参数返回所有聚合数据. 
