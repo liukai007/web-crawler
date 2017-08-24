@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年8月24日
+    + 搜索热词API /topics/keywords 返回内容增加字段
+        + value : 现在有值了
+        + score : 归一化
+
 + 2017年8月23日
     + 增加搜索热词API /topics/keywords
         + 算法有待调整
@@ -1604,12 +1609,13 @@ HOST: http://192.168.1.138/
 ## (GET) 查询主题搜索热词列表 [/topics/keywords?page[size]=10]
 
 + Description
-    + 统计某一个时间段内的搜索指数高的词组或短语等
+    + 统计某一个时间段内（当前时间往前推 7 * 24 小时）的搜索指数高的词组或短语等
 
 + Data
     + rank (int) - 排名
-    + keyword (string) - 热词
-    + value (int) - _保留字段_ 搜索指数
+    + keyword (string) - 热词/词组/短语等等
+    + value (int) - 对关键词在过去一段时间内搜索频度的度量, 会随着时间慢慢降低;
+    + score (double) - 归一化(normalization)处理后的值, 取值范围[0, 1], 会随着时间慢慢降低;
     
 + Parameters
     + page[size]=10 (int) - 默认10
@@ -1623,22 +1629,32 @@ HOST: http://192.168.1.138/
                 {
                     "rank": 1,
                     "keyword": "guitars",
-                    "value": 0
+                    "value": 337,
+                    "score": 1
                 },
                 {
                     "rank": 2,
-                    "keyword": "bass",
-                    "value": 0
+                    "keyword": "Wagner",
+                    "value": 322,
+                    "score": 0.9549665333484131
                 },
                 {
                     "rank": 3,
-                    "keyword": "yamaha",
-                    "value": 0
+                    "keyword": "Yamaha",
+                    "value": 318,
+                    "score": 0.9419774284314028
                 },
                 {
                     "rank": 4,
-                    "keyword": "ev",
-                    "value": 0
+                    "keyword": "EV",
+                    "value": 317,
+                    "score": 0.9404728856718862
+                },
+                {
+                    "rank": 5,
+                    "keyword": "bass",
+                    "value": 258,
+                    "score": 0.7664617198397439
                 }
             ]
         }
