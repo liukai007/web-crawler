@@ -748,7 +748,7 @@ HOST: http://192.168.1.138/
     + forumId = [3|4], 有document数据;
 
 + Data
-    + forumId (long) - 版块ID, 1:产品, 2:品牌, 3:新闻, 4:评测. @see forumName
+    + forumId (long) - 版块ID, 1:产品, 2:品牌, 3:新闻, 4:评测, 5:视频. @see forumName
     + forumName (string) - 版块名称, @see forumId
     + topicType (int) - 主题类型, 0:正常, 1:置顶, 2:公告. @see topicTypeValue
     + topicTypeValue (String) - 主题类型值, @see topicType
