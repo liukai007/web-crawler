@@ -10,6 +10,8 @@ HOST: http://192.168.1.138/
     + 查询相关主题API topics/1/relates 调整
         + 增加过滤条件 ?filter[forumId]=1,3,4
         + 增加过滤条件 ?filter[tag]=ACC-TI2POLOAR
+    + 查询相关主题API topics/1/relates 
+        + 增加了分页参数 page[number] 
 
 + 2017年8月23日
     + 增加搜索热词API /topics/keywords
