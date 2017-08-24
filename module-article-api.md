@@ -8,7 +8,8 @@ HOST: http://192.168.1.138/
         + value : 现在有值了
         + score : 归一化
     + 查询相关主题API topics/1/relates 调整
-        + 增加过滤条件?filter[forumId]=1,3,4
+        + 增加过滤条件 ?filter[forumId]=1,3,4
+        + 增加过滤条件 ?filter[tag]=ACC-TI2POLOAR
 
 + 2017年8月23日
     + 增加搜索热词API /topics/keywords
@@ -1230,14 +1231,15 @@ HOST: http://192.168.1.138/
             ]
         }
         
-## (GET) 查询与特定主题相关的数据集合 [/topics/{id}/relates?filter[forumId]={forumId}]
+## (GET) 查询与特定主题相关的数据集合 [/topics/{id}/relates?filter[forumId]={forumId}&filter[tag]={tag}]
 
 + Description
     + 结构同搜索API
 
 + Parameters
     + id (long) - 主题ID
-    + forumId (long) - forum ID, 多个id使用逗号分隔
+    + forumId (long, nullable) - forum ID, 多个id使用逗号分隔
+    + tag (string, nullable) - 按标签/型号/关键词过滤, 多个tag使用逗号分隔
     
 ### 搜索主题 [GET]
 
