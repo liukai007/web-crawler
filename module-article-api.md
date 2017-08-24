@@ -7,6 +7,8 @@ HOST: http://192.168.1.138/
     + 搜索热词API /topics/keywords 返回内容增加字段
         + value : 现在有值了
         + score : 归一化
+    + 查询相关主题API topics/1/relates 调整
+        + 增加过滤条件?filter[forumId]=1,3,4
 
 + 2017年8月23日
     + 增加搜索热词API /topics/keywords
@@ -1228,13 +1230,14 @@ HOST: http://192.168.1.138/
             ]
         }
         
-## (GET) 查询与特定主题相关的数据集合 [/topics/{id}/relates]
+## (GET) 查询与特定主题相关的数据集合 [/topics/{id}/relates?filter[forumId]={forumId}]
 
 + Description
     + 结构同搜索API
 
 + Parameters
     + id (long) - 主题ID
+    + forumId (long) - forum ID, 多个id使用逗号分隔
     
 ### 搜索主题 [GET]
 
