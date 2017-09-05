@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月5日
+    + 部分API增加新的返回字段: favorite 是否收藏
+        + 搜索主题列表API
+        + 查看详细主题API
+
 + 2017年8月24日
     + 搜索热词API /topics/keywords 返回内容增加字段
         + value : 现在有值了
@@ -767,6 +772,7 @@ HOST: http://192.168.1.138/
     + imageSingle (boolean) - 是否是单图
     + imageRotation (boolean) - 是否有旋转图
     + liked (int) - -1:踩, 0:无, 1:赞
+    + favorite (int) - 0:否, 1:已加入收藏
     + rotations (array) - 旋转图集合
     + images (array) - 图片集合
     + audios (array) - 音频集合
@@ -839,6 +845,7 @@ HOST: http://192.168.1.138/
                 "imageSingle": false,
                 "imageRotation": true,
                 "liked": 1,
+                "favorite": 1,
                 "rotations": [
                     {
                         "mime": "image/jpeg",
@@ -1175,6 +1182,7 @@ HOST: http://192.168.1.138/
                     "created": "2016-10-17 21:08:35",
                     "modified": "2017-04-05 12:33:54",
                     "liked": 1,
+                    "favorite": 1,
                     "reviews": 22,
                     "replies": 21,
                     "thumbsUp": 44,
@@ -1496,6 +1504,7 @@ HOST: http://192.168.1.138/
                     "created": "2016-10-12 09:55:37",
                     "modified": "2017-04-05 22:46:40",
                     "liked": 1,
+                    "favorite": 1,
                     "reviews": 22,
                     "replies": 21,
                     "thumbsUp": 44,
