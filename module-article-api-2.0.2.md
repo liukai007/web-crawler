@@ -9,6 +9,7 @@ HOST: http://192.168.1.138/
     + 增加用户收藏主题API
     + 增加留言板API
     + 增加反馈信息API
+    + 增加获取举报选项的API
 
 文章主题模块2.0.2
 
@@ -139,6 +140,123 @@ HOST: http://192.168.1.138/
                     "detail": "错误信息描述"
                 }
             ]
+        }
+        
+## (POST)用户与主题关联关系(举报) [/users/{userId}/relationships/topics]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+    + [OPTIONAL] 不写meta的话:/users/{userId}/relationships/topics/report
+    + 非unique关联
+    
++ Meta
+    + relationships (string) - report:表明这是用户与主题资源多对多关系中的_举报关联_
+    
++ Data
+    + id (long) - 主题资源唯一标识符
+    + attributes (object, nullable) - 资源属性
+    + attributes.remark (string, nullable) - 举报备注信息
+    + attributes.options (array, nullable) - 选项的ID数组
+
++ Parameters
+    + userId (long) - 用户ID
+
+### 增加关联 [POST]
+
++ Request (application/json)
+
+        {
+            "meta": {
+                "relationships": "report"
+            },
+            "data": [
+                {
+                    "id": "92",
+                    "attributes": {
+                        "remark": "我要举报你",
+                        "options": [
+                            1,
+                            2,
+                            4
+                        ]
+                    }
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
++ Response 202 (application/json)
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
+        
+## (GET) 投票信息 [/article/votes/{id}]
+
++ Description
+    + 用户举报主题时的复选/单选等详情
+    + 获取举报相关的投票信息, 如下两种方式, ID=1的固定为举报投票的相关信息, 或者使用report
+        + /article/votes/1
+        + /article/votes/report
+    
++ Data
+    + id (long) - vote ID
+    + voteType (enum) - [CHECKBOX|RADIO]
+    + voteText (string) - 投票描述
+    + voteStart (date) - _保留字段_
+    + voteLength (int) - _保留字段_
+    + options (array) - 选项数组
+    + options.id - 选项 ID
+    + options.voteOptionText - 选项描述
+    + options.voteOptionCount - 选项投票计数
+
+### 查询投票信息 [GET]
+
++ Response 400 (application/json)
+
+        {
+            "data": {
+                "id": 1,
+                "voteType": "CHECKBOX",
+                "voteText": "举报原因",
+                "voteStart": "2017-09-05 11:37:48",
+                "voteLength": 0,
+                "options": [
+                    {
+                        "id": 1,
+                        "voteOptionText": "反动言论",
+                        "voteOptionCount": 6
+                    },
+                    {
+                        "id": 2,
+                        "voteOptionText": "文题不符",
+                        "voteOptionCount": 6
+                    },
+                    {
+                        "id": 3,
+                        "voteOptionText": "错别字",
+                        "voteOptionCount": 1
+                    },
+                    {
+                        "id": 4,
+                        "voteOptionText": "其他",
+                        "voteOptionCount": 5
+                    }
+                ]
+            }
         }
         
 ## (POST|GET) 留言板 [/article/messages]
