@@ -3,6 +3,15 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月6日
+    + /channels API 增加host字段, 来满足__网站合作__API数据
+        + 当频道类型为来源/网站频道时, host表示来源的主页地址
+    + /channels API 简化
+        + 登陆用户查询频道列表时不需要显式声明fields[]字段, 服务端根据条件使用最小数据集
+    + /channels API 优化
+        + 排序:使用索引排序
+        + 缓存:第一页数据现有缓存
+
 + 2017年9月5日
     + 部分API增加新的返回字段: favorite 是否收藏
         + 搜索主题列表API
@@ -543,8 +552,9 @@ HOST: http://192.168.1.138/
     + 删除tag字段, 删除user_id字段;
     + 增加cancellable字段, 增加channelImage字段;
     + 不加过滤条件查询所有频道集合
-    + ~~filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)~~
-    + filter[UsersChannelsWatch.userId]={userId}&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder
+    + <del>filter[channelType]=1,2 : 只查询系统频道与订阅频道, 不查询用户频道(查询所有频道的时候用此过滤参数)</del>
+    + <del>filter[UsersChannelsWatch.userId]={userId}&fields[UsersChannelsWatch]=displayOrder&fields[channels]=id,channelName,channelType,channelImage,description,watched,cancellable&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder</del>
+    + filter[UsersChannelsWatch.userId]={userId}&include=UsersChannelsWatch&sort=UsersChannelsWatch.displayOrder
         + 查询用户订阅的频道, 并按displayOrder字段排序;
         + 只要参数中有该过滤条件, 如果用户没有登录, 抛出未认证异常;
         + 只要参数中有该过滤条件, 如果不是当前登录用户ID, 抛出未认证异常;
@@ -557,6 +567,7 @@ HOST: http://192.168.1.138/
         + 查看当前用户在多个来源频道中是否已经订阅
         + targetId为seedId, 即网站种子来源的ID
         + channelType为在来源频道
+    + filter[channelType]=4, 查看网站/来源频道
 
 + Data
     + channelType (int) - 频道类型, 1:版面频道, 2:标签频道, 3:用户频道, 4:来源频道
@@ -568,6 +579,7 @@ HOST: http://192.168.1.138/
     + cancellable (int) - 0否, 1是 : 是否可取消订阅/关注;
     + subscribed (boolean, nullable) - false否, true是 : 用户是否订阅/关注了该频道, 只有在用户登录时增加该字段; 
     + displayOrder (int) - 排序, 用户登录时增加该显示字段
+    + host (string) - 只有channelType=4的数据有该字段, 表示来源网站的host
 
 ### 查询频道集合 [GET]
 
@@ -609,7 +621,8 @@ HOST: http://192.168.1.138/
                     "watched": 7,
                     "cancellable": 0,
                     "displayOrder": 272,
-                    "subscribed": true
+                    "subscribed": true,
+                    "host": null
                 }
             ]
         }
