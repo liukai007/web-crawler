@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月7日
+    + 新增收藏主题列表API 
+        + /topics/favorites
+
 + 2017年9月5日
     + 部分新API增加了模块前缀名称，未来老接口会逐渐过渡到这种格式
         + /article
@@ -203,6 +207,21 @@ HOST: http://192.168.1.138/
                 }
             ]
         }
+        
+## (GET) 收藏主题列表 [/topics/favorites]
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] 用户只能操作自己的资源
+    + 结构同搜索API
+
+### 查询收藏主题列表 [GET]
+
++ Response 200 (application/json)
+
+        {
+        }
+
         
 ## (GET) 投票信息 [/article/votes/{id}]
 
