@@ -3,6 +3,10 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月8日
+    + [FIXED] 查看浏览记录API现在可以按filter[forumId]进行过滤了
+    + [FIXED] 收藏列表现在可以按filter[forumId]进行过滤了
+
 + 2017年9月6日
     + /channels API 增加host字段, 来满足__网站合作__API数据
         + 当频道类型为来源/网站频道时, host表示来源的主页地址
