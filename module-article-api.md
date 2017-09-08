@@ -6,6 +6,8 @@ HOST: http://192.168.1.138/
 + 2017年9月8日
     + [FIXED] 查看浏览记录API现在可以按filter[forumId]进行过滤了
     + [FIXED] 收藏列表现在可以按filter[forumId]进行过滤了
+    + 主题搜索API与主题详情API增加新字段
+        + from对象中增加image字段
 
 + 2017年9月6日
     + /channels API 增加host字段, 来满足__网站合作__API数据
@@ -1232,7 +1234,8 @@ HOST: http://192.168.1.138/
                         "origin": "https://www.thomann.de/gb/jbl_c26c.htm",
                         "rating": 0.95,
                         "host": "https://www.thomann.de",
-                        "source": "Thomann"
+                        "source": "Thomann",
+                        "image": "logo"
                     },
                     "post": {
                         "postType": 1,
