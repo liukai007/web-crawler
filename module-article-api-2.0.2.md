@@ -447,7 +447,7 @@ HOST: http://192.168.1.138/
             ]
         }
         
-### 查询留言板集合 [GET]
+### 查询反馈列表集合 [GET]
 
 + Response 200 (application/json)
 
