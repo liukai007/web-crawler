@@ -537,6 +537,7 @@ HOST: http://192.168.1.138/
     + state (int) 
 
     
+    {
         "meta": {
             "totalPages": 1,
             "totalElements": 3,
@@ -596,91 +597,92 @@ HOST: http://192.168.1.138/
               "parentTitle": "刘凯222产品"
             }
           ]
-
+    }
 
 
 ### 精翻详情 [GET] /article/humanTranslates/{id}
 
 + Description
     + [MUST] Authenticated
-
     
-    "data": {
-        "id": 853974,
-        "enabled": 0,
-        "creator": 1031,
-        "modifier": 1031,
-        "created": "2017-09-11 16:37:00",
-        "modified": "2017-09-11 17:31:10",
-        "parentId": 23373,
-        "topicId": 23373,
-        "priority": 0,
-        "language": 0,
-        "categories": [],
-        "tags": [],
-        "features": [
-          {
-            "_name": "12123342属性2",
-            "_value": "中国"
-          }
-        ],
-        "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
-        "moderation": {
-          "id": 5,
-          "enabled": 1,
-          "creator": 1031,
-          "modifier": 1031,
-          "created": "2017-09-11 16:37:00",
-          "modified": "2017-09-11 17:34:00",
-          "postId": 853974,
-          "state": 9
-        },
-        "parent": {
-          "id": 23373,
-          "enabled": 1,
-          "creator": 0,
-          "modifier": 0,
-          "created": "2016-10-12 15:25:02",
-          "modified": "2016-10-17 14:31:47",
-          "parentId": 0,
-          "topicId": 23373,
-          "priority": 0,
-          "language": 2,
-          "categories": [
-            "Guitars and Basses",
-            "Acoustic Guitars",
-            "Acoustic / Electric Guitars"
-          ],
-          "tags": [
-            "T5z6CustomCB"
-          ],
-          "features": [
-            {
-              "_name": "Body Type",
-              "_value": "Hollowbody"
-            },
-            {
-              "_name": "Body Shape",
-              "_value": "T5"
-            }
-          ],
-          "title": "Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
-          "description": "6-string Thinline Acoustic-electric Guitar with Cocobolo Top, Sapele Body, Acoustic Body Sensor System, 2 Humbucking Pickups, and Hard Case - Natural",
-          "content": "<h2>This Cocobolo T5z Custom is Exclusive to Sweetwater!</h2> "
-          },
-          "postTypeValue": "爬取",
-          "postType": 1
-        },
-        "postsText": {
-          "id": 853974,
-          "category": "",
-          "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
-          "feature": "[{\"_name\":\"12123342属性2\",\"_value\":\"中国\"}]"
-        },
-        "postTypeValue": "精翻",
-        "postType": 3
-      }
 
+    { 
+        "data": {
+            "id": 853974,
+            "enabled": 0,
+            "creator": 1031,
+            "modifier": 1031,
+            "created": "2017-09-11 16:37:00",
+            "modified": "2017-09-11 17:31:10",
+            "parentId": 23373,
+            "topicId": 23373,
+            "priority": 0,
+            "language": 0,
+            "categories": [],
+            "tags": [],
+            "features": [
+              {
+                "_name": "12123342属性2",
+                "_value": "中国"
+              }
+            ],
+            "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+            "moderation": {
+              "id": 5,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-11 16:37:00",
+              "modified": "2017-09-11 17:34:00",
+              "postId": 853974,
+              "state": 9
+            },
+            "parent": {
+              "id": 23373,
+              "enabled": 1,
+              "creator": 0,
+              "modifier": 0,
+              "created": "2016-10-12 15:25:02",
+              "modified": "2016-10-17 14:31:47",
+              "parentId": 0,
+              "topicId": 23373,
+              "priority": 0,
+              "language": 2,
+              "categories": [
+                "Guitars and Basses",
+                "Acoustic Guitars",
+                "Acoustic / Electric Guitars"
+              ],
+              "tags": [
+                "T5z6CustomCB"
+              ],
+              "features": [
+                {
+                  "_name": "Body Type",
+                  "_value": "Hollowbody"
+                },
+                {
+                  "_name": "Body Shape",
+                  "_value": "T5"
+                }
+              ],
+              "title": "Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+              "description": "6-string Thinline Acoustic-electric Guitar with Cocobolo Top, Sapele Body, Acoustic Body Sensor System, 2 Humbucking Pickups, and Hard Case - Natural",
+              "content": "<h2>This Cocobolo T5z Custom is Exclusive to Sweetwater!</h2> "
+              },
+              "postTypeValue": "爬取",
+              "postType": 1
+            },
+            "postsText": {
+              "id": 853974,
+              "category": "",
+              "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+              "feature": "[{\"_name\":\"12123342属性2\",\"_value\":\"中国\"}]"
+            },
+            "postTypeValue": "精翻",
+            "postType": 3
+          }
+    }
 
  
 ### 增加精翻 [POST] /article/humanTranslates
@@ -913,6 +915,7 @@ HOST: http://192.168.1.138/
 + Data
     + remark (String) - 审核说明
     + state (int) - 状态 1:草稿箱, 2:待审核, 3:审核通过, 4:审核失败, 5:被覆盖, 9:已删除
+    + riceNum (int) - 奖励的米粒个数
 
 + Parameters
     + topicId
@@ -920,6 +923,7 @@ HOST: http://192.168.1.138/
 
 ### 待审核列表 [GET] /article/hopeTranslates?filter[state]=1
 
+    
     {
       "meta": {
         "totalPages": 1,
@@ -982,6 +986,7 @@ HOST: http://192.168.1.138/
 + Parameters
     + remark - 必填
     + state - 必填 范围限制3~4
+    + riceNum 0-100
 
 + 审核Request (application/json)
 
