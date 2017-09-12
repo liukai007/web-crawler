@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月12日
+    + 增加价格单位符号 priceSign 字段
+        + 主题搜索API
+        + 主题详情API
+
 + 2017年9月8日
     + [FIXED] 查看浏览记录API现在可以按filter[forumId]进行过滤了
     + [FIXED] 收藏列表现在可以按filter[forumId]进行过滤了
@@ -809,7 +814,8 @@ HOST: http://192.168.1.138/
     + document.brands (array) - 文章关联的品牌
     + product (object, nullable) - 产品相关数据;
     + product.price (decimal, nullable) - [MUST]Authenticated, 价格
-    + product.priceUnit (string, nullable) - [MUST]Authenticated, 价格单位
+    + product.priceUnit (string, nullable) - [MUST]Authenticated, 价格单位编码 e.g : USD
+    + product.priceSign (string, nullable) - [MUST]Authenticated, 价格单位符号 e.g : $
     + product.brand (string, nullable) - 品牌名称
     + product.brandInfo (object, nullable) - 品牌详细
     + product.brandInfo.name (string) - 品牌名称
@@ -909,7 +915,8 @@ HOST: http://192.168.1.138/
                     "id": 49226,
                     "topicId": 49226,
                     "price": 329,
-                    "priceUnit": "EUR",
+                    "priceUnit": "USD",
+                    "priceSign": "$"
                     "brand": "Rode",
                     "histories": [
                         {
