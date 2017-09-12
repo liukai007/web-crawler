@@ -505,7 +505,7 @@ HOST: http://192.168.1.138/
         }
         
 + 2017年9月9日
-    + 精翻API初始化
+    + API初始化
 
 ## 精翻
 
@@ -524,7 +524,7 @@ HOST: http://192.168.1.138/
     + parentTitle (String) - 父文档标题
     + remark (String) - 审核说明
 
-### 希望精翻扩展列表 [GET] /article/humanTranslates?filter[parentTitle]=雅马哈&filter[topicId]=23373
+### 精翻列表 [GET] /article/humanTranslates?filter[parentTitle]=雅马哈&filter[topicId]=23373
 
 + Description
     + [MUST] Authenticated
@@ -537,7 +537,7 @@ HOST: http://192.168.1.138/
     + state (int) 
 
     
-    "meta": {
+        "meta": {
             "totalPages": 1,
             "totalElements": 3,
             "size": 10,
@@ -604,7 +604,7 @@ HOST: http://192.168.1.138/
 + Description
     + [MUST] Authenticated
 
-
+    
     "data": {
         "id": 853974,
         "enabled": 0,
@@ -914,7 +914,11 @@ HOST: http://192.168.1.138/
     + remark (String) - 审核说明
     + state (int) - 状态 1:草稿箱, 2:待审核, 3:审核通过, 4:审核失败, 5:被覆盖, 9:已删除
 
-### 待审核列表 [DELETE] /article/hopeTranslates
++ Parameters
+    + topicId
+    + state
+
+### 待审核列表 [GET] /article/hopeTranslates?filter[state]=1
 
     {
       "meta": {
@@ -965,17 +969,6 @@ HOST: http://192.168.1.138/
           "postId": 852804,
           "state": 1,
           "title": "ETY Plugs 翻译High Fidelity Earplugs - Large Fit"
-        },
-        {
-          "id": 5,
-          "enabled": 1,
-          "creator": 1031,
-          "modifier": 1031,
-          "created": "2017-09-11 16:37:00",
-          "modified": "2017-09-11 17:34:00",
-          "postId": 853974,
-          "state": 9,
-          "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo"
         }
       ]
     }
