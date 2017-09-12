@@ -504,3 +504,499 @@ HOST: http://192.168.1.138/
             ]
         }
         
++ 2017年9月9日
+    + 精翻API初始化
+
+## 精翻
+
++ Data
+    + id (long) - 文档id
+    + parentId (long) - 父文档id
+    + postId (long) - 文档id
+    + topicId (long) - 主题id
+    + language (int) - 语言 0:缺省, 1:中文, 2英文
+    + features (数组) - 属性
+    + title (String) - 标题
+    + description (String) - 描述
+    + content (String) - 内容
+    + state (int) - 状态 1:草稿箱, 2:待审核, 3:审核通过, 4:审核失败, 5:被覆盖, 9:已删除
+    + isAdmin (boolean) - 是否是管理员
+    + parentTitle (String) - 父文档标题
+    + remark (String) - 审核说明
+
+### 希望精翻扩展列表 [GET] /article/humanTranslates?filter[parentTitle]=雅马哈&filter[topicId]=23373
+
++ Description
+    + [MUST] Authenticated
+
+    
++ Parameters
+    + parentTitle (String) 父文档标题
+    + topicId (long) 主题id
+    + title (String) 文档标题
+    + state (int) 
+
+    
+    "meta": {
+            "totalPages": 1,
+            "totalElements": 3,
+            "size": 10,
+            "number": 1,
+            "numberOfElements": 3,
+            "first": true,
+            "last": true,
+            "sort": [
+              {
+                "direction": "DESC",
+                "property": "created",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "descending": true,
+                "ascending": false
+              }
+            ]
+          },
+          "links": {
+            "self": "/article/humanTranslates?page[number]=1&page[size]=10",
+            "first": "/article/humanTranslates?page[number]=1&page[size]=10",
+            "last": "/article/humanTranslates?page[number]=1&page[size]=10"
+          },
+          "data": [
+            {
+              "id": 852804,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-08 14:11:24",
+              "modified": "2017-09-08 14:11:24",
+              "topicId": 413,
+              "title": "ETY Plugs 翻译High Fidelity Earplugs - Large Fit",
+              "state": 1,
+              "parentTitle": "ETY Plugs High Fidelity Earplugs - Large Fit"
+            },
+            {
+              "id": 852390,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-07 16:56:56",
+              "modified": "2017-09-07 16:56:56",
+              "topicId": 36176,
+              "title": "Tuba翻译Strap",
+              "state": 1,
+              "parentTitle": "Tuba Strap"
+            },
+            {
+              "id": 852377,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-07 15:11:46",
+              "modified": "2017-09-07 15:11:46",
+              "topicId": 457999,
+              "title": "刘凯产品的翻译",
+              "state": 1,
+              "parentTitle": "刘凯222产品"
+            }
+          ]
+
+
+
+### 精翻详情 [GET] /article/humanTranslates/{id}
+
++ Description
+    + [MUST] Authenticated
+
+
+    "data": {
+        "id": 853974,
+        "enabled": 0,
+        "creator": 1031,
+        "modifier": 1031,
+        "created": "2017-09-11 16:37:00",
+        "modified": "2017-09-11 17:31:10",
+        "parentId": 23373,
+        "topicId": 23373,
+        "priority": 0,
+        "language": 0,
+        "categories": [],
+        "tags": [],
+        "features": [
+          {
+            "_name": "12123342属性2",
+            "_value": "中国"
+          }
+        ],
+        "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+        "moderation": {
+          "id": 5,
+          "enabled": 1,
+          "creator": 1031,
+          "modifier": 1031,
+          "created": "2017-09-11 16:37:00",
+          "modified": "2017-09-11 17:34:00",
+          "postId": 853974,
+          "state": 9
+        },
+        "parent": {
+          "id": 23373,
+          "enabled": 1,
+          "creator": 0,
+          "modifier": 0,
+          "created": "2016-10-12 15:25:02",
+          "modified": "2016-10-17 14:31:47",
+          "parentId": 0,
+          "topicId": 23373,
+          "priority": 0,
+          "language": 2,
+          "categories": [
+            "Guitars and Basses",
+            "Acoustic Guitars",
+            "Acoustic / Electric Guitars"
+          ],
+          "tags": [
+            "T5z6CustomCB"
+          ],
+          "features": [
+            {
+              "_name": "Body Type",
+              "_value": "Hollowbody"
+            },
+            {
+              "_name": "Body Shape",
+              "_value": "T5"
+            }
+          ],
+          "title": "Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+          "description": "6-string Thinline Acoustic-electric Guitar with Cocobolo Top, Sapele Body, Acoustic Body Sensor System, 2 Humbucking Pickups, and Hard Case - Natural",
+          "content": "<h2>This Cocobolo T5z Custom is Exclusive to Sweetwater!</h2> "
+          },
+          "postTypeValue": "爬取",
+          "postType": 1
+        },
+        "postsText": {
+          "id": 853974,
+          "category": "",
+          "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+          "feature": "[{\"_name\":\"12123342属性2\",\"_value\":\"中国\"}]"
+        },
+        "postTypeValue": "精翻",
+        "postType": 3
+      }
+
+
+ 
+### 增加精翻 [POST] /article/humanTranslates
+
++ Description
+    + [MUST] Authenticated
+    
++ Parameters
+    + parentId  - 必填
+    + topicId - 必填
+    + language
+    + features
+    + title - 必填
+    + description
+    + content
+    + state - 范围1~2
+
++ 新增Request (application/json)
+    
+        "data":{
+                "topicId":23373,
+                "parentId":23373,
+                "title":"fan'yi翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+                "state":1,
+                "features":[
+                            {
+                                "_name":"属性2",
+                                "_value":"中国"
+                            }
+                        ]
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /article/humanTranslates/2
+    + Body
+
+            {
+                "data": {
+                    "id": 2,
+                    "type": "humanTranslates"
+                }
+            }
+
+### 修改精翻 [PATCH] /article/humanTranslates/{id}
+
++ Description
+    + [MUST] Authenticated
++ Parameters
+    + title - 必填
+    + description
+    + content
+    + state - 范围1~2
+    + language
+    + features
+
++ 修改Request (application/json)
+
+        "data":{
+        "title":"翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
+        "state":2,
+        "features":[
+                    {
+                        "_name":"12123342属性2",
+                        "_value":"中国"
+                    }
+                ]
+    }
+    
++ Response 200 (application/json)
+    
+### 删除精翻 [DELETE] /article/humanTranslates/{id}
+
++ Response 204 (application/json)
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
+
+
+## 希望精翻
+
++ Data
+    + id (long) - 品牌名称
+    + userId (long) - 用户id
+    + extendId (long) - 扩展id
+    + why (String) - 对我有什么帮助
+    + votesOptionIds (String) - 要求翻译的部分
+    + topicId (long) - 主题id
+    + state (int) - 状态，0：待翻 1：已翻 2：驳回
+    + feedBack (String) - 管理员反馈
+    + who (long) - 谁翻译的
+    + userCount (int) - 多少人希望精翻
+
+
+### 用户查询希望精翻列表 [GET] /article/hopeTranslates
+
++ Description
+    + [MUST] Authenticated
+    + 本接口供前台普通用户查询使用
++ Response 200 (application/json)
+        
+          "meta": {
+            "totalPages": 1,
+            "totalElements": 2,
+            "size": 10,
+            "number": 1,
+            "numberOfElements": 2,
+            "first": true,
+            "last": true,
+            "sort": null
+          },
+          "links": {
+            "self": "/article/hopeTranslates?page[number]=1&page[size]=10",
+            "first": "/article/hopeTranslates?page[number]=1&page[size]=10",
+            "last": "/article/hopeTranslates?page[number]=1&page[size]=10"
+          },
+          "data": [
+            {
+              "id": 5,
+              "enabled": 1,
+              "created": "2017-09-07 14:13:59",
+              "modified": "2017-09-07 14:13:59",
+              "userId": 1031,
+              "extendId": 9,
+              "why": "dui'wo对我 hen'you很有 bang帮 zhu住 ",
+              "extend": {
+                "id": 9,
+                "topicId": 1,
+                "state": 1,
+                "title": "Virus TI2 Desktop"
+              }
+            },
+            {
+              "id": 6,
+              "enabled": 1,
+              "created": "2017-09-07 14:38:27",
+              "modified": "2017-09-07 14:38:27",
+              "userId": 1031,
+              "extendId": 10,
+              "why": "222222",
+              "extend": {
+                "id": 10,
+                "topicId": 2,
+                "state": 0,
+                "title": "Virus TI2 Keyboard"
+              }
+            }
+          ]
+
+### 增加希望精翻 [POST] /article/hopeTranslates/
+
++ Description
+    + [MUST] Authenticated
+    + 本接口供前台普通用户使用
+
++ Parameters
+    + extend.topicId  - 必填
+    + why  - 必填
+    + votesOptionIds
+
++ 新增Request (application/json)
+
+        "data":{
+            "why":"这篇文章对我很有用，希望能有人翻译一下。",
+            "extend":{
+                "topicId":36176
+            }
+        }
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /article/hopeTranslates/2
+    + Body
+
+            {
+                "data": {
+                    "id": 2,
+                    "type": "hopeTranslates"
+                }
+            }
+
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
+
+### 删除希望精翻 [DELETE] /article/hopeTranslates/{id}
+
++ Description
+    + [MUST] Authenticated
+    + 本接口供前台普通使用
+
++ Response 204 (application/json)
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "应用程序code编码",
+                    "title": "Bad Request",
+                    "detail": "错误信息描述"
+                }
+            ]
+        }
+        
+
+## 审核精翻
+
++ Data
+    + remark (String) - 审核说明
+    + state (int) - 状态 1:草稿箱, 2:待审核, 3:审核通过, 4:审核失败, 5:被覆盖, 9:已删除
+
+### 待审核列表 [DELETE] /article/hopeTranslates
+
+    {
+      "meta": {
+        "totalPages": 1,
+        "totalElements": 4,
+        "size": 10,
+        "number": 1,
+        "numberOfElements": 4,
+        "first": true,
+        "last": true,
+        "sort": null
+      },
+      "links": {
+        "self": "/article/moderations?page[number]=1&page[size]=10",
+        "first": "/article/moderations?page[number]=1&page[size]=10",
+        "last": "/article/moderations?page[number]=1&page[size]=10"
+      },
+      "data": [
+        {
+          "id": 2,
+          "enabled": 1,
+          "creator": 1031,
+          "modifier": 1031,
+          "created": "2017-09-07 15:11:46",
+          "modified": "2017-09-07 15:11:46",
+          "postId": 852377,
+          "state": 1,
+          "title": "刘凯产品的翻译"
+        },
+        {
+          "id": 3,
+          "enabled": 1,
+          "creator": 1031,
+          "modifier": 1031,
+          "created": "2017-09-07 16:56:56",
+          "modified": "2017-09-07 16:56:56",
+          "postId": 852390,
+          "state": 1,
+          "title": "Tuba翻译Strap"
+        },
+        {
+          "id": 4,
+          "enabled": 1,
+          "creator": 1031,
+          "modifier": 1031,
+          "created": "2017-09-08 14:11:24",
+          "modified": "2017-09-08 15:33:24",
+          "postId": 852804,
+          "state": 1,
+          "title": "ETY Plugs 翻译High Fidelity Earplugs - Large Fit"
+        },
+        {
+          "id": 5,
+          "enabled": 1,
+          "creator": 1031,
+          "modifier": 1031,
+          "created": "2017-09-11 16:37:00",
+          "modified": "2017-09-11 17:34:00",
+          "postId": 853974,
+          "state": 9,
+          "title": "翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo"
+        }
+      ]
+    }
+
+### 审核 [PATCH] /article/hopeTranslates/audit/{id}
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] administrator
+
++ Parameters
+    + remark - 必填
+    + state - 必填 范围限制3~4
+
++ 审核Request (application/json)
+
+        {
+            "data":{
+                "state":3,
+                "remark":"111翻译的不错 "
+            }
+        }
+        
++ Response 200 (application/json)
