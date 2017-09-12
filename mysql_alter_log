@@ -1,0 +1,9 @@
+# 数据库修改记录
+
+## 138服务器 2017.9.12
++ moderation
+    + post_id设置唯一索引
++ hope_translate
+    + user_id、extend_id设置联合唯一索引
++ praise
+    + comment_id删除外键，设置默认值为0，不允许为空，conf_id、theme_id、comment_id、creator设置为联合唯一索引
