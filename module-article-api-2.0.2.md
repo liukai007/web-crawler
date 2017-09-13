@@ -230,6 +230,7 @@ HOST: http://192.168.1.138/
     + 获取举报相关的投票信息, 如下两种方式, ID=1的固定为举报投票的相关信息, 或者使用report
         + /article/votes/1
         + /article/votes/report
+    
     + 获取精翻选项的投票信息,如下两种方式,ID=2的固定为精翻选项的相关信息, 或者使用translate
         + /article/votes/2
         + /article/votes/translate
@@ -538,6 +539,7 @@ HOST: http://192.168.1.138/
     + topicId (long) 主题id
     + title (String) 文档标题
     + state (int) 
+    + forumId (long) 文章类型，1:product  2:brand  3:news  4:review
 
     
     {
