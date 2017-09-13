@@ -785,7 +785,7 @@ HOST: http://192.168.1.138/
     + userId (long) - 用户id
     + extendId (long) - 扩展id
     + why (String) - 对我有什么帮助
-    + votesOptionIds (String) - 要求翻译的部分
+    + options (long[]) - 要求翻译的部分
     + topicId (long) - 主题id
     + state (int) - 状态，0：待翻 1：已翻 2：驳回
     + feedBack (String) - 管理员反馈
@@ -857,7 +857,7 @@ HOST: http://192.168.1.138/
 + Parameters
     + extend.topicId  - 必填
     + why  - 必填
-    + votesOptionIds
+    + options
 
 + 新增Request (application/json)
 
