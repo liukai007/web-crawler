@@ -3,6 +3,12 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月14日
+    + 搜索API增加一个优化, 可以控制是否需要返回聚合数据, agg[size]参数
+        + 小于0时 - 不返回聚合数据, e.g : -1
+        + 等于0时 - 服务端控制聚合数据size大小
+        + 大于0时 - 客户端控制聚合数据size大小
+
 + 2017年9月12日
     + 增加价格单位符号 priceSign 字段
         + 主题搜索API
@@ -1020,6 +1026,7 @@ HOST: http://192.168.1.138/
     
 + 聚合参数
     + agg[size] (int, nullable) - 该参数控制返回聚合数的大小, 不写该参数返回所有聚合数据. 
+        + 增加了对小于0的参数判断, 小于0时不返回聚合数据
     + agg[sort] (string, nullable) - 聚合排序, 只能在[term|count]中选择, term按字母排序, count按统计数排序
     + agg[image] (boolean, nullable) - 聚合的数据是否需要查找一个代表性图片. 缺省false.
     + agg[group] (boolean, nullable) - 是否按首字母分组显示. 
