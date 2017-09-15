@@ -3,6 +3,9 @@ HOST: http://www.mifan.com/
 
 # user center
 
++ 2017年9月15日
+    + 地址API增加了一些新的字段
+
 + 2017年4月11日
     + 新增上传文件验证 API
     + 新增上传文件文档
