@@ -56,8 +56,10 @@ HOST: http://www.mifan.com/
     + mobile (string) [NOT NULL] - 手机号
     + consignee (string) [NOT NULL] - 收件人/收货人
     + address (string) [NOT NULL] - 收货地址
-    + priority (int) [NOT NULL] - 1:默认地址, 0:非默认
-    
+    + addressLabel (string, nullable) - 地址标签
+    + postalCode (string, nullable) - 邮政编码
+    + priority (int) [NOT NULL] - 1:默认地址, 0:非默认
+    
 + Meta
     + number (int) - 当前页
     + size (int) - 每页大小
@@ -80,7 +82,9 @@ HOST: http://www.mifan.com/
                 "district": "东城区",
                 "address": "雨儿胡同乙10号",
                 "consignee": "安抚22233",
-                "mobile": "13611019209"
+                "mobile": "13611019209",
+                "addressLabel": "家里",
+                "postalCode": "100009"
             }
         }
 
@@ -154,6 +158,8 @@ HOST: http://www.mifan.com/
                     "mobile": "13611019209",
                     "consignee": "曲子乐",
                     "address": "雨儿胡同乙10号",
+                    "addressLabel": "家里",
+                    "postalCode": "100009",
                     "priority": 0
                 },
                 {
@@ -171,6 +177,8 @@ HOST: http://www.mifan.com/
                     "mobile": "13611019209",
                     "consignee": "安抚22233",
                     "address": "阿萨德的222qqUI个我个我个我个我个我个我还好",
+                    "addressLabel": "家里",
+                    "postalCode": "100009",
                     "priority": 0
                 }
             ]
