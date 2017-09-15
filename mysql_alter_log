@@ -1,7 +1,7 @@
 # 数据库修改记录
 
 + 2017年9月15日 
-> ucenter.user_addresses表新增字段
+> ucenter.user_addresses表新增字段f
 ```sql
 ALTER TABLE `ucenter`.`user_addresses` 
 ADD COLUMN `address_label` VARCHAR(255) NULL COMMENT '地址标签' AFTER `address`,
