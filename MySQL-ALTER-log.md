@@ -7,7 +7,6 @@ ALTER TABLE `ucenter`.`user_addresses`
 ADD COLUMN `address_label` VARCHAR(255) NULL COMMENT '地址标签' AFTER `address`,
 ADD COLUMN `postal_code` VARCHAR(30) NULL COMMENT '邮政编码' AFTER `address_label`;
 ```
-
 + 2017年9月12日 
     + moderation
         + post_id设置唯一索引
