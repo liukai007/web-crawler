@@ -230,7 +230,6 @@ HOST: http://192.168.1.138/
     + 获取举报相关的投票信息, 如下两种方式, ID=1的固定为举报投票的相关信息, 或者使用report
         + /article/votes/1
         + /article/votes/report
-    
     + 获取精翻选项的投票信息,如下两种方式,ID=2的固定为精翻选项的相关信息, 或者使用translate
         + /article/votes/2
         + /article/votes/translate
@@ -926,7 +925,7 @@ HOST: http://192.168.1.138/
     + topicId
     + state
 
-### 待审核列表 [GET] /article/hopeTranslates?filter[state]=1
+### 待审核列表 [GET] /article/moderations?filter[state]=2
 
     
     {
@@ -982,7 +981,7 @@ HOST: http://192.168.1.138/
       ]
     }
 
-### 审核 [PATCH] /article/hopeTranslates/audit/{id}
+### 审核 [PATCH] /article/moderations/audit/{id}
 
 + Description
     + [MUST] Authenticated
