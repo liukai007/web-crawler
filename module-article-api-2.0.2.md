@@ -922,7 +922,6 @@ HOST: http://192.168.1.138/
     + riceNum (int) - 奖励的米粒个数
 
 + Parameters
-    + topicId
     + state
 
 ### 待审核列表 [GET] /article/moderations?filter[state]=2
