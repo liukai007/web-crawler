@@ -531,6 +531,7 @@ HOST: http://192.168.1.138/
 
 + Description
     + [MUST] Authenticated
+    + 普通用户只能看到自己的翻译，管理员和审核员可以看到所有的翻译
 
     
 + Parameters
@@ -608,6 +609,7 @@ HOST: http://192.168.1.138/
 
 + Description
     + [MUST] Authenticated
+    + 只有本人、管理员、审核员可以查看
     
 
     { 
@@ -693,6 +695,7 @@ HOST: http://192.168.1.138/
 
 + Description
     + [MUST] Authenticated
+    + [MUST] ROLE_AD_USER
     
 + Parameters
     + parentId  - 必填
@@ -722,10 +725,10 @@ HOST: http://192.168.1.138/
 + Response 201 (application/json)
 
     + Headers
-
+    
             Location: /article/humanTranslates/2
     + Body
-
+    
             {
                 "data": {
                     "id": 2,
@@ -737,6 +740,7 @@ HOST: http://192.168.1.138/
 
 + Description
     + [MUST] Authenticated
+    + 本人和管理员可修改
 + Parameters
     + title - 必填
     + description
@@ -761,6 +765,9 @@ HOST: http://192.168.1.138/
 + Response 200 (application/json)
     
 ### 删除精翻 [DELETE] /article/humanTranslates/{id}
++ Description
+    + [MUST] Authenticated
+    + 本人和管理员可删除
 
 + Response 204 (application/json)
 + Response 400 (application/json)
@@ -921,70 +928,75 @@ HOST: http://192.168.1.138/
     + state (int) - 状态 1:草稿箱, 2:待审核, 3:审核通过, 4:审核失败, 5:被覆盖, 9:已删除
     + riceNum (int) - 奖励的米粒个数
 
-+ Parameters
-    + state
 
 ### 待审核列表 [GET] /article/moderations?filter[state]=2
 
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AUDITOR
+
++ Parameters
+    + state
     
-    {
-      "meta": {
-        "totalPages": 1,
-        "totalElements": 4,
-        "size": 10,
-        "number": 1,
-        "numberOfElements": 4,
-        "first": true,
-        "last": true,
-        "sort": null
-      },
-      "links": {
-        "self": "/article/moderations?page[number]=1&page[size]=10",
-        "first": "/article/moderations?page[number]=1&page[size]=10",
-        "last": "/article/moderations?page[number]=1&page[size]=10"
-      },
-      "data": [
+
         {
-          "id": 2,
-          "enabled": 1,
-          "creator": 1031,
-          "modifier": 1031,
-          "created": "2017-09-07 15:11:46",
-          "modified": "2017-09-07 15:11:46",
-          "postId": 852377,
-          "state": 1,
-          "title": "刘凯产品的翻译"
-        },
-        {
-          "id": 3,
-          "enabled": 1,
-          "creator": 1031,
-          "modifier": 1031,
-          "created": "2017-09-07 16:56:56",
-          "modified": "2017-09-07 16:56:56",
-          "postId": 852390,
-          "state": 1,
-          "title": "Tuba翻译Strap"
-        },
-        {
-          "id": 4,
-          "enabled": 1,
-          "creator": 1031,
-          "modifier": 1031,
-          "created": "2017-09-08 14:11:24",
-          "modified": "2017-09-08 15:33:24",
-          "postId": 852804,
-          "state": 1,
-          "title": "ETY Plugs 翻译High Fidelity Earplugs - Large Fit"
+          "meta": {
+            "totalPages": 1,
+            "totalElements": 4,
+            "size": 10,
+            "number": 1,
+            "numberOfElements": 4,
+            "first": true,
+            "last": true,
+            "sort": null
+          },
+          "links": {
+            "self": "/article/moderations?page[number]=1&page[size]=10",
+            "first": "/article/moderations?page[number]=1&page[size]=10",
+            "last": "/article/moderations?page[number]=1&page[size]=10"
+          },
+          "data": [
+            {
+              "id": 2,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-07 15:11:46",
+              "modified": "2017-09-07 15:11:46",
+              "postId": 852377,
+              "state": 1,
+              "title": "刘凯产品的翻译"
+            },
+            {
+              "id": 3,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-07 16:56:56",
+              "modified": "2017-09-07 16:56:56",
+              "postId": 852390,
+              "state": 1,
+              "title": "Tuba翻译Strap"
+            },
+            {
+              "id": 4,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-09-08 14:11:24",
+              "modified": "2017-09-08 15:33:24",
+              "postId": 852804,
+              "state": 1,
+              "title": "ETY Plugs 翻译High Fidelity Earplugs - Large Fit"
+            }
+          ]
         }
-      ]
-    }
 
 ### 审核 [PATCH] /article/moderations/audit/{id}
 
 + Description
     + [MUST] Authenticated
-    + [MUST] administrator
+    + [MUST] ROLE_AUDITOR
 
 + Parameters
     + remark - 必填
@@ -1001,3 +1013,12 @@ HOST: http://192.168.1.138/
         }
         
 + Response 200 (application/json)
+
+## 权限信息
+
++ 角色
+    + ROLE_USER 普通用户，可有可无
+    + ROLE_ADMIN 管理员
+    + ROLE_AUDITOR 审核员
+    + ROLE_AD_USER 翻译人员
+
