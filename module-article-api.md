@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月27日
+    + 搜索API增加一个优化, 可以控制返回何种聚合数据, agg[mask]参数
+        + 4bit长度的掩码, e.g : agg[mask]=3 将返回category与brand聚合
+        + 参考搜索API
+
 + 2017年9月14日
     + 搜索API增加一个优化, 可以控制是否需要返回聚合数据, agg[size]参数
         + 小于0时 - 不返回聚合数据, e.g : -1
@@ -1025,6 +1030,11 @@ HOST: http://192.168.1.138/
     + sort=-best - 按精选降序排序, 当sort为best时, 只有filter[forumId]参数起作用
     
 + 聚合参数
+    + agg[mask] (int, nullable) - 缺省为15, 即显示所有聚合. (filter中明确指定的字段, 不会作为聚合项返回 e.g filter[brand]=Yamaha, 结果将不包含brand聚合)
+        + 0001 - (1) category 聚合
+        + 0010 - (2) brand 聚合
+        + 0100 - (4) price 聚合
+        + 1000 - (8) from 聚合
     + agg[size] (int, nullable) - 该参数控制返回聚合数的大小, 不写该参数返回所有聚合数据. 
         + 增加了对小于0的参数判断, 小于0时不返回聚合数据
     + agg[sort] (string, nullable) - 聚合排序, 只能在[term|count]中选择, term按字母排序, count按统计数排序
