@@ -10,6 +10,38 @@ HOST: http://192.168.1.138/
 
 文章主题模块2.0.3
 
+## (GET)导航栏菜单 [/article/navigation/{id}]
+
++ Description
+    + <del>include=children</del>
+    + <del>include=parent</del>
+
++ Data
+    + id (long) - 导航ID
+    + parentId (long) - 父ID
+    + title (string) - 导航标题
+    + image (string) - icon
+
++ Parameters
+    + id (long) - navigation id
+
+### 查询颜色集合 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": 1,
+                "parentId": 0,
+                "elasticQueryBuilderId": 2,
+                "displayOrder": 1,
+                "title": "麦克风",
+                "image": "microphone",
+                "children": [],
+                "root": true
+            }
+        }
+
 ## (GET)导航栏菜单集合 [/article/navigation]
 
 + Description
@@ -20,6 +52,7 @@ HOST: http://192.168.1.138/
     + id (long) - 导航ID
     + parentId (long) - 父ID
     + title (string) - 导航标题
+    + image (string) - icon
     + children (array) - 子节点
 
 ### 查询导航菜单集合列表 [GET]
@@ -244,3 +277,6 @@ HOST: http://192.168.1.138/
                 }
             ]
         }
+
+
+        
