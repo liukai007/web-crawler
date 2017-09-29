@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年9月29日
+    + search API 修改, 具体见API排序部分
+
 + 2017年9月27日
     + 搜索API增加一个优化, 可以控制返回何种聚合数据, agg[mask]参数
         + 4bit长度的掩码, e.g : agg[mask]=3 将返回category与brand聚合
@@ -1025,9 +1028,15 @@ HOST: http://192.168.1.138/
         + alias : 暂无待定
     + sort=-created - 按主题创建时间降序排序
     + sort=-modified - 按主题修改时间降序排序
-    + sort=-hot - 按热度降序排序, 当sort为hot时, 只有filter[forumId]参数起作用
-    + sort=-new - 按新品降序排序, 当sort为new时, 只有filter[forumId]参数起作用
-    + sort=-best - 按精选降序排序, 当sort为best时, 只有filter[forumId]参数起作用
+    + 特殊排序
+        + 可用过滤参数
+            + filter[forumId] 
+            + filter[topicId:ne] - not equel (单个值)
+            + filter[topicId:nin] - not in (多个值)
+        + 排序类型
+            + sort=-hot - 按热度降序排序
+            + sort=-new - 按新品降序排序
+            + sort=-best - 按精选降序排序
     
 + 聚合参数
     + agg[mask] (int, nullable) - 缺省为15, 即显示所有聚合. (filter中明确指定的字段, 不会作为聚合项返回 e.g filter[brand]=Yamaha, 结果将不包含brand聚合)
