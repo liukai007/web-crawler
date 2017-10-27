@@ -87,9 +87,9 @@ FORMAT: 1A
 + [工具类] HTML格式优化
     + 压缩:
         + 剔除无效空格(&nbsp; 特殊空格等 setRemoveIntertagSpaces)
-        + 剔除无有效内容的HTML元素 e.g : <p> &nbsp; <p>
+        + 剔除无有效内容的HTML元素 e.g : 
         + 剔除部分指定的HTML转移字符, 要观察爬取的HTML结构进行总结
-        + 剔除无用的多级嵌套标签 e.g <div><div>this is a example</div></div>
+        + 剔除无用的多级嵌套标签 e.g 
         + img ul ol等元素的优化
     + 无图片数据低优先
     + 无内容数据低优先
