@@ -111,3 +111,10 @@ DROP INDEX `comment_id` ;
 ALTER TABLE `mifan_support`.`praise` 
 ADD UNIQUE INDEX `conf_id_theme_id_comment_id_creator_unique` (`conf_id` ASC, `theme_id` ASC, `comment_id` ASC, `creator` ASC);
 ```
++ 2017年10月28日 
+> mifan_article.topics_fetch 修改原topic_id_idx普通索引为唯一索引
+```sql
+ALTER TABLE `mifan_article`.`topics_fetch` 
+DROP INDEX `topic_id_idx` ;
+ADD UNIQUE INDEX `topic_id_idx` (`topic_id` ASC);
+```
