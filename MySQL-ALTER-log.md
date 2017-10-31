@@ -29,14 +29,17 @@ ENGINE = InnoDB
 CREATE TABLE IF NOT EXISTS `mifan_article`.`word_dictionary` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `word_en` VARCHAR(255) NOT NULL,
+  `word_en_hash` BIGINT NOT NULL,
   `word_cn` VARCHAR(255) NOT NULL,
+  `word_cn_hash` BIGINT NOT NULL,
   `enabled` TINYINT(1) NOT NULL DEFAULT 1,
   `creator` BIGINT UNSIGNED NOT NULL,
   `modifier` BIGINT UNSIGNED NOT NULL,
   `created` DATETIME NOT NULL,
   `modified` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `enabled_idx` (`enabled` ASC))
+  INDEX `enabled_word_en_hash_idx` (`enabled` ASC, `word_en_hash` ASC),
+  INDEX `enabled_word_cn_hash_idx` (`enabled` ASC, `word_cn_hash` ASC))
 ENGINE = InnoDB
 ```
 + 2017年9月27日 2.0.3 数据库改动
