@@ -1,7 +1,7 @@
 # 数据库修改记录
 
 + 2017年10月31日 2.1.0 数据库改动
-> article.categories 新增类别表
+> article.forum_categories 新增类别表
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`forum_categories` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -22,6 +22,21 @@ CREATE TABLE IF NOT EXISTS `mifan_article`.`forum_categories` (
   INDEX `root_id_enabled_idx` (`root_id` ASC, `enabled` ASC),
   INDEX `parent_id_enabled_idx` (`parent_id` ASC, `enabled` ASC),
   INDEX `enabled_forum_id_root_id_parent_id_idx` (`enabled` ASC, `forum_id` ASC, `root_id` ASC, `parent_id` ASC))
+ENGINE = InnoDB
+```
+> article.word_dictionary 英汉字典表
+```sql
+CREATE TABLE IF NOT EXISTS `mifan_article`.`word_dictionary` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `word_en` VARCHAR(255) NOT NULL,
+  `word_cn` VARCHAR(255) NOT NULL,
+  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+  `creator` BIGINT UNSIGNED NOT NULL,
+  `modifier` BIGINT UNSIGNED NOT NULL,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `enabled_idx` (`enabled` ASC))
 ENGINE = InnoDB
 ```
 + 2017年9月27日 2.0.3 数据库改动
