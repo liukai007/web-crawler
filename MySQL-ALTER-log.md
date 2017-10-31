@@ -3,7 +3,7 @@
 + 2017年10月31日 2.1.0 数据库改动
 > article.categories 新增类别表
 ```sql
-CREATE TABLE IF NOT EXISTS `mifan_article`.`categories` (
+CREATE TABLE IF NOT EXISTS `mifan_article`.`forum_categories` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `forum_id` BIGINT UNSIGNED NOT NULL COMMENT '版块ID',
   `root_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '根节点ID',
