@@ -1,5 +1,29 @@
 # 数据库修改记录
 
++ 2017年10月31日 2.1.0 数据库改动
+> article.categories 新增类别表
+```sql
+CREATE TABLE IF NOT EXISTS `mifan_article`.`categories` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `forum_id` BIGINT UNSIGNED NOT NULL COMMENT '版块ID',
+  `root_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '根节点ID',
+  `parent_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '父节点ID',
+  `title` VARCHAR(255) NULL,
+  `path` VARCHAR(255) NULL,
+  `depth` TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '深度',
+  `leaf` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否是叶子节点',
+  `display_order` INT NOT NULL DEFAULT 0,
+  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+  `creator` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `modifier` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `root_id_enabled_idx` (`root_id` ASC, `enabled` ASC),
+  INDEX `parent_id_enabled_idx` (`parent_id` ASC, `enabled` ASC),
+  INDEX `enabled_forum_id_root_id_parent_id_idx` (`enabled` ASC, `forum_id` ASC, `root_id` ASC, `parent_id` ASC))
+ENGINE = InnoDB
+```
 + 2017年9月27日 2.0.3 数据库改动
 > article.navigation 新增导航菜单表
 ```sql
