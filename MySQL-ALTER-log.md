@@ -16,6 +16,12 @@ DROP INDEX `forum_id_idx` ;
 UPDATE topics, topics_fetch SET topics.train_sample = 1 
 WHERE topics.id = topics_fetch.topic_id AND topics_fetch.seed_id = 11;
 ```
+> article.topics表改动 增加人工标注的字段 用于与标注的类别进行关联
+```sql
+ALTER TABLE `mifan_article`.`topics` 
+ADD COLUMN `category_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 AFTER `forum_id`,
+ADD INDEX `category_id_idx` (`category_id` ASC);
+```
 > article.forum_categories 新增类别表
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`forum_categories` (
