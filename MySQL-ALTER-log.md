@@ -1,7 +1,7 @@
 # 数据库修改记录
 
 + 2017年10月31日 2.1.0 数据库改动
-> article.topics表改动 增加两个新字段, 修改索引
+> article.topics表改动 增加两个新字段, 修改索引, SQL初始化训练数据
 ```sql
 ALTER TABLE `mifan_article`.`topics` 
 ADD COLUMN `boost` DOUBLE NOT NULL DEFAULT 1.0 AFTER `thumbs_down`,
@@ -11,6 +11,10 @@ ADD INDEX `forum_id_train_sample_idx` (`forum_id` ASC, `train_sample` ASC);
 ```sql
 ALTER TABLE `mifan_article`.`topics` 
 DROP INDEX `forum_id_idx` ;
+```
+```sql
+UPDATE topics, topics_fetch SET topics.train_sample = 1 
+WHERE topics.id = topics_fetch.topic_id AND topics_fetch.seed_id = 11;
 ```
 > article.forum_categories 新增类别表
 ```sql
