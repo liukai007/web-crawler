@@ -417,7 +417,27 @@ HOST: http://192.168.1.138/
 
 + Response 204 (application/json)
 
+## (PATCH)主题主推数/加入撤销到样本集 [/topics/{id}]
 
++ Description
+    + [MUST] ROLE_ADMIN
 
++ Field
+    + boost (double) - 搜索引擎助推数, 值越高排名越靠前
+    + trainSample (int) - 是否加入到训练样本集中, 0:否, 1:是
 
+### 修改主题[PATCH]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "boost": 1,
+                "trainSample": 1
+            }
+        }
+        
++ Response 200 (application/json)
+
++ Response 204 (application/json)
 
