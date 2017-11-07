@@ -838,3 +838,641 @@ HOST: http://192.168.1.138/
 + Response 200 (application/json)
 
 + Response 204 (application/json)
+
+
+## 翻译任务
+
++ Data
+    + topicId (Long) - 主题标识
+    + postId (Long) - 翻译标识
+    + state (int) - 任务状态，1：待领取，2：未提交，3：待审核，4：审核中，5：审核失败，6：审核成功，7：已支付
+    + wordsNum (int) - 单词数
+    + bonus (BigDecimal) - 金额
+    + translator (Long) - 翻译人
+    + auditor (Long) - 审核人
+    + auditOpinion (String) - 审核意见
+    + enabled (int) - 是否可用 0/1 ：不可用/可用
+    + creator (Long) - 创建人
+    + modifier (Long) - 修改人
+    + language (int) - 语言 0:缺省, 1:中文, 2英文
+    + features (数组) - 属性
+    + title (String) - 标题
+    + description (String) - 描述
+    + content (String) - 内容
+    + title (String) - 标题
+    + topicType (String) - 文章类型
+
+## 审核人员接口
+### 开始审核/暂存审核/提交审核结果 [PATCH] /article/translateTask/auditor/{id}
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AUDITOR
+    + 开始审核：审核人员领取审核任务，此时state从3变为4
+    + 暂存审核：审核人员暂存审核，此时state从4变为4
+    + 提交审核：审核人员提交审核，此时state从4变为5|6
++ Parameters
+    + state 必填，开始审核/暂存审核：state=4，提交审核state=5|6
+    + auditOpinion
+    + posts 开始审核-必不填，暂存/提交-必填
+    + posts.features
+    + posts.title - 必填
+    + posts.description
+    + posts.content
+
++ 开始审核Request (application/json)
+
+        {
+            "data":{
+                "state":4
+            }
+        }
++ 暂存审核/提交审核Request (application/json)
+    
+        {
+            "data":{
+                "state":4,
+                "auditOpinion":"我草暂存 yi'xia一下 ",
+                "posts":{
+                    "title":"我草u翻译任务??fan'yi'de翻译的很好",
+                    "description":"翻译的很fan'yi翻译 miao'shu描述2222222 ",
+                    "content":"翻译的很wo'shi'fan'yi'nei'rong我是翻译内容2222222",
+                    "features":[
+                                {
+                                    "_name":"翻译的很属性2",
+                                    "_value":"翻译的很属性2的值"
+                                }
+                            ]
+                }
+            }
+        }
++ Response 20* (application/json)
++ Response 40* (application/json)
+
+### 审核者任务列表 [GET] /article/translateTask/auditor?filter[state]=3&page[number]=1&page[size]=5
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AUDITOR
++ Parameters
+    + filter[state] - 筛选条件，任务状态
++ Response 200 (application/json)
+
+        {
+          "meta": {
+            "totalPages": 1,
+            "totalElements": 1,
+            "size": 5,
+            "number": 1,
+            "numberOfElements": 1,
+            "first": true,
+            "last": true,
+            "sort": [
+              {
+                "direction": "DESC",
+                "property": "modified",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": false,
+                "descending": true
+              }
+            ]
+          },
+          "links": {
+            "self": "/article/translateTask/auditor?filter[state]=4&page[number]=1&page[size]=5",
+            "first": "/article/translateTask/auditor?filter[state]=4&page[number]=1&page[size]=5",
+            "last": "/article/translateTask/auditor?filter[state]=4&page[number]=1&page[size]=5"
+          },
+          "data": [
+            {
+              "id": 1,
+              "topicId": 1,
+              "state": 4,
+              "translator": 1031,
+              "title": "Virus TI2 Desktop",
+              "topicType": "产品"
+            }
+          ]
+        }
+
+### 审核者任务详情 [GET] [/article/translateTask/auditor/{id}]
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AUDITOR
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "id": 1,
+            "enabled": 1,
+            "creator": 1031,
+            "modifier": 1031,
+            "created": "2017-11-07 10:41:56",
+            "modified": "2017-11-07 17:18:38",
+            "topicId": 1,
+            "postId": 1013367,
+            "state": 4,
+            "wordsNum": 2000,
+            "bonus": 100,
+            "translator": 1031,
+            "auditor": 1031,
+            "auditOpinion": "1我草暂存 yi'xia一下 ",
+            "post": {
+              "id": 1013367,
+              "enabled": 0,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-11-07 15:03:23",
+              "modified": "2017-11-07 17:18:38",
+              "parentId": 1,
+              "topicId": 1,
+              "priority": 0,
+              "language": 2,
+              "categories": [
+                "111111111"
+              ],
+              "tags": [
+                "2222222222"
+              ],
+              "features": [
+                {
+                  "_name": "翻译的很属性2",
+                  "_value": "翻译的很属性2的值"
+                }
+              ],
+              "title": "111111我草u翻译任务??fan'yi'de翻译的很好",
+              "description": "1111111翻译的很fan'yi翻译 miao'shu描述2222222 ",
+              "content": "1111111翻译的很wo'shi'fan'yi'nei'rong我是翻译内容2222222",
+              "parent": {
+                "id": 1,
+                "enabled": 1,
+                "creator": 0,
+                "modifier": 0,
+                "created": "2016-10-12 09:55:37",
+                "modified": "2017-10-28 13:33:38",
+                "parentId": 0,
+                "topicId": 1,
+                "priority": 0,
+                "language": 2,
+                "categories": [
+                  "Keyboards & Synthesizers",
+                  "Synthesizers"
+                ],
+                "tags": [
+                  "VirusTI2Desk"
+                ],
+                "features": [
+                  {
+                    "_name": "Sound Engine Type(s)",
+                    "_value": "Analog Modeling"
+                  }
+                ],
+                "title": "Virus TI2 Desktop",
+                "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n",
+                "postsText": {
+                  "id": 1,
+                  "category": "Keyboards & Synthesizers,Synthesizers",
+                  "tag": "VirusTI2Desk",
+                  "title": "Virus TI2 Desktop",
+                  "feature": "[{\"_name\":\"Sound Engine Type(s)\",\"_value\":\"Analog Modeling\"}]",
+                  "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                  "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n "
+                },
+                "postType": 1,
+                "postTypeValue": "爬取"
+              },
+              "postsText": {
+                "id": 1013367,
+                "category": "111111111",
+                "tag": "2222222222",
+                "title": "111111我草u翻译任务??fan'yi'de翻译的很好",
+                "feature": "[{\"_name\":\"翻译的很属性2\",\"_value\":\"翻译的很属性2的值\"}]",
+                "description": "1111111翻译的很fan'yi翻译 miao'shu描述2222222 ",
+                "content": "1111111翻译的很wo'shi'fan'yi'nei'rong我是翻译内容2222222"
+              },
+              "postType": 3,
+              "postTypeValue": "精翻"
+            },
+            "title": "Virus TI2 Desktop",
+            "topicType": "产品"
+          }
+        }
+
+## 翻译人员接口
+### 领取/添加翻译/修改翻译/审核失败后继续翻译 [PATCH] /article/translateTask/translator/{id}
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AD_USER
+    + 领取：翻译人员领取任务，此时state从1变为2
+    + 添加/修改：翻译人员领取任务后添加翻译，此时state从2变为2|3，当状态变为3后不再允许修改
+    + 审核失败后继续翻译：审核结果失败后可以继续翻译，此时state从5变为2
+
++ Parameters
+    + state 必填，领取/继续时：state=2；添加/修改时：state=2|3
+    + post 领取/继续翻译-必不填，添加/修改-必填
+    + post.language
+    + post.features
+    + post.title - 必填
+    + post.description
+    + post.content
+
++ 领取/审核失败后继续翻译Request (application/json)
+
+        {
+            "data":{
+                "state":2
+            }
+        }
++ 添加翻译/修改翻译Request (application/json)
+
+        {
+            "data":{
+                "state":2,
+                "post":{
+                    "title":"fan'yi'ren'wu翻译任务222222222 ",
+                    "language":2,
+                    "description":"fan'yi翻译 miao'shu描述2222222 ",
+                    "content":"wo'shi'fan'yi'nei'rong我是翻译内容2222222",
+                    "features":[
+                                {
+                                    "_name":"属性2",
+                                    "_value":"属性2的值"
+                                }
+                            ]
+                }
+            }
+        }
+
++ Response 20* (application/json)
++ Response 40* (application/json)    
+
+### 退回任务 [DELETE] /article/translateTask/translator/{id}
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AD_USER
+    + state=2的才能退回
+
++ Response 20* (application/json)
++ Response 40* (application/json)
+
+### 翻译者任务列表 [GET] /article/translateTask/translator?filter[state]=1&page[number]=1&page[size]=5
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_AD_USER
++ Parameters
+    + filter[state] - 筛选条件，任务状态
++ Response 200 (application/json)
+
+        {
+          "meta": {
+            "totalPages": 1,
+            "totalElements": 1,
+            "size": 5,
+            "number": 1,
+            "numberOfElements": 1,
+            "first": true,
+            "last": true,
+            "sort": [
+              {
+                "direction": "DESC",
+                "property": "modified",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": false,
+                "descending": true
+              }
+            ]
+          },
+          "links": {
+            "self": "/article/translateTask/translator?filter[state]=1&page[number]=1&page[size]=5",
+            "first": "/article/translateTask/translator?filter[state]=1&page[number]=1&page[size]=5",
+            "last": "/article/translateTask/translator?filter[state]=1&page[number]=1&page[size]=5"
+          },
+          "data": [
+            {
+              "id": 2,
+              "topicId": 2,
+              "state": 1,
+              "title": "Virus TI2 Keyboard",
+              "topicType": "产品"
+            }
+          ]
+        }
+### 翻译者任务详情 [GET] [/article/translateTask/{id}]
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "id": 1,
+            "enabled": 1,
+            "creator": 1031,
+            "modifier": 1031,
+            "created": "2017-11-07 10:41:56",
+            "modified": "2017-11-07 15:09:33",
+            "topicId": 1,
+            "postId": 1013367,
+            "state": 2,
+            "wordsNum": 2000,
+            "bonus": 100,
+            "translator": 1031,
+            "auditor": 0,
+            "post": {
+              "id": 1013367,
+              "enabled": 0,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-11-07 15:03:23",
+              "modified": "2017-11-07 15:09:33",
+              "parentId": 1,
+              "topicId": 1,
+              "priority": 0,
+              "language": 2,
+              "categories": [],
+              "tags": [],
+              "features": [
+                {
+                  "_name": "属性2",
+                  "_value": "属性2的值"
+                }
+              ],
+              "title": "fan'yi'ren'wu翻译任务222222222 ",
+              "description": "fan'yi翻译 miao'shu描述2222222 ",
+              "content": "wo'shi'fan'yi'nei'rong我是翻译内容2222222",
+              "parent": {
+                "id": 1,
+                "enabled": 1,
+                "creator": 0,
+                "modifier": 0,
+                "created": "2016-10-12 09:55:37",
+                "modified": "2017-10-28 13:33:38",
+                "parentId": 0,
+                "topicId": 1,
+                "priority": 0,
+                "language": 2,
+                "categories": [
+                  "Keyboards & Synthesizers",
+                  "Synthesizers"
+                ],
+                "tags": [
+                  "VirusTI2Desk"
+                ],
+                "features": [
+                  {
+                    "_name": "Sound Engine Type(s)",
+                    "_value": "Analog Modeling"
+                  }
+                ],
+                "title": "Virus TI2 Desktop",
+                "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n ",
+                "postsText": {
+                  "id": 1,
+                  "category": "Keyboards & Synthesizers,Synthesizers",
+                  "tag": "VirusTI2Desk",
+                  "title": "Virus TI2 Desktop",
+                  "feature": "[{\"_name\":\"Sound Engine Type(s)\",\"_value\":\"Analog Modeling\"}]",
+                  "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                  "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n 
+                },
+                "postType": 1,
+                "postTypeValue": "爬取"
+              },
+              "postsText": {
+                "id": 1013367,
+                "category": "",
+                "tag": "",
+                "title": "fan'yi'ren'wu翻译任务222222222 ",
+                "feature": "[{\"_name\":\"属性2\",\"_value\":\"属性2的值\"}]",
+                "description": "fan'yi翻译 miao'shu描述2222222 ",
+                "content": "wo'shi'fan'yi'nei'rong我是翻译内容2222222"
+              },
+              "postType": 3,
+              "postTypeValue": "精翻"
+            },
+            "title": "Virus TI2 Desktop",
+            "topicType": "产品"
+          }
+        }
+## 管理员接口
+### 增加任务 [POST] /article/translateTask
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+
++ Parameters
+    + topicId - 必填
+    + wordsNum
+    + bonus
+
++ 新增Request (application/json)
+    
+        {
+            "data":{
+                "topicId":1,
+                "wordsNum":1000,
+                "bonus":50
+            }
+        }
++ Response 201 (application/json)
+
+        {
+            "data": {
+                "id": 1,
+                "type": "translateTask"
+            }
+        }
+### 修改任务 [PATCH] /article/translateTask/{id}
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+
++ Parameters
+    + state
+    + wordsNum
+    + bonus
+
++ 修改Request (application/json)
+    
+        {
+            "data":{
+                "wordsNum":2000,
+                "bonus":100
+            }
+        }
++ Response 200 (application/json)
+
+### 删除任务 [DELETE] /article/translateTask/{id}
+
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+    + [MUST] 只有state=1的才能被删除
+
++ Response 204 (application/json)
++ Response 400 (application/json)
+
+### 任务集合 [GET] [/article/translateTask?page[number]=1&page[size]=5&filter[state]=1&filter[enabled]=1
+
++ Parameters
+    + filter[enabled] - 筛选条件，是否可用
+    + filter[state] - 筛选条件，任务状态
+
++ Response 200 (application/json)
+
+        {
+          "meta": {
+            "totalPages": 1,
+            "totalElements": 2,
+            "size": 5,
+            "number": 1,
+            "numberOfElements": 2,
+            "first": true,
+            "last": true,
+            "sort": null
+          },
+          "links": {
+            "self": "/article/translateTask?filter[state]=1&filter[enabled]=1&page[number]=1&page[size]=5",
+            "first": "/article/translateTask?filter[state]=1&filter[enabled]=1&page[number]=1&page[size]=5",
+            "last": "/article/translateTask?filter[state]=1&filter[enabled]=1&page[number]=1&page[size]=5"
+          },
+          "data": [
+            {
+              "id": 1,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-11-07 10:41:56",
+              "modified": "2017-11-07 11:09:06",
+              "topicId": 1,
+              "postId": 0,
+              "state": 1,
+              "wordsNum": 2000,
+              "bonus": 100,
+              "translator": 0,
+              "auditor": 0,
+              "title": "Virus TI2 Desktop",
+              "topicType": "产品"
+            },
+            {
+              "id": 2,
+              "enabled": 1,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-11-07 11:07:30",
+              "modified": "2017-11-07 11:07:30",
+              "topicId": 2,
+              "postId": 0,
+              "state": 1,
+              "wordsNum": 500,
+              "bonus": 25,
+              "translator": 0,
+              "auditor": 0,
+              "title": "Virus TI2 Keyboard",
+              "topicType": "产品"
+            }
+          ]
+        }
+### 任务详情 [GET] [/article/translateTask/{id}]
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+
++ Response 200 (application/json)   
+
+        {
+          "data": {
+            "id": 1,
+            "enabled": 1,
+            "creator": 1031,
+            "modifier": 1031,
+            "created": "2017-11-07 10:41:56",
+            "modified": "2017-11-07 15:09:33",
+            "topicId": 1,
+            "postId": 1013367,
+            "state": 2,
+            "wordsNum": 2000,
+            "bonus": 100,
+            "translator": 1031,
+            "auditor": 0,
+            "post": {
+              "id": 1013367,
+              "enabled": 0,
+              "creator": 1031,
+              "modifier": 1031,
+              "created": "2017-11-07 15:03:23",
+              "modified": "2017-11-07 15:09:33",
+              "parentId": 1,
+              "topicId": 1,
+              "priority": 0,
+              "language": 2,
+              "categories": [],
+              "tags": [],
+              "features": [
+                {
+                  "_name": "属性2",
+                  "_value": "属性2的值"
+                }
+              ],
+              "title": "fan'yi'ren'wu翻译任务222222222 ",
+              "description": "fan'yi翻译 miao'shu描述2222222 ",
+              "content": "wo'shi'fan'yi'nei'rong我是翻译内容2222222",
+              "parent": {
+                "id": 1,
+                "enabled": 1,
+                "creator": 0,
+                "modifier": 0,
+                "created": "2016-10-12 09:55:37",
+                "modified": "2017-10-28 13:33:38",
+                "parentId": 0,
+                "topicId": 1,
+                "priority": 0,
+                "language": 2,
+                "categories": [
+                  "Keyboards & Synthesizers",
+                  "Synthesizers"
+                ],
+                "tags": [
+                  "VirusTI2Desk"
+                ],
+                "features": [
+                  {
+                    "_name": "Sound Engine Type(s)",
+                    "_value": "Analog Modeling"
+                  }
+                ],
+                "title": "Virus TI2 Desktop",
+                "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n ",
+                "postsText": {
+                  "id": 1,
+                  "category": "Keyboards & Synthesizers,Synthesizers",
+                  "tag": "VirusTI2Desk",
+                  "title": "Virus TI2 Desktop",
+                  "feature": "[{\"_name\":\"Sound Engine Type(s)\",\"_value\":\"Analog Modeling\"}]",
+                  "description": "Analog Modeling Desktop Synthesizer and 24-bit/192kHz Audio/MIDI Interface",
+                  "content": "<div> \n <h2>Access Steps Up The Renowned Virus!</h2> \n 
+                },
+                "postType": 1,
+                "postTypeValue": "爬取"
+              },
+              "postsText": {
+                "id": 1013367,
+                "category": "",
+                "tag": "",
+                "title": "fan'yi'ren'wu翻译任务222222222 ",
+                "feature": "[{\"_name\":\"属性2\",\"_value\":\"属性2的值\"}]",
+                "description": "fan'yi翻译 miao'shu描述2222222 ",
+                "content": "wo'shi'fan'yi'nei'rong我是翻译内容2222222"
+              },
+              "postType": 3,
+              "postTypeValue": "精翻"
+            },
+            "title": "Virus TI2 Desktop",
+            "topicType": "产品"
+          }
+        }
