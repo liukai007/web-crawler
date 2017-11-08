@@ -1158,10 +1158,10 @@ HOST: http://192.168.1.138/
             }
           ]
         }
-### 翻译者任务详情 [GET] [/article/translateTasks/{id}]
+### 翻译者任务详情 [GET] [/article/translateTasks/translators/{id}]
 + Description
     + [MUST] Authenticated
-    + [MUST] ROLE_ADMIN
+    + [MUST] ROLE_AD_USER
 
 + Response 200 (application/json)
 
