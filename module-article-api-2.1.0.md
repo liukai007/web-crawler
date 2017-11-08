@@ -863,7 +863,7 @@ HOST: http://192.168.1.138/
     + topicType (String) - 文章类型
 
 ## 审核人员接口
-### 开始审核/暂存审核/提交审核结果 [PATCH] /article/translateTask/auditor/{id}
+### 开始审核/暂存审核/提交审核结果 [PATCH] /article/translateTasks/auditors/{id}
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AUDITOR
@@ -908,7 +908,7 @@ HOST: http://192.168.1.138/
 + Response 20* (application/json)
 + Response 40* (application/json)
 
-### 审核者任务列表 [GET] /article/translateTask/auditor?filter[state]=3&page[number]=1&page[size]=5
+### 审核者任务列表 [GET] /article/translateTasks/auditors?filter[state]=3&page[number]=1&page[size]=5
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AUDITOR
@@ -953,7 +953,7 @@ HOST: http://192.168.1.138/
           ]
         }
 
-### 审核者任务详情 [GET] [/article/translateTask/auditor/{id}]
+### 审核者任务详情 [GET] [/article/translateTasks/auditors/{id}]
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AUDITOR
@@ -1059,7 +1059,7 @@ HOST: http://192.168.1.138/
         }
 
 ## 翻译人员接口
-### 领取/添加翻译/修改翻译/审核失败后继续翻译 [PATCH] /article/translateTask/translator/{id}
+### 领取/添加翻译/修改翻译/审核失败后继续翻译 [PATCH] /article/translateTasks/translators/{id}
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AD_USER
@@ -1106,7 +1106,7 @@ HOST: http://192.168.1.138/
 + Response 20* (application/json)
 + Response 40* (application/json)    
 
-### 退回任务 [DELETE] /article/translateTask/translator/{id}
+### 退回任务 [DELETE] /article/translateTasks/translators/{id}
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AD_USER
@@ -1115,7 +1115,7 @@ HOST: http://192.168.1.138/
 + Response 20* (application/json)
 + Response 40* (application/json)
 
-### 翻译者任务列表 [GET] /article/translateTask/translator?filter[state]=1&page[number]=1&page[size]=5
+### 翻译者任务列表 [GET] /article/translateTasks/translators?filter[state]=1&page[number]=1&page[size]=5
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_AD_USER
@@ -1158,7 +1158,7 @@ HOST: http://192.168.1.138/
             }
           ]
         }
-### 翻译者任务详情 [GET] [/article/translateTask/{id}]
+### 翻译者任务详情 [GET] [/article/translateTasks/{id}]
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_ADMIN
@@ -1258,7 +1258,7 @@ HOST: http://192.168.1.138/
           }
         }
 ## 管理员接口
-### 增加任务 [POST] /article/translateTask
+### 增加任务 [POST] /article/translateTasks
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_ADMIN
@@ -1282,10 +1282,10 @@ HOST: http://192.168.1.138/
         {
             "data": {
                 "id": 1,
-                "type": "translateTask"
+                "type": "translateTasks"
             }
         }
-### 修改任务 [PATCH] /article/translateTask/{id}
+### 修改任务 [PATCH] /article/translateTasks/{id}
 
 + Description
     + [MUST] Authenticated
@@ -1306,7 +1306,7 @@ HOST: http://192.168.1.138/
         }
 + Response 200 (application/json)
 
-### 删除任务 [DELETE] /article/translateTask/{id}
+### 删除任务 [DELETE] /article/translateTasks/{id}
 
 + Description
     + [MUST] Authenticated
@@ -1316,7 +1316,7 @@ HOST: http://192.168.1.138/
 + Response 204 (application/json)
 + Response 400 (application/json)
 
-### 任务集合 [GET] [/article/translateTask?page[number]=1&page[size]=5&filter[state]=1&filter[enabled]=1
+### 任务集合 [GET] [/article/translateTasks?page[number]=1&page[size]=5&filter[state]=1&filter[enabled]=1
 
 + Parameters
     + filter[enabled] - 筛选条件，是否可用
@@ -1377,7 +1377,7 @@ HOST: http://192.168.1.138/
             }
           ]
         }
-### 任务详情 [GET] [/article/translateTask/{id}]
+### 任务详情 [GET] [/article/translateTasks/{id}]
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_ADMIN
