@@ -1,5 +1,27 @@
 # 数据库修改记录
-
++ 2017年11月08日 2.1.0 数据库改动
+> article.topics_model新增表, 分类模型增加数据库表
+```sql
+CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `forum_id` BIGINT UNSIGNED NOT NULL COMMENT '版块ID',
+  `model_status` ENUM('NEW', 'RUNNABLE', 'DONE', 'DELETE', 'TERMINATED') NOT NULL DEFAULT 'NEW' COMMENT 'NEW:新创建的模型\nRUNNABLE:正在执行训练的模型\nDONE:完成训练\nDELETE:已经被删除, 无法回滚\nTERMINATED:训练中的模型被终止',
+  `model_name` VARCHAR(100) NOT NULL COMMENT '模型名称, e.g : topic-1',
+  `priority` TINYINT NOT NULL DEFAULT 0 COMMENT '每个forum_id下, 使用一个优先级最高的模型用于分类',
+  `conf_random_selection` TINYINT NOT NULL DEFAULT 20 COMMENT '(1-100) n%用于测试数据',
+  `conf_overwrite` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否覆盖',
+  `result_samples` INT NOT NULL DEFAULT 0 COMMENT '训练样本数量',
+  `result_text` TEXT NULL COMMENT '模型结果:测试结果或异常结果',
+  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+  `creator` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `modifier` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `created` DATETIME NOT NULL,
+  `modified` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `enabled_forum_id_model_status_priority_idx` (`enabled` ASC, `forum_id` ASC, `model_status` ASC, `priority` ASC),
+  INDEX `forum_id_idx` (`forum_id` ASC))
+ENGINE = InnoDB
+```
 + 2017年10月31日 2.1.0 数据库改动
 > article.topics表改动 增加两个新字段, 修改索引, SQL初始化训练数据
 ```sql
