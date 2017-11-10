@@ -1025,7 +1025,8 @@ HOST: http://192.168.1.138/
     + postId (Long) - 翻译标识
     + state (int) - 任务状态，1：待领取，2：未提交，3：待审核，4：审核中，5：审核失败，6：审核成功，7：已支付
     + wordsNum (int) - 单词数
-    + bonus (BigDecimal) - 金额
+    + wordsNumCn (int) - 中文字数
+    + bonus (BigDecimal) - 金额
     + translator (Long) - 翻译人
     + auditor (Long) - 审核人
     + auditOpinion (String) - 审核意见
@@ -1472,6 +1473,7 @@ HOST: http://192.168.1.138/
 + Parameters
     + state
     + wordsNum
+    + wordsNumCn
     + bonus
 
 + 修改Request (application/json)
@@ -1479,6 +1481,7 @@ HOST: http://192.168.1.138/
         {
             "data":{
                 "wordsNum":2000,
+                "wordsNumCn":2500,
                 "bonus":100
             }
         }
