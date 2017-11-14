@@ -26,6 +26,36 @@ HOST: http://192.168.1.138/
 
 + 2017年10月31日
     + 新增种子相关API
+    
+## (GET) 分类模型状态集合 [/article/topicsModel/modelStatus?filter[type]={type}]
+
++ Description
+    + [MUST] ROLE_ADMIN
+    + 不写filter就查询全部的枚举类型
+
++ Field
+    + name (string) - 状态名称
+    + value (string) - 状态值
+
++ Parameters
+    + type (enum, nullable) - 过滤条件, MANUAL:人工类型(可修改), AUTO:自动类型(不可修改)
+
+### 查询分类模型的枚举状态类型列表 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "name": "训练",
+                    "value": "RUNNABLE"
+                },
+                {
+                    "name": "分类",
+                    "value": "CLASSIFICATION"
+                }
+            ]
+        }
 
 ## (POST|GET) 分类模型 [/article/topicsModel]
 
@@ -56,36 +86,6 @@ HOST: http://192.168.1.138/
     + sort (object) - 排序相关信息
     + first (boolean) - 是否是第一页
     + totalElements - 总记录数
-
-## (GET) 分类模型状态集合 [/article/topicsModel/modelStatus?filter[type]={type}]
-
-+ Description
-    + [MUST] ROLE_ADMIN
-    + 不写filter就查询全部的枚举类型
-
-+ Field
-    + name (string) - 状态名称
-    + value (string) - 状态值
-
-+ Parameters
-    + type (enum, nullable) - 过滤条件, MANUAL:人工类型(可修改), AUTO:自动类型(不可修改)
-
-### 查询分类模型的枚举状态类型列表 [GET]
-
-+ Response 200 (application/json)
-
-        {
-            "data": [
-                {
-                    "name": "训练",
-                    "value": "RUNNABLE"
-                },
-                {
-                    "name": "分类",
-                    "value": "CLASSIFICATION"
-                }
-            ]
-        }
 
 ### 新增分类模型 [POST]
 
