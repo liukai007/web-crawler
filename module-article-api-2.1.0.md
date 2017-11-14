@@ -1051,6 +1051,7 @@ HOST: http://192.168.1.138/
     + 提交审核：审核人员提交审核，此时state从4变为5|6
 + Parameters
     + state 必填，开始审核/暂存审核：state=4，提交审核state=5|6
+    + wordsNumCn 当state=4|5时不填；当state=6时，可以填写，如果不填则后台计算
     + auditOpinion
     + posts 开始审核-必不填，暂存/提交-必填
     + posts.features
@@ -1473,7 +1474,7 @@ HOST: http://192.168.1.138/
 + Parameters
     + state
     + wordsNum
-    + wordsNumCn
+    + wordsNumCn
     + bonus
 
 + 修改Request (application/json)
