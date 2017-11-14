@@ -1,6 +1,6 @@
 # 数据库修改记录
 + 2017年11月08日 2.1.0 数据库改动
-> article.topics_model新增表, 分类模型增加数据库表
+> article.topics_model新增表, 分类模型增加数据库表, 修改表, 增加了一个字段
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -21,6 +21,10 @@ CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
   INDEX `enabled_forum_id_model_status_priority_idx` (`enabled` ASC, `forum_id` ASC, `model_status` ASC, `priority` ASC),
   INDEX `forum_id_idx` (`forum_id` ASC))
 ENGINE = InnoDB
+```
+```sql
+ALTER TABLE `mifan_article`.`topics_model` 
+CHANGE COLUMN `model_status` `model_status` ENUM('NEW', 'RUNNABLE', 'CLASSIFICATION', 'DONE', 'DELETE', 'TERMINATED') NOT NULL DEFAULT 'NEW' COMMENT 'NEW:新创建的模型\nRUNNABLE:正在执行训练的模型\nCLASSIFICATION:正在执行全量分类\nDONE:完成\nDELETE:已经被删除, 无法回滚\nTERMINATED:训练中的模型被终止' ;
 ```
 + 2017年10月31日 2.1.0 数据库改动
 > article.topics表改动 增加两个新字段, 修改索引, SQL初始化训练数据
