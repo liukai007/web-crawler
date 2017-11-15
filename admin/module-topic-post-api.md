@@ -7,13 +7,14 @@
     + postTypeValue (String) - 文章类型
     + parentId (Long) - 父id
     + language (Integer) - 语言 0:缺省, 1:中文, 2英文
+    + priority - 默认为0
 
 ### 文章二级集合 [GET] [/article/posts/topic/{topicId}]
 
 + Description
     + [MUST] Authenticated
     + [MUST] ROLE_ADMIN
-    + 列表需要展示的数据：id,title,postTypeValue,parentId,language,enabled,creator,modifier,created,modified
+    + 列表需要展示的数据：id,title,postTypeValue,parentId,priority,language,enabled,creator,modifier,created,modified
 + Response 200 (application/json)
 
         {
@@ -115,7 +116,9 @@
     + language - 必填
     + topicId - 必填
     + parentId - 必填
+    + priority - 数值大小0-100 后台未加控制
     + features
+    + content
     + content
 + 新增Request (application/json)
     
@@ -124,8 +127,9 @@
                 "topicId":3,
                 "parentId":3,
                 "language":2,
+                "priority": 10,
                 "title":"fan'yi翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
-                "content":"我是翻译内容 ",
+                "content":"我是翻译内容 ",           
                 "features":[
                             {
                                 "_name":"属性2",
@@ -144,14 +148,17 @@
     + title - 必填
     + description
     + language
+    + priority - 数值大小0-100 后台未加控制
     + features
     + content
+    + features
 + 修改Request (application/json)
     
         {
             "data":{
                 "title":"更新翻译Taylor T5z Custom, Sweetwater Exclusive - Cocobolo",
                 "content":"更新-我是翻译内容 ",
+                "priority": 10,
                 "features":[
                             {
                                 "_name":"更新-属性2",

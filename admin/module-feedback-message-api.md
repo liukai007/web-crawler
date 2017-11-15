@@ -1,3 +1,4 @@
+
 ## (POST|GET) 留言板 [/article/messages]
 
 + Description
@@ -108,3 +109,48 @@
                 }
             ]
         }   
+## (GET|DELETE|PATCH) 留言  [/article/messages/{id}]
+
++ Description
+    + [MUST] ROLE_ADMIN 除了GET
+    + [PATCH] 
+        + message 不能为空 并且大于等于2个字符小于等于140个字符
+
+
++ Parameters
+    + id (long) - 留言ID
+
+### 查询留言详情 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": 3,
+                "enabled": 1,
+                "creator": 0,
+                "modifier": 0,
+                "created": "2017-09-02 15:09:29",
+                "modified": "2017-09-02 15:09:29",
+                "message": "messagemessagemessagemessage"
+            }
+        }
+
+### 删除留言 [DELETE]
+
++ Response 204 (application/json)
+
+### 修改留言 [PATCH]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "message": "messagemessagemessagemessage",
+                "enabled": 1
+            }
+        }
+        
++ Response 200 (application/json)
+
++ Response 204 (application/json)

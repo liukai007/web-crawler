@@ -112,3 +112,63 @@
                 }
             ]
         }
+
+## (GET|DELETE|PATCH) 反馈  [/article/feedback/{id}]
+
++ Description
+    + [MUST] ROLE_ADMIN 除了GET
+    + [PATCH] 
+        + username 大于等于1个字符小于等于100个字符
+        + mobile 符合正则表达式(^1(3[0-9]|4[579]|5[0-35-9]|7[0135678]|8[0-9])\d{8}$)
+        + email 符合正则表达式(^([a-z0-9A-Z]+[-|\.|_]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-zA-Z]{2,}$) 且大于等于2个字符小于等于255个字符
+        + suggestion 大于等于1个字符小于等于2048个字符
+
++ Data
+    + username (string) - 姓名
+    + mobile (string) - 手机号, 联系方式
+    + email (string) - 邮箱
+    + suggestion (string) - 反馈建议信息
+
++ Parameters
+    + id (long) - 反馈ID
+
+### 查询反馈详情 [GET]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "id": 3,
+                "enabled": 1,
+                "creator": 11,
+                "modifier": 11,
+                "created": "2017-09-02 15:06:51",
+                "modified": "2017-09-02 15:06:51",
+                "username": "quzile",
+                "mobile": "17611019209",
+                "email": "1929593@qq.com",
+                "suggestion": "建议22333233"
+            }
+        }
+
+### 删除反馈 [DELETE]
+
++ Response 204 (application/json)
+
+### 修改反馈 [PATCH]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "username": "quzile",
+                "mobile": "17611019209",
+                "email": "1929593@qq.com",
+                "suggestion": "建议22333233"
+                "enabled": 1
+            }
+        }
+        
++ Response 200 (application/json)
+
++ Response 204 (application/json)
