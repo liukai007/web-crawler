@@ -1,4 +1,26 @@
 # 数据库修改记录
++ 2017年11月02日 2.1.0 数据库改动
+> article.translate_task，新增翻译任务表
+```sql
+CREATE TABLE `translate_task` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `topic_id` bigint(20) unsigned NOT NULL,
+  `post_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '翻译文档关联id',
+  `state` tinyint(3) unsigned NOT NULL COMMENT '状态：1：待领取，2：未提交，3：待审核，4：审核中，5：审核失败，6：审核成功，7：已支付',
+  `words_num` int(11) DEFAULT NULL COMMENT '单词数',
+  `words_num_cn` int(11) DEFAULT NULL COMMENT '中文字数',
+  `bonus` decimal(10,2) DEFAULT NULL COMMENT '支付金额',
+  `translator` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '翻译人',
+  `auditor` bigint(20) NOT NULL DEFAULT '0',
+  `audit_opinion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '审核员反馈',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT '启用/禁用',
+  `modifier` bigint(20) unsigned NOT NULL COMMENT '修改人',
+  `creator` bigint(20) unsigned NOT NULL COMMENT '创建人',
+  `modified` datetime NOT NULL COMMENT '修改时间',
+  `created` datetime NOT NULL COMMENT '创建人',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `topic_id_unique` (`topic_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 + 2017年11月08日 2.1.0 数据库改动
 > article.topics_model新增表, 分类模型增加数据库表, 修改表, 增加了一个字段
 ```sql
