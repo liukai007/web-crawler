@@ -23,7 +23,7 @@
     + modifier (long) - 修改人
     + seedId (long) - 来源id
 
-### (GET)产品集合 [/product?page[number]=1&page[size]=5&filter[title]=刘凯
+### (GET)产品集合 [/products?page[number]=1&page[size]=5&filter[title]=刘凯
 
 + Parameters
     + filter[id] - 筛选条件，唯一标识
