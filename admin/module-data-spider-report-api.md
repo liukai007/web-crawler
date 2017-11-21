@@ -10,8 +10,8 @@
 + Description
 
 + Parameters
-    + filter[priortime] 必填,起始时间
-    + filter[latertime] 必填,结束时间
+    + filter[priortime] 起始时间,默认时间为当前时间减去一天
+    + filter[latertime] 结束时间,默认时间为当前时间
     + page[number] 页数
     + page[size]  每页多少条记录
 + Response 200 (application/json)
