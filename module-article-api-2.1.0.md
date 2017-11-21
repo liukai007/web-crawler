@@ -1913,3 +1913,76 @@ HOST: http://192.168.1.138/
                     }
                     ]
                 }
+               
+  ## 通过SeedId获取爬取的数据详情
+
++ Data
+    + id(Long) - id
+    + topicId(Long) - topicId
+    + seedId(Long) - 种子ID
+    + origin(String) - 被爬取的url
+
+## Connections连接状态汇总 [GET] /spider/statistics/topicsfetch/{seedId}
++ Description
+
++ Parameters
+    + page[number] 页数
+    + page[size]  每页多少条记录
+    + seedId  种子ID
+
++ Response 200 (application/json)
+    
+        {
+        "meta": {
+            "totalPages": 16449,
+            "totalElements": 65795,
+            "size": 4,
+            "number": 2,
+            "numberOfElements": 4,
+            "first": false,
+            "last": false,
+            "sort": [
+                {
+                    "direction": "DESC",
+                    "property": "id",
+                    "ignoreCase": false,
+                    "nullHandling": "NATIVE",
+                    "descending": true,
+                    "ascending": false
+                }
+            ]
+        },
+        "links": {
+            "self": "/spider/statistics/topicsfetch/1?page[number]=2&page[size]=4",
+            "first": "/spider/statistics/topicsfetch/1?page[number]=1&page[size]=4",
+            "prev": "/spider/statistics/topicsfetch/1?page[number]=1&page[size]=4",
+            "next": "/spider/statistics/topicsfetch/1?page[number]=3&page[size]=4",
+            "last": "/spider/statistics/topicsfetch/1?page[number]=16449&page[size]=4"
+        },
+        "data": [
+            {
+                "id": 620042,
+                "topicId": 620302,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-20-brass-bar-chime-tree/472925000000000"
+            },
+            {
+                "id": 620041,
+                "topicId": 620301,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-a-days-work-hand-held-chime-and-holder/472918000914000"
+            },
+            {
+                "id": 620040,
+                "topicId": 620300,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-wheelchair-tray-table-multi-instrument-holder/472921000000000"
+            },
+            {
+                "id": 620039,
+                "topicId": 620299,
+                "seedId": 1,
+                "origin": "http://www.music123.com/accessories/a-days-work-36-peg-soprano-recorder-stand/472923000000000"
+            }
+        ]
+    }
