@@ -19,7 +19,7 @@
 
 ### 列表 [GET] /channels?filter[channelType]=1 
 + Description
-    + 列表展示id,channelName,description,channelTypeValue,watched,cancellable,enabled,created,modified
+    + 列表展示id,channelName,description,channelTypeValue,watched,cancellable,enabled,creator,modifier,created,modified
 + Parameters
     + channelType
     + channelName
@@ -74,7 +74,7 @@
         }
 ### 频道详情 [GET] /channels/{id}
 + Description
-    + 展示字段id,channelName,description,channelTypeValue,targetId 或者 targets,channelImage,watched,cancellable,enabled,created,modified
+    + 展示字段id,channelName,description,channelTypeValue,targetId 或者 targets,channelImage,watched,cancellable,enabled,creator,modifier,created,modified
 + Response 200 (application/json)
     
         {
