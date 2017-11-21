@@ -1,4 +1,12 @@
 # 数据库修改记录
++ 2017年11月21日 2.1.0 数据库改动
+> article.channels，增加频道表创建人和修改人字段
+```sql
+ALTER TABLE `channels`
+ADD COLUMN `creator`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `enabled`,
+ADD COLUMN `modifier`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `creator`;
+```
+
 + 2017年11月02日 2.1.0 数据库改动
 > article.translate_task，新增翻译任务表
 ```sql
