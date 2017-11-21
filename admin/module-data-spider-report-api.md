@@ -16,7 +16,7 @@
     + page[size]  每页多少条记录
 + Response 200 (application/json)
 
-    
+```   
     {
         "meta": 
         {
@@ -70,14 +70,13 @@
             }
         ]
     }
+```
 
-
-## 通过SeedId获取爬取的数据详情
+## 通过SeedId获取爬取的数据详情 [GET] /spider/statistics/topicsfetch/{seedId}
 + Description
 
 + Parameters
-    + filter[priortime] 必填,起始时间
-    + filter[latertime] 必填,结束时间
+    + seedId 来源id
     + page[number] 页数
     + page[size]  每页多少条记录
 + Response 200 (application/json)
@@ -86,3 +85,47 @@
     + topicId(Long) - topicId
     + seedId(Long) - 种子ID    
     + origin(String) - 被爬取的url
+
+```
+{
+    "meta": {
+        "totalPages": 1038,
+        "totalElements": 2075,
+        "size": 2,
+        "number": 1,
+        "numberOfElements": 2,
+        "first": true,
+        "last": false,
+        "sort": [
+            {
+                "direction": "DESC",
+                "property": "id",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": false,
+                "descending": true
+            }
+        ]
+    },
+    "links": {
+        "self": "/spider/statistics/topicsfetch/12?page[number]=1&page[size]=2",
+        "first": "/spider/statistics/topicsfetch/12?page[number]=1&page[size]=2",
+        "next": "/spider/statistics/topicsfetch/12?page[number]=2&page[size]=2",
+        "last": "/spider/statistics/topicsfetch/12?page[number]=1038&page[size]=2"
+    },
+    "data": [
+        {
+            "id": 400707,
+            "topicId": 400707,
+            "seedId": 12,
+            "origin": "https://www.thomann.de/gb/acme.html"
+        },
+        {
+            "id": 400706,
+            "topicId": 400706,
+            "seedId": 12,
+            "origin": "https://www.thomann.de/gb/accent_on_music.html"
+        }
+    ]
+}
+```
