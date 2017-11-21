@@ -16,7 +16,7 @@
     + page[size]  每页多少条记录
 + Response 200 (application/json)
 
-    
+```   
     {
         "meta": 
         {
@@ -70,7 +70,7 @@
             }
         ]
     }
-
+```
 
 ## 通过SeedId获取爬取的数据详情
 + Description
