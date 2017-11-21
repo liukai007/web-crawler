@@ -137,3 +137,17 @@
         }
       ]
     }
+   
+### 保存某个角色下的权限集合 [POST] /user/roles/{roleId}/authorities
++ Description
+    + [MUST] Authenticated
+    + [MUST] ROLE_ADMIN
+
++ Parameters
+    + authorityIds  数组必填
++ 新增Request (application/json)
+    
+
+    {
+        "authorityIds":14，12,13
+    }
