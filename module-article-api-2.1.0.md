@@ -1705,8 +1705,8 @@ HOST: http://192.168.1.138/
 + Description
 
 + Parameters
-    + filter[priortime] 必填,起始时间
-    + filter[latertime] 必填,结束时间
+    + filter[priortime] 起始时间,默认时间为当前时间减去一天
+    + filter[latertime] 结束时间,默认时间为当前时间
     + page[number] 页数
     + page[size]  每页多少条记录
 + Response 200 (application/json)
@@ -1761,3 +1761,228 @@ HOST: http://192.168.1.138/
             }
         ]
         }
+
+## RabbitMq Connections连接状态汇总
+
++ Data
+    + name(String) - 客户端名字
+    + user(String) - 账户登陆名字
+    + host (String) - 客户端IP
+    + ssl(Boolean) - 是否加密
+    + state(String) - 运行状态
+    + timeout (int) - HeartBeat心跳时间
+    + protocol (String) - 协议名称
+    + connected_at(Long) -建立连接时间
+
+## Connections连接状态汇总 [GET] /spider/rabbitmq/connections
++ Description
+
++ Parameters
+
++ Response 200 (application/json)
+    
+        {
+            "data": [
+                    {
+                    "garbage_collection": {
+                        "minor_gcs": 71,
+                        "min_bin_vheap_size": 46422,
+                        "min_heap_size": 233,
+                        "fullsweep_after": 65535
+                    },
+                    "reductions": 35848,
+                    "ssl_cipher": null,
+                    "connected_at": 1510898081568,
+                    "type": "network",
+                    "ssl": false,
+                    "timeout": 60,
+                    "frame_max": 131072,
+                    "protocol": "AMQP 0-9-1",
+                    "send_oct_details": {
+                        "rate": 40
+                    },
+                    "client_properties": {
+                        "connection_name": "rabbitConnectionFactory#0",
+                        "product": "RabbitMQ",
+                        "copyright": "Copyright (c) 2007-2016 Pivotal Software, Inc.",
+                        "capabilities": {
+                            "exchange_exchange_bindings": true,
+                            "connection.blocked": true,
+                            "authentication_failure_close": true,
+                            "basic.nack": true,
+                            "publisher_confirms": true,
+                            "consumer_cancel_notify": true
+                        },
+                        "information": "Licensed under the MPL. See http://www.rabbitmq.com/",
+                        "version": "4.0.2",
+                        "platform": "Java"
+                    },
+                    "send_pend": 0,
+                    "host": "192.168.1.138",
+                    "auth_mechanism": "PLAIN",
+                    "state": "running",
+                    "recv_oct_details": {
+                        "rate": 44
+                    },
+                    "ssl_protocol": null,
+                    "ssl_key_exchange": null,
+                    "peer_cert_subject": null,
+                    "peer_cert_validity": null,
+                    "recv_cnt": 178,
+                    "peer_port": 58275,
+                    "ssl_hash": null,
+                    "peer_cert_issuer": null,
+                    "send_cnt": 178,
+                    "recv_oct": 7367,
+                    "vhost": "/",
+                    "node": "rabbit@dev",
+                    "channel_max": 0,
+                    "channels": 2,
+                    "peer_host": "192.168.1.130",
+                    "port": 5672,
+                    "send_oct": 6050,
+                    "name": "192.168.1.130:58275 -> 192.168.1.138:5672",
+                    "user": "rabbitmq",
+                    "reductions_details": {
+                        "rate": 218.4
+                    }
+                },
+                {
+                    "garbage_collection": {
+                        "minor_gcs": 377,
+                        "min_bin_vheap_size": 46422,
+                        "min_heap_size": 233,
+                        "fullsweep_after": 65535
+                    },
+                    "reductions": 15039405,
+                    "ssl_cipher": null,
+                    "connected_at": 1510822344221,
+                    "type": "network",
+                    "ssl": false,
+                    "timeout": 60,
+                    "frame_max": 131072,
+                    "protocol": "AMQP 0-9-1",
+                    "send_oct_details": {
+                        "rate": 40
+                    },
+                    "client_properties": {
+                        "connection_name": "rabbitConnectionFactory#0",
+                        "product": "RabbitMQ",
+                        "copyright": "Copyright (c) 2007-2016 Pivotal Software, Inc.",
+                        "capabilities": {
+                            "exchange_exchange_bindings": true,
+                            "connection.blocked": true,
+                            "authentication_failure_close": true,
+                            "basic.nack": true,
+                            "publisher_confirms": true,
+                            "consumer_cancel_notify": true
+                        },
+                        "information": "Licensed under the MPL. See http://www.rabbitmq.com/",
+                        "version": "4.0.2",
+                        "platform": "Java"
+                    },
+                    "send_pend": 0,
+                    "host": "192.168.1.138",
+                    "auth_mechanism": "PLAIN",
+                    "state": "running",
+                    "recv_oct_details": {
+                        "rate": 44
+                    },
+                    "ssl_protocol": null,
+                    "ssl_key_exchange": null,
+                    "peer_cert_subject": null,
+                    "peer_cert_validity": null,
+                    "recv_cnt": 75413,
+                    "peer_port": 55984,
+                    "ssl_hash": null,
+                    "peer_cert_issuer": null,
+                    "send_cnt": 75412,
+                    "recv_oct": 2765947,
+                    "vhost": "/",
+                    "node": "rabbit@dev",
+                    "channel_max": 0,
+                    "channels": 2,
+                    "peer_host": "192.168.1.181",
+                    "port": 5672,
+                    "send_oct": 2513850,
+                    "name": "192.168.1.181:55984 -> 192.168.1.138:5672",
+                    "user": "rabbitmq",
+                    "reductions_details": {
+                        "rate": 217.6
+                    }
+                    }
+                    ]
+                }
+               
+  ## 通过SeedId获取爬取的数据详情
+
++ Data
+    + id(Long) - id
+    + topicId(Long) - topicId
+    + seedId(Long) - 种子ID
+    + origin(String) - 被爬取的url
+
+## Connections连接状态汇总 [GET] /spider/statistics/topicsfetch/{seedId}
++ Description
+
++ Parameters
+    + page[number] 页数
+    + page[size]  每页多少条记录
+    + seedId  种子ID
+
++ Response 200 (application/json)
+    
+        {
+        "meta": {
+            "totalPages": 16449,
+            "totalElements": 65795,
+            "size": 4,
+            "number": 2,
+            "numberOfElements": 4,
+            "first": false,
+            "last": false,
+            "sort": [
+                {
+                    "direction": "DESC",
+                    "property": "id",
+                    "ignoreCase": false,
+                    "nullHandling": "NATIVE",
+                    "descending": true,
+                    "ascending": false
+                }
+            ]
+        },
+        "links": {
+            "self": "/spider/statistics/topicsfetch/1?page[number]=2&page[size]=4",
+            "first": "/spider/statistics/topicsfetch/1?page[number]=1&page[size]=4",
+            "prev": "/spider/statistics/topicsfetch/1?page[number]=1&page[size]=4",
+            "next": "/spider/statistics/topicsfetch/1?page[number]=3&page[size]=4",
+            "last": "/spider/statistics/topicsfetch/1?page[number]=16449&page[size]=4"
+        },
+        "data": [
+            {
+                "id": 620042,
+                "topicId": 620302,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-20-brass-bar-chime-tree/472925000000000"
+            },
+            {
+                "id": 620041,
+                "topicId": 620301,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-a-days-work-hand-held-chime-and-holder/472918000914000"
+            },
+            {
+                "id": 620040,
+                "topicId": 620300,
+                "seedId": 1,
+                "origin": "http://www.music123.com/classroom-kids/a-days-work-wheelchair-tray-table-multi-instrument-holder/472921000000000"
+            },
+            {
+                "id": 620039,
+                "topicId": 620299,
+                "seedId": 1,
+                "origin": "http://www.music123.com/accessories/a-days-work-36-peg-soprano-recorder-stand/472923000000000"
+            }
+        ]
+    }
