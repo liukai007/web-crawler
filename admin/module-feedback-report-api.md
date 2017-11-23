@@ -10,9 +10,10 @@
     + remark (string) - 举报原因
     + options (array) - 举报选项 前端需取voteOptions用以替换
         
-### 查询留言板集合 [GET]
+### 查询文章举报集合 [GET]
 
 + Response 200 (application/json)
+```
 {
     "meta": {
         "totalPages": 1,
@@ -69,7 +70,8 @@
         }
     ]
 }
-## (GET) 留言  [/article/messages/{id}]
+```
+## (GET|DELETE) 举报  [/users/relationships/topics/report/{id}]
 
 + Description
     + [MUST] ROLE_ADMIN 
@@ -77,10 +79,10 @@
 + Parameters
     + id (long) - 举报ID
 
-### 查询留言详情 [GET]
+### 查询举报详情 [GET]
 
 + Response 200 (application/json)
-
+```
         {
             "data": {
                 "id": 3,
@@ -95,5 +97,7 @@
                 ]
             }
         }
+```
+### 删除举报 [DELETE]
 
-
++ Response 204 (application/json)
