@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # 米饭平台2.1.0
 
++ 2017年11月23日
+    + 增加索引管理API
+        + 增加或重建topics索引API
+        + 删除topics索引API
+
 + 2017年11月14日
     + 增加获取模型状态列表的API
 
@@ -26,6 +31,81 @@ HOST: http://192.168.1.138/
 
 + 2017年10月31日
     + 新增种子相关API
+    
+### 新增索引 [POST]
+
++ Request (application/json)
+
+        {
+            "data": {
+                "id": 1,
+                "array": [
+                    1,
+                    2
+                ],
+                "start": 1,
+                "end": 2
+            }
+        }
+
++ Response 200 (application/json)
+
+        {
+            "data": "some information"
+        }
+            
++ Response 204 (application/json)
+        
++ Response 400 (application/json)
+
+        {
+            "errors": [
+                {
+                    "status": "400",
+                    "code": "some code",
+                    "title": "Bad Request",
+                    "detail": "格式错误",
+                    "source": {
+                        "pointer": "{class} -> {field}"
+                    }
+                }
+            ]
+        }
+        
+## (DELETE)  [/article/topics/index/{id}]
+
++ Description
+    + [MUST] ROLE_ADMIN
+
++ Parameters
+    + id (long) - topic ID
+
+### 删除主题索引 [DELETE]
+
++ Response 200 (application/json)
+
+        {
+            "data": {
+                "context": {
+                    "empty": true
+                },
+                "headers": [],
+                "shardInfo": {
+                    "total": 2,
+                    "successful": 1,
+                    "failures": [],
+                    "failed": 0
+                },
+                "index": "topic-0928",
+                "id": "1",
+                "type": "post",
+                "version": 24,
+                "found": true,
+                "contextEmpty": true
+            }
+        }
+
++ Response 204 (application/json)    
     
 ## (GET) 分类模型状态集合 [/article/topicsModel/modelStatus?filter[type]={type}]
 
