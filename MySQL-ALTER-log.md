@@ -1,8 +1,14 @@
 # 数据库修改记录
++ 2017年11月23日 2.1.0 数据库改动
+> article.channels，增加分类表图片字段
+```sql
+ALTER TABLE `mifan_article`.`forum_categories`
+ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '分类图片' AFTER `title`;
+```
 + 2017年11月21日 2.1.0 数据库改动
 > article.channels，增加频道表创建人和修改人字段
 ```sql
-ALTER TABLE `channels`
+ALTER TABLE `mifan_article`.`channels`
 ADD COLUMN `creator`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `enabled`,
 ADD COLUMN `modifier`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `creator`;
 ```
@@ -10,7 +16,7 @@ ADD COLUMN `modifier`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `creator`;
 + 2017年11月02日 2.1.0 数据库改动
 > article.translate_task，新增翻译任务表
 ```sql
-CREATE TABLE `translate_task` (
+CREATE TABLE IF NOT EXISTS `mifan_article`.`translate_task` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `topic_id` bigint(20) unsigned NOT NULL,
   `post_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '翻译文档关联id',
@@ -33,7 +39,7 @@ CREATE TABLE `translate_task` (
 + 2017年11月08日 2.1.0 数据库改动
 > article.topics_model新增表, 分类模型增加数据库表, 修改表, 增加了一个字段
 ```sql
-CREATE TABLE `topics_model` (
+CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `forum_id` bigint(20) unsigned NOT NULL COMMENT '版块ID',
   `model_status` enum('NEW','RUNNABLE','CLASSIFICATION','WAITING','DONE','DELETE','TERMINATED') NOT NULL DEFAULT 'NEW' COMMENT 'NEW:新创建的模型\nRUNNABLE:正在执行训练的模型\nCLASSIFICATION:正在执行全量分类\nWAITING:等待\nDONE:完成\nDELETE:已经被删除, 无法回滚\nTERMINATED:训练中的模型被终止',
