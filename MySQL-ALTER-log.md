@@ -1,4 +1,12 @@
 # 数据库修改记录
++ 2017年11月24日 2.1.0 数据库改动
+
+> support.event_dic，增加enabled字段
+```sql
+ALTER TABLE `mifan_support`.`event_dic`
+ADD COLUMN `enabled`  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 AFTER `event_describe`;
+```
+
 + 2017年11月23日 2.1.0 数据库改动
 
 > article.channels，增加分类表图片字段
