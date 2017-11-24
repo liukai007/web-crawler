@@ -18,6 +18,7 @@ ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci N
 > article.scheduled_job，增加一行数据（排行榜定时任务）
 ```sql
 INSERT INTO `scheduled_job` VALUES (5, 0, 'DONE', '2017-11-23 14:42:23', '2017-11-23 14:42:26', '2017-11-23 14:42:30', NULL, '排行榜定时', 1);
+```
 
 + 2017年11月21日 2.1.0 数据库改动
 > article.channels，增加频道表创建人和修改人字段
