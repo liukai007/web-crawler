@@ -31,75 +31,79 @@
 + Response 200 (application/json)
 
         {
-          "meta": {
-            "totalPages": 8,
-            "totalElements": 73,
-            "size": 10,
-            "number": 1,
-            "numberOfElements": 10,
-            "first": true,
-            "last": false,
-            "sort": null
-          },
-          "links": {
-            "self": "/channels?page[number]=1&page[size]=10",
-            "first": "/channels?page[number]=1&page[size]=10",
-            "next": "/channels?page[number]=2&page[size]=10",
-            "last": "/channels?page[number]=8&page[size]=10"
-          },
-          "data": [
-            {
-              "id": 86,
-              "targetId": 2425,
-              "channelSource": 1,
-              "channelType": 3,
-              "channelName": "米饭星2425",
-              "channelImage": null,
-              "description": null,
-              "watched": 0,
-              "displayOrder": 0,
-              "cancellable": 1,
-              "subscribed": false,
-              "channelTypeValue": "用户频道"
+            "meta": {
+                "totalPages": 8,
+                "totalElements": 73,
+                "size": 10,
+                "number": 1,
+                "numberOfElements": 10,
+                "first": true,
+                "last": false,
+                "sort": null
             },
-            {
-              "id": 13,
-              "targetId": 8,
-              "channelSource": 1,
-              "channelType": 4,
-              "channelName": "EAW",
-              "channelImage": "http://static.budee.com/yyren/image/channel/eaw.jpg",
-              "description": null,
-              "watched": 1,
-              "displayOrder": 0,
-              "cancellable": 1,
-              "subscribed": false,
-              "host": "http://eaw.com",
-              "channelTypeValue": "来源频道"
-            }
-          ]
+            "links": {
+                "self": "/channels?page[number]=1&page[size]=10",
+                "first": "/channels?page[number]=1&page[size]=10",
+                "next": "/channels?page[number]=2&page[size]=10",
+                "last": "/channels?page[number]=8&page[size]=10"
+            },
+            "data": [
+                {
+                    "id": 86,
+                    "targetId": 2425,
+                    "channelSource": 1,
+                    "channelType": 3,
+                    "channelName": "米饭星2425",
+                    "channelImage": null,
+                    "description": null,
+                    "watched": 0,
+                    "displayOrder": 0,
+                    "cancellable": 1,
+                    "subscribed": false,
+                    "channelTypeValue": "用户频道",
+                    "channelSourceValue": "国内频道"
+                },
+                {
+                    "id": 13,
+                    "targetId": 8,
+                    "channelSource": 1,
+                    "channelType": 4,
+                    "channelName": "EAW",
+                    "channelImage": "http://static.budee.com/yyren/image/channel/eaw.jpg",
+                    "description": null,
+                    "watched": 1,
+                    "displayOrder": 0,
+                    "cancellable": 1,
+                    "subscribed": false,
+                    "host": "http://eaw.com",
+                    "channelTypeValue": "来源频道",
+                    "channelSourceValue": "国内频道"
+                }
+            ]
         }
+        
 ### 频道详情 [GET] /channels/{id}
 + Description
     + 展示字段id,channelName,description,channelTypeValue,targetId 或者 targets,channelImage,watched,cancellable,enabled,creator,modifier,created,modified
 + Response 200 (application/json)
     
         {
-          "data": {
-            "id": 2,
-            "targetId": 1,
-            "channelSource": 1,
-            "channelType": 1,
-            "channelName": "产品",
-            "channelImage": "http://cdn.mifanxing.com/mifan/img/default-channel.png",
-            "filter": "",
-            "description": "产品",
-            "watched": 4,
-            "displayOrder": 0,
-            "cancellable": 0,
-            "subscribed": false,
-            "channelTypeValue": "版面频道"
-          }
+            "data": {
+                "id": 2,
+                "targetId": 1,
+                "channelSource": 1,
+                "channelType": 1,
+                "channelName": "产品",
+                "channelImage": "http://cdn.mifanxing.com/mifan/img/default-channel.png",
+                "filter": "",
+                "description": "产品",
+                "watched": 4,
+                "displayOrder": 0,
+                "cancellable": 0,
+                "subscribed": false,
+                "channelTypeValue": "版面频道",
+                "channelSourceValue": "国内频道"
+            }
         }
 
 ### 增加/修改 [POST] /channels
