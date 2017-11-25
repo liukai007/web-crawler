@@ -4,9 +4,9 @@
 ## 频道管理
 
 + Data
-    + channelSource (Integer) - 频道来源 0:缺省 1:国内频道 2:国外频道
-    + channelType (Integer) - 频道类型 1:版面频道2:标签频道3:用户频道4:来源频道5：排行频道
-    + channelSourceValue (String) - 频道来源值
+    + channelSource (Integer) - 频道来源 0:缺省 1:国内频道 2:国外频道
+    + channelType (Integer) - 频道类型 1:版面频道2:标签频道3:用户频道4:来源频道5：排行频道
+    + channelSourceValue (String) - 频道来源值
     + channelTypeValue (String) - 频道类型值
     + targetId (Long) - 目标id，(查看详情时，根据频道类型不同，目标也不同；当channelType=4时，此字段失效，取代字段为targets)
     + channelName (String) - 频道名称
