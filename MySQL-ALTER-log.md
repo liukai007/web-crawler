@@ -1,4 +1,36 @@
 # 数据库修改记录
+
++ 2017年11月25日 任务表 article.quartz_jobs
+```sql
+CREATE TABLE `quartz_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `job_status` enum('NEW','SUSPEND','RUNNABLE','TERMINATED') NOT NULL DEFAULT 'NEW' COMMENT '任务状态',
+  `job_group` varchar(100) NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组',
+  `job_name` varchar(100) NOT NULL COMMENT '任务名称',
+  `job_class` varchar(255) NOT NULL COMMENT '任务类',
+  `job_data` text COMMENT '任务参数, JSON格式',
+  `job_data_template` text COMMENT '任务参数模板',
+  `trigger_group` varchar(100) NOT NULL DEFAULT 'DEFAULT' COMMENT '触发器组',
+  `trigger_name` varchar(100) NOT NULL COMMENT '触发器名称',
+  `trigger_cron_expression` varchar(255) NOT NULL COMMENT 'CRON表达式',
+  `description` varchar(255) DEFAULT NULL COMMENT '任务描述',
+  `message` text,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `last_start_time` datetime DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
+  `auto` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否自动启动',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `enabled_auto_idx` (`enabled`,`auto`),
+  KEY `job_status_idx` (`job_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
 + 2017年11月24日 2.1.0 数据库改动
 
 > support.event_dic，增加enabled字段
