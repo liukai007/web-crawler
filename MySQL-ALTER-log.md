@@ -9,7 +9,7 @@ ADD COLUMN `enabled`  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 AFTER `event_descri
 
 + 2017年11月23日 2.1.0 数据库改动
 
-> article.channels，增加分类表图片字段
+> article.forum_categories，增加分类表图片字段
 ```sql
 ALTER TABLE `mifan_article`.`forum_categories`
 ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '分类图片' AFTER `title`;
@@ -26,6 +26,13 @@ INSERT INTO `scheduled_job` VALUES (5, 0, 'DONE', '2017-11-23 14:42:23', '2017-1
 ALTER TABLE `mifan_article`.`channels`
 ADD COLUMN `creator`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `enabled`,
 ADD COLUMN `modifier`  bigint(20) UNSIGNED NOT NULL DEFAULT 0 AFTER `creator`;
+```
+> article.channels，增加新字段
+```sql
+ALTER TABLE `mifan_article`.`channels` 
+ADD COLUMN `channel_source` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '频道来源 0:默认, 1:国内频道, 2:国外频道' AFTER `target_id`,
+ADD COLUMN `display_order` INT NOT NULL DEFAULT 0 COMMENT '排序' AFTER `watched`,
+ADD INDEX `enabled_channel_source_display_order_idx` (`enabled` ASC, `channel_source` ASC, `display_order` ASC);
 ```
 
 + 2017年11月02日 2.1.0 数据库改动
