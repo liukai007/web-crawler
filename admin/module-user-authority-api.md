@@ -16,7 +16,7 @@
     + [MUST] Authenticated
     + [MUST] ROLE_ADMIN
 
-    
+```   
     {
         "meta": {
             "totalPages": 30,
@@ -60,7 +60,7 @@
             }
         ]
     }
-
+```
 ### 增加新权限 [POST] /user/authorities
 + Description
     + [MUST] Authenticated
@@ -85,16 +85,16 @@
         + modifier (long) - 修改人
         + created (date) 创建时间
         + modified (date) 修改时间
-+ 新增Request (application/json)
-    
-
++ 新增Request (application/json) 
+```
     {
         "data":{
             "authType":1,
             "name":"权限测试",
             "siteId":14
-        }
+      
     }
+```
 ### 修改权限 [PATCH] /user/authorities/{id}
 + Description
     + [MUST] Authenticated
@@ -117,14 +117,14 @@
         + enabled (int) -  是否启用 0：否，1：是
         
 + 修改Request (application/json)
-    
+```  
 
     {
         "data":{
             "enabled":0
         }
     }
-    
+``` 
 ### 获取权限 [GET] /user/authorities/{id}
 + Description
     + [MUST] Authenticated
