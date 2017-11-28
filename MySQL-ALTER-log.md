@@ -119,18 +119,18 @@ ALTER TABLE `mifan_article`.`topics`
 DROP INDEX `forum_id_idx` ;
 ```
 ```sql
-##
+## 初始化训练样本集合, 使用thomman的数据
 UPDATE topics, topics_fetch SET topics.train_sample = 1 
 WHERE topics.id = topics_fetch.topic_id AND topics_fetch.seed_id = 11;
 
-## 将Sheet分类从
+## 将Sheet分类从训练样本中删除
 update topics, topics_fetch, posts, posts_text
 set topics.train_sample = 0
 where topics_fetch.topic_id = topics.id and topics_fetch.seed_id = 11
 and posts.topic_id = topics.id
 and posts_text.id = posts.id and posts_text.category regexp '^Sheet';
 
-##
+## 将Computer Audio分类加入到训练样本中
 update topics, topics_classification
 set topics.train_sample = 1
 where topics_classification.id = topics.id 
