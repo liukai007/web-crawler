@@ -207,49 +207,49 @@ ENGINE = InnoDB;
 ```
 > article.elastic_query_builder 新增elastic查询表
 ```sql
-CREATE TABLE IF NOT EXISTS `mifan_article`.`elastic_query_builder` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL,
-  `query_fields_en` VARCHAR(255) NULL,
-  `query_fields_cn` VARCHAR(255) NULL,
-  `filter_categories_en` VARCHAR(255) NULL,
-  `filter_categories_cn` VARCHAR(255) NULL,
-  `positive_query_string_en` VARCHAR(1024) NULL,
-  `positive_query_string_cn` VARCHAR(1024) NULL,
-  `negative_query_string_en` VARCHAR(1024) NULL,
-  `negative_query_string_cn` VARCHAR(1024) NULL,
-  `negative_boost` DOUBLE NOT NULL DEFAULT 0.2,
-  `function_score_mode` ENUM('FIRST', 'MULTIPLY', 'SUM', 'AVG', 'MAX', 'MIN') NOT NULL DEFAULT 'MULTIPLY',
-  `function_boost_mode` ENUM('REPLACE', 'MULTIPLY', 'SUM', 'AVG', 'MAX', 'MIN') NOT NULL DEFAULT 'MULTIPLY',
-  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
-  `creator` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `modifier` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL,
-  `modified` DATETIME NOT NULL,
+CREATE TABLE `elastic_query_builder` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL COMMENT '查询建造器名称',
+  `query_fields_en` varchar(255) DEFAULT NULL COMMENT '查询英文字段',
+  `query_fields_cn` varchar(255) DEFAULT NULL COMMENT '查询中文字段',
+  `filter_categories_en` varchar(255) DEFAULT NULL COMMENT '过滤器英文类别字段',
+  `filter_categories_cn` varchar(255) DEFAULT NULL COMMENT '过滤器中文类别字段',
+  `positive_query_string_en` varchar(1024) DEFAULT NULL COMMENT '正相关英文查询字符串',
+  `positive_query_string_cn` varchar(1024) DEFAULT NULL COMMENT '正相关中文查询字符串',
+  `negative_query_string_en` varchar(1024) DEFAULT NULL COMMENT '负相关英文查询字符串',
+  `negative_query_string_cn` varchar(1024) DEFAULT NULL COMMENT '负相关中文查询字符串',
+  `negative_boost` double NOT NULL DEFAULT '0.2' COMMENT '负助推因子',
+  `function_score_mode` enum('FIRST','MULTIPLY','SUM','AVG','MAX','MIN') NOT NULL DEFAULT 'MULTIPLY' COMMENT '函数评分模式',
+  `function_boost_mode` enum('REPLACE','MULTIPLY','SUM','AVG','MAX','MIN') NOT NULL DEFAULT 'MULTIPLY' COMMENT '函数助推模式',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `enabled_idx` (`enabled` ASC))
-ENGINE = InnoDB;
+  KEY `enabled_idx` (`enabled`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 > article.elastic_function_score 新增elastic函数评分表
 ```sql
-CREATE TABLE IF NOT EXISTS `mifan_article`.`elastic_function_score` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL,
-  `numeric_field` VARCHAR(100) NOT NULL,
-  `filters` VARCHAR(255) NULL,
-  `weight` DOUBLE NOT NULL DEFAULT 1,
-  `function_modifier` ENUM('NONE', 'LOG', 'LOG1P', 'LOG2P', 'LN', 'LN1P', 'LN2P', 'SQUARE', 'SQRT', 'RECIPROCAL') NOT NULL DEFAULT 'NONE',
-  `function_factor` DOUBLE NOT NULL DEFAULT 1,
-  `function_missing` DOUBLE NOT NULL DEFAULT 1,
-  `function_global` TINYINT(1) NOT NULL DEFAULT 1,
-  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
-  `creator` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `modifier` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL,
-  `modified` DATETIME NOT NULL,
+CREATE TABLE `elastic_function_score` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL COMMENT '助推函数名称/标题',
+  `numeric_field` varchar(100) NOT NULL COMMENT '搜索引擎映射中用于助推的数字型字段名称/路径',
+  `filters` varchar(255) DEFAULT NULL COMMENT '过滤器条件, 格式:{field:value}',
+  `weight` double NOT NULL DEFAULT '1' COMMENT '权重',
+  `function_modifier` enum('NONE','LOG','LOG1P','LOG2P','LN','LN1P','LN2P','SQUARE','SQRT','RECIPROCAL') NOT NULL DEFAULT 'NONE' COMMENT '函数修饰',
+  `function_factor` double NOT NULL DEFAULT '1' COMMENT '函数因子',
+  `function_missing` double NOT NULL DEFAULT '1' COMMENT '部分文档缺失特定field时使用此值作为默认值',
+  `function_global` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否影响全局搜索 1:是, 0:否',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `enabled_global_idx` (`enabled` ASC, `function_global` ASC))
-ENGINE = InnoDB;
+  KEY `enabled_global_idx` (`enabled`,`function_global`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
 + 2017年9月15日 
