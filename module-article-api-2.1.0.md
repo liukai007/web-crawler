@@ -2,7 +2,9 @@ FORMAT: 1A
 HOST: http://192.168.1.138/
 
 # 米饭平台2.1.0
-
++ 2017年11月28日
+    + 增加产品分类
+    
 + 2017年11月23日
     + 增加索引管理API
         + 增加或重建topics索引API
@@ -31,7 +33,351 @@ HOST: http://192.168.1.138/
 
 + 2017年10月31日
     + 新增种子相关API
+## (GET) [/article/forumCategories]
+
+### 显示产品分类列表 [GET]
+
++ Description
+    + 查询一级列表参数 filter[parentId]=0&filter[forum_id]=1&sort=-displayOrder&page[size]=16
+
++ Field
+    + name (string) - 状态名称
+    + forumId (long) - 版块ID
+    + rootId (long) - 根节点ID
+    + parentId (long) - 父节点ID
+    + title (string) - 标题
+    + filename (string) - 附件名称
+    + path (string) - 面包屑路径
+    + depth (int) - 深度
+    + leaf (int) - 是否是叶子节点
+    + displayOrder (long) - 显示顺序 数值越大越靠前 默认为0
+    + titleChinese (string) - 标题中文
     
++ Parameters
+    + parentId (int) - 过滤条件,父级分类id 0：根
+    + forum_id(int) - 过滤条件, 1： 产品
+    + displayOrder - 排序字段
+    
++ Response 200 (application/json) 
+```
+{
+    "meta": {
+        "totalPages": 2,
+        "totalElements": 17,
+        "size": 16,
+        "number": 1,
+        "numberOfElements": 16,
+        "first": true,
+        "last": false,
+        "sort": [
+            {
+                "direction": "DESC",
+                "property": "display_order",
+                "ignoreCase": false,
+                "nullHandling": "NATIVE",
+                "ascending": false,
+                "descending": true
+            }
+        ]
+    },
+    "links": {
+        "self": "/article/forumCategories?filter[parentId]=0&filter[forum_id]=1&sort=-displayOrder&page[number]=1&page[size]=16",
+        "first": "/article/forumCategories?filter[parentId]=0&filter[forum_id]=1&sort=-displayOrder&page[number]=1&page[size]=16",
+        "next": "/article/forumCategories?filter[parentId]=0&filter[forum_id]=1&sort=-displayOrder&page[number]=2&page[size]=16",
+        "last": "/article/forumCategories?filter[parentId]=0&filter[forum_id]=1&sort=-displayOrder&page[number]=2&page[size]=16"
+    },
+    "data": [
+        {
+            "id": 2151,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "forumId": 1,
+            "rootId": 2151,
+            "parentId": 0,
+            "title": "Sheet Music, Books, CDs and DVDs",
+            "filename": "",
+            "path": "2151",
+            "depth": 1,
+            "leaf": 1,
+            "displayOrder": 250000,
+            "titleChinese": "歌单/书/CD/DVD"
+        },
+        {
+            "id": 1909,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:13:07",
+            "modified": "2017-10-31 17:13:07",
+            "forumId": 1,
+            "rootId": 1909,
+            "parentId": 0,
+            "title": "Wind Instruments",
+            "filename": "",
+            "path": "1909",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 240000,
+            "titleChinese": "管乐器"
+        },
+        {
+            "id": 1684,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:12:49",
+            "modified": "2017-10-31 17:12:49",
+            "forumId": 1,
+            "rootId": 1684,
+            "parentId": 0,
+            "title": "Traditional",
+            "filename": "",
+            "path": "1684",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 230000,
+            "titleChinese": "传统乐器"
+        },
+        {
+            "id": 1522,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:12:35",
+            "modified": "2017-10-31 17:12:35",
+            "forumId": 1,
+            "rootId": 1522,
+            "parentId": 0,
+            "title": "Studio Equipment",
+            "filename": "",
+            "path": "1522",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 220000,
+            "titleChinese": "演播室设备"
+        },
+        {
+            "id": 1473,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:12:32",
+            "modified": "2017-10-31 17:12:32",
+            "forumId": 1,
+            "rootId": 1473,
+            "parentId": 0,
+            "title": "Software",
+            "filename": "",
+            "path": "1473",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 210000,
+            "titleChinese": "软件"
+        },
+        {
+            "id": 1315,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:12:12",
+            "modified": "2017-10-31 17:12:12",
+            "forumId": 1,
+            "rootId": 1315,
+            "parentId": 0,
+            "title": "PA Equipment",
+            "filename": "",
+            "path": "1315",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 200000,
+            "titleChinese": "专业扩声"
+        },
+        {
+            "id": 1179,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:11:53",
+            "modified": "2017-10-31 17:11:53",
+            "forumId": 1,
+            "rootId": 1179,
+            "parentId": 0,
+            "title": "Microphones",
+            "filename": "",
+            "path": "1179",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 190000,
+            "titleChinese": "麦克风"
+        },
+        {
+            "id": 984,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:11:22",
+            "modified": "2017-10-31 17:11:23",
+            "forumId": 1,
+            "rootId": 984,
+            "parentId": 0,
+            "title": "Lighting + Stage",
+            "filename": "",
+            "path": "984",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 180000,
+            "titleChinese": "照明+舞台"
+        },
+        {
+            "id": 831,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:10:56",
+            "modified": "2017-10-31 17:10:57",
+            "forumId": 1,
+            "rootId": 831,
+            "parentId": 0,
+            "title": "Keys",
+            "filename": "",
+            "path": "831",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 170000,
+            "titleChinese": "键盘"
+        },
+        {
+            "id": 604,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:09:54",
+            "modified": "2017-10-31 17:09:54",
+            "forumId": 1,
+            "rootId": 604,
+            "parentId": 0,
+            "title": "Guitars and Basses",
+            "filename": "",
+            "path": "604",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 160000,
+            "titleChinese": "吉他和贝司"
+        },
+        {
+            "id": 560,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:09:47",
+            "modified": "2017-10-31 17:09:47",
+            "forumId": 1,
+            "rootId": 560,
+            "parentId": 0,
+            "title": "Effects + Signal Proc.",
+            "filename": "",
+            "path": "560",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 150000,
+            "titleChinese": "效果器/处理器"
+        },
+        {
+            "id": 391,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:09:18",
+            "modified": "2017-10-31 17:09:18",
+            "forumId": 1,
+            "rootId": 391,
+            "parentId": 0,
+            "title": "Drums + Percussion",
+            "filename": "",
+            "path": "391",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 140000,
+            "titleChinese": "鼓+打击乐器"
+        },
+        {
+            "id": 323,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:08:43",
+            "modified": "2017-10-31 17:08:43",
+            "forumId": 1,
+            "rootId": 323,
+            "parentId": 0,
+            "title": "DJ Equipment",
+            "filename": "",
+            "path": "323",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 130000,
+            "titleChinese": "DJ设备"
+        },
+        {
+            "id": 258,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:08:33",
+            "modified": "2017-10-31 17:08:33",
+            "forumId": 1,
+            "rootId": 258,
+            "parentId": 0,
+            "title": "Cases",
+            "filename": "",
+            "path": "258",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 120000,
+            "titleChinese": "箱/包"
+        },
+        {
+            "id": 131,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 0,
+            "created": "2017-10-31 17:08:15",
+            "modified": "2017-10-31 17:08:15",
+            "forumId": 1,
+            "rootId": 131,
+            "parentId": 0,
+            "title": "Cables + Plugs",
+            "filename": "",
+            "path": "131",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 110000,
+            "titleChinese": "线缆"
+        },
+        {
+            "id": 1,
+            "enabled": 1,
+            "creator": 0,
+            "modifier": 11,
+            "created": "2017-10-31 17:07:52",
+            "modified": "2017-11-01 13:16:01",
+            "forumId": 1,
+            "rootId": 1,
+            "parentId": 0,
+            "title": "Accessories",
+            "filename": "“”",
+            "path": "1",
+            "depth": 1,
+            "leaf": 0,
+            "displayOrder": 100000,
+            "titleChinese": "配件"
+        }
+    ]
+}
+```
+
+
 ### 新增索引 [POST]
 
 + Request (application/json)

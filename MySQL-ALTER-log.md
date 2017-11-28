@@ -4,7 +4,7 @@
 > article.channels，增加分类表图片字段
 ```sql
 ALTER TABLE `mifan_article`.`forum_categories`
-ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '分类图片' AFTER `title`;
+ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类图片' AFTER `title`;
 ```
 
 > article.scheduled_job，增加一行数据（排行榜定时任务）
