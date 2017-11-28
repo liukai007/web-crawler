@@ -1,6 +1,7 @@
 # 数据库修改记录
 
-+ 2017年11月25日 任务表 article.quartz_jobs
++ 2017年11月25日 2.1.0 数据库改动 
+> article.quartz_jobs 任务表 
 ```sql
 CREATE TABLE `quartz_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -32,7 +33,6 @@ CREATE TABLE `quartz_jobs` (
 ```
 
 + 2017年11月24日 2.1.0 数据库改动
-
 > support.event_dic，增加enabled字段
 ```sql
 ALTER TABLE `mifan_support`.`event_dic`
