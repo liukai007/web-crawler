@@ -40,13 +40,6 @@ ADD COLUMN `enabled`  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 AFTER `event_descri
 ```
 
 + 2017年11月23日 2.1.0 数据库改动
-
-> article.forum_categories，增加分类表图片字段
-```sql
-ALTER TABLE `mifan_article`.`forum_categories`
-ADD COLUMN `filename`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类图片' AFTER `title`;
-```
-
 > article.scheduled_job，增加一行数据（排行榜定时任务）
 ```sql
 INSERT INTO `scheduled_job` VALUES (5, 0, 'DONE', '2017-11-23 14:42:23', '2017-11-23 14:42:26', '2017-11-23 14:42:30', NULL, '排行榜定时', 1);
@@ -135,28 +128,29 @@ ALTER TABLE `mifan_article`.`topics`
 ADD COLUMN `category_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 AFTER `forum_id`,
 ADD INDEX `category_id_idx` (`category_id` ASC);
 ```
-> article.forum_categories 新增类别表
+> article.forum_categories 新增类别表, 初始化数据见mifan-api项目的data-categories.sql文件
 ```sql
-CREATE TABLE IF NOT EXISTS `mifan_article`.`forum_categories` (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `forum_id` BIGINT UNSIGNED NOT NULL COMMENT '版块ID',
-  `root_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '根节点ID',
-  `parent_id` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '父节点ID',
-  `title` VARCHAR(255) NULL,
-  `path` VARCHAR(255) NULL,
-  `depth` TINYINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '深度',
-  `leaf` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否是叶子节点',
-  `display_order` INT NOT NULL DEFAULT 0,
-  `enabled` TINYINT(1) NOT NULL DEFAULT 1,
-  `creator` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `modifier` BIGINT UNSIGNED NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL,
-  `modified` DATETIME NOT NULL,
+CREATE TABLE `forum_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `forum_id` bigint(20) unsigned NOT NULL COMMENT '版块ID',
+  `root_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '根节点ID',
+  `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '父节点ID',
+  `title` varchar(255) DEFAULT NULL,
+  `filename` varchar(255) NOT NULL DEFAULT '' COMMENT '分类图片地址',
+  `path` varchar(255) DEFAULT NULL,
+  `depth` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '深度',
+  `leaf` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否是叶子节点',
+  `display_order` int(11) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `root_id_enabled_idx` (`root_id` ASC, `enabled` ASC),
-  INDEX `parent_id_enabled_idx` (`parent_id` ASC, `enabled` ASC),
-  INDEX `enabled_forum_id_root_id_parent_id_idx` (`enabled` ASC, `forum_id` ASC, `root_id` ASC, `parent_id` ASC))
-ENGINE = InnoDB
+  KEY `root_id_enabled_idx` (`root_id`,`enabled`),
+  KEY `parent_id_enabled_idx` (`parent_id`,`enabled`),
+  KEY `enabled_forum_id_root_id_parent_id_idx` (`enabled`,`forum_id`,`root_id`,`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 > article.word_dictionary 英汉字典表
 ```sql
