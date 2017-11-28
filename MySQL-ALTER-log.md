@@ -119,16 +119,18 @@ ALTER TABLE `mifan_article`.`topics`
 DROP INDEX `forum_id_idx` ;
 ```
 ```sql
+##
 UPDATE topics, topics_fetch SET topics.train_sample = 1 
 WHERE topics.id = topics_fetch.topic_id AND topics_fetch.seed_id = 11;
-```
-```sql
+
+## 将Sheet分类从
 update topics, topics_fetch, posts, posts_text
 set topics.train_sample = 0
 where topics_fetch.topic_id = topics.id and topics_fetch.seed_id = 11
 and posts.topic_id = topics.id
 and posts_text.id = posts.id and posts_text.category regexp '^Sheet';
 
+##
 update topics, topics_classification
 set topics.train_sample = 1
 where topics_classification.id = topics.id 
