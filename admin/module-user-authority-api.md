@@ -187,8 +187,7 @@
 
 + Parameters
     + roleId (long) - 角色id
-
-    
+```  
     {
         "data": [
             {
@@ -199,3 +198,4 @@
             }
         ]
     }
+```
