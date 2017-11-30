@@ -1,7 +1,7 @@
 
 + 2017年11月30日
-    + GET方法(列表和单个资源)增加inluce参数, 在原始返回结果中增加父节点信息或子节点信息
-        + ?inluce=parent
+    + GET方法(列表和单个资源)增加inluce参数, 在原始返回结果中增加父节点信息或子节点信息
+        + ?inluce=parent
         + ?include=children 
 
 + 2017年11月24日
