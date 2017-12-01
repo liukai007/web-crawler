@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年12月1日
+    + 搜索API增加按category ID进行过滤的filter
+
 + 2017年9月29日
     + search API 修改, 具体见API排序部分
 
@@ -1011,6 +1014,7 @@ HOST: http://192.168.1.138/
 + 过滤参数
     + filter[q] (string, nullable) - 按关键词过滤
     + filter[category] (string, nullable) - 按类别过滤
+    + filter[categoryId] (int, nullable) - 按类ID别过滤
     + filter[brand] (string, nullable) - 按品牌过滤, e.g : EV,Yamaha 
     + filter[tag] (string, nullable) - 按标签过滤
     + filter[from] (int, nullable) - 按来源过滤, 抓取的数据都有一个来源seedId
