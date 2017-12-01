@@ -1041,7 +1041,12 @@ HOST: http://192.168.1.138/
             + sort=-hot - 按热度降序排序
             + sort=-new - 按新品降序排序
             + sort=-best - 按精选降序排序
-    
++ 建议器
+    + suggest[size] (int) - 控制返回的建议结果条数, 缺省值为0, 即不显示建议器
+    + suggest[type] (string) - 建议类型, 缺省值 phrase
+        + phrase - 拼写检查 (目前对中文支持不太友好)
+        + completion - 自动完成 (未完成)
+
 + 聚合参数
     + agg[mask] (int, nullable) - 缺省为15, 即显示所有聚合. (filter中明确指定的字段, 不会作为聚合项返回 e.g filter[brand]=Yamaha, 结果将不包含brand聚合)
         + 0001 - (1) category 聚合
@@ -1096,6 +1101,47 @@ HOST: http://192.168.1.138/
                 "sort": null,
                 "first": true,
                 "totalElements": 88800,
+                "suggest": {
+                    "phrase": [
+                        {
+                            "offset": 0,
+                            "length": 13,
+                            "options": [
+                                {
+                                    "score": 0.0000012245733,
+                                    "highlighted": "<em>guitar</em> and bas",
+                                    "text": "guitar and bas"
+                                },
+                                {
+                                    "score": 1.1775544e-7,
+                                    "highlighted": "<em>guild</em> and bas",
+                                    "text": "guild and bas"
+                                },
+                                {
+                                    "score": 7.7354095e-8,
+                                    "highlighted": "<em>guiro</em> and bas",
+                                    "text": "guiro and bas"
+                                },
+                                {
+                                    "score": 4.4551182e-8,
+                                    "highlighted": "<em>guira</em> and bas",
+                                    "text": "guira and bas"
+                                },
+                                {
+                                    "score": 3.3881292e-8,
+                                    "highlighted": "<em>guitari</em> and bas",
+                                    "text": "guitari and bas"
+                                },
+                                {
+                                    "score": 3.2059063e-8,
+                                    "highlighted": "<em>guit</em> and bas",
+                                    "text": "guit and bas"
+                                }
+                            ],
+                            "text": "guita and bas"
+                        }
+                    ]
+                },
                 "aggregations": {
                     "price": {
                         "buckets": [
