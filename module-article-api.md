@@ -3,6 +3,11 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年12月2日
+    + 修改/topics/{id} API, 修改搜索API, 调整了from对象的属性
+        + channelId -> 变更为 targetId
+        + 增加type属性以区别targetId指向的资源类型, 可选值 users|channels
+
 + 2017年12月1日
     + 搜索API增加按category ID进行过滤的filter
 
@@ -824,8 +829,11 @@ HOST: http://192.168.1.138/
     + from.rating (double, nullable) - 爬取的评分 区间[0, 1]
     + from.reviews (int, nullable) - 爬取的浏览数 区间[0, 1]
     + from.host (string) - 网站地址
-    + from.source (string) - 网站简称
-    + document (object, nullable) - 新闻和评测相关数据; 
+    + from.source (string) - 来源名称
+    + from.image (string) - 来源名称
+    + from.type (string) - users|channels, 类型
+    + from.targetId (string) - 目标ID, 类型为users时为用户ID, 类型为channels时为频道ID
+    + document (object, nullable) - 新闻和评测相关数据; 
     + document.postDate (date, nullable) - 文章发表时间
     + document.author (string, nullable) - 文章作者
     + document.brands (array) - 文章关联的品牌
