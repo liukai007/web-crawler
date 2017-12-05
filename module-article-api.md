@@ -3,6 +3,9 @@ HOST: http://192.168.1.138/
 
 # topics
 
++ 2017年12月5日
+    + 现在不管是普通频道还是用户频道统一返回channelId
+
 + 2017年12月2日
     + ~~修改/topics/{id} API, 修改搜索API, 调整了from对象的属性~~
         + ~~channelId -> 变更为 targetId~~
@@ -831,8 +834,7 @@ HOST: http://192.168.1.138/
     + from.host (string) - 网站地址
     + from.source (string) - 来源名称
     + from.image (string) - 来源名称
-    + from.type (string) - users|channels, 类型
-    + from.targetId (string) - 目标ID, 类型为users时为用户ID, 类型为channels时为频道ID
+    + from.channelId (string) - 频道ID
     + document (object, nullable) - 新闻和评测相关数据; 
     + document.postDate (date, nullable) - 文章发表时间
     + document.author (string, nullable) - 文章作者
