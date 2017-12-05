@@ -4,9 +4,9 @@ HOST: http://192.168.1.138/
 # topics
 
 + 2017年12月2日
-    + ~~修改/topics/{id} API, 修改搜索API, 调整了from对象的属性
-        + ~~channelId -> 变更为 targetId
-        + ~~增加type属性以区别targetId指向的资源类型, 可选值 users|channels
+    + ~~修改/topics/{id} API, 修改搜索API, 调整了from对象的属性~~
+        + ~~channelId -> 变更为 targetId~~
+        + ~~增加type属性以区别targetId指向的资源类型, 可选值 users|channels~~
 
 + 2017年12月1日
     + 搜索API增加按category ID进行过滤的filter
