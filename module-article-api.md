@@ -2,6 +2,8 @@ FORMAT: 1A
 HOST: http://192.168.1.138/
 
 # topics
++ 2017年12月6日
+    + 增加建议器-自动完成API
 
 + 2017年12月5日
     + 现在不管是普通频道还是用户频道统一返回channelId
@@ -1053,19 +1055,19 @@ HOST: http://192.168.1.138/
             + sort=-best - 按精选降序排序
 + 建议器
     + suggest[size] (int) - 控制返回的建议结果条数, 缺省值为0, 即不显示建议器
-    + suggest[type] (string) - 建议类型, 缺省值为phrase, 可选值如下
-        + phrase - 拼写检查 (目前对中文支持不太友好)
-        + completion - 自动完成, 如果使用该建议器将不返回任何结果和聚合数据
-            + 过滤
-                + filter[q] (string) - 建议文本, 至少一个字符(英文, 中文, 中文词拼音)
-                + filter[forumId] (long, nullable) - 在特定范围中进行建议, forum id
-                + filter[category] (string, nullable) - 在特定范围中进行建议, 中英文类别全称, 多个使用逗号分隔
-                + filter[brand] (string, nullable) - 在特定范围中进行建议, 品牌的英文全称, 多个使用逗号分隔
-            + 数据
-                + meta.suggest.completion[] (array) - 自动完成建议的内容数组
-                + meta.suggest.completion[].text - 输入的建议文本
-                + meta.suggest.completion[].options[].text - 输出的建议文本
-                + meta.suggest.completion[].options[].payload - 和该数据相关的一些额外载荷数据, 其中载荷中的attributes对象中的属性可能为空
+    + suggest[type] (string) - 建议类型, 缺省值为phrase, 可选值如下
+        + phrase - 拼写检查 (目前对中文支持不太友好)
+        + completion - 自动完成, 如果使用该建议器将不返回任何结果和聚合数据
+            + 过滤
+            + filter[q] (string) - 建议文本, 至少一个字符(英文, 中文, 中文词拼音)
+                + filter[forumId] (long, nullable) - 在特定范围中进行建议, forum id
+                + filter[category] (string, nullable) - 在特定范围中进行建议, 中英文类别全称, 多个使用逗号分隔
+                + filter[brand] (string, nullable) - 在特定范围中进行建议, 品牌的英文全称, 多个使用逗号分隔
+            + 数据
+                + meta.suggest.completion[] (array) - 自动完成建议的内容数组
+                + meta.suggest.completion[].text - 输入的建议文本
+                + meta.suggest.completion[].options[].text - 输出的建议文本
+                + meta.suggest.completion[].options[].payload - 和该数据相关的一些额外载荷数据, 其中载荷中的attributes对象中的属性可能为空
                 
 + 聚合参数
     + agg[mask] (int, nullable) - 缺省为15, 即显示所有聚合. (filter中明确指定的字段, 不会作为聚合项返回 e.g filter[brand]=Yamaha, 结果将不包含brand聚合)
