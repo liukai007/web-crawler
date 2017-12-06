@@ -1059,7 +1059,7 @@ HOST: http://192.168.1.138/
         + phrase - 拼写检查 (目前对中文支持不太友好)
         + completion - 自动完成, 如果使用该建议器将不返回任何结果和聚合数据
             + 过滤
-            + filter[q] (string) - 建议文本, 至少一个字符(英文, 中文, 中文词拼音)
+                + filter[q] (string) - 建议文本, 至少一个字符(英文, 中文, 中文词拼音)
                 + filter[forumId] (long, nullable) - 在特定范围中进行建议, forum id
                 + filter[category] (string, nullable) - 在特定范围中进行建议, 中英文类别全称, 多个使用逗号分隔
                 + filter[brand] (string, nullable) - 在特定范围中进行建议, 品牌的英文全称, 多个使用逗号分隔
