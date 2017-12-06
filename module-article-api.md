@@ -1012,7 +1012,7 @@ HOST: http://192.168.1.138/
     + forumId = [1], 有product数据;
     + forumId = [3|4], 有document数据;
     + 结构同/topics, 是其子集（字段更少一些）
-    
+    
 + Meta
     + aggregations (object, nullable) - 原聚合数据, 结构不变, 所有一级对象为每个聚类的名称;
     + clusters (array, nullable) - 【保留】只有在聚类查询时才返回数据或空数组, 原聚类数据, 结构不变;
@@ -1053,10 +1053,20 @@ HOST: http://192.168.1.138/
             + sort=-best - 按精选降序排序
 + 建议器
     + suggest[size] (int) - 控制返回的建议结果条数, 缺省值为0, 即不显示建议器
-    + suggest[type] (string) - 建议类型, 缺省值 phrase
-        + phrase - 拼写检查 (目前对中文支持不太友好)
-        + completion - 自动完成 (未完成)
-
+    + suggest[type] (string) - 建议类型, 缺省值为phrase, 可选值如下
+        + phrase - 拼写检查 (目前对中文支持不太友好)
+        + completion - 自动完成, 如果使用该建议器将不返回任何结果和聚合数据
+            + 过滤
+                + filter[q] (string) - 建议文本, 至少一个字符(英文, 中文, 中文词拼音)
+                + filter[forumId] (long, nullable) - 在特定范围中进行建议, forum id
+                + filter[category] (string, nullable) - 在特定范围中进行建议, 中英文类别全称, 多个使用逗号分隔
+                + filter[brand] (string, nullable) - 在特定范围中进行建议, 品牌的英文全称, 多个使用逗号分隔
+            + 数据
+                + meta.suggest.completion[] (array) - 自动完成建议的内容数组
+                + meta.suggest.completion[].text - 输入的建议文本
+                + meta.suggest.completion[].options[].text - 输出的建议文本
+                + meta.suggest.completion[].options[].payload - 和该数据相关的一些额外载荷数据, 其中载荷中的attributes对象中的属性可能为空
+                
 + 聚合参数
     + agg[mask] (int, nullable) - 缺省为15, 即显示所有聚合. (filter中明确指定的字段, 不会作为聚合项返回 e.g filter[brand]=Yamaha, 结果将不包含brand聚合)
         + 0001 - (1) category 聚合
@@ -1149,6 +1159,94 @@ HOST: http://192.168.1.138/
                                 }
                             ],
                             "text": "guita and bas"
+                        }
+                    ],
+                    "completion": [
+                        {
+                            "offset": 0,
+                            "length": 2,
+                            "options": [
+                                {
+                                    "score": 1,
+                                    "payload": {
+                                        "data": {
+                                            "attributes": {
+                                                "images": [
+                                                    {
+                                                        "filename": "http://static.budee.com/yyren/image/152/37/2463973.jpg"
+                                                    }
+                                                ],
+                                                "title": "UNMIX::DRUMS - Plug-in",
+                                                "forumId": 1
+                                            },
+                                            "id": 38,
+                                            "type": "topics"
+                                        }
+                                    },
+                                    "text": "产品 - UNMIX::DRUMS - Plug-in"
+                                },
+                                {
+                                    "score": 1,
+                                    "payload": {
+                                        "data": {
+                                            "attributes": {
+                                                "images": [
+                                                    {
+                                                        "filename": "http://static.budee.com/yyren/image/153/37/2464003.jpg"
+                                                    }
+                                                ],
+                                                "categories": [
+                                                    {
+                                                        "en": "Software",
+                                                        "cn": "软件"
+                                                    },
+                                                    {
+                                                        "en": "Virtual Processors",
+                                                        "cn": "虚拟处理器"
+                                                    }
+                                                ],
+                                                "title": "Unchirp Plug-in",
+                                                "brand": "Zynaptiq",
+                                                "forumId": 1
+                                            },
+                                            "id": 26,
+                                            "type": "topics"
+                                        }
+                                    },
+                                    "text": "产品 - Unchirp Plug-in"
+                                },
+                                {
+                                    "score": 1,
+                                    "payload": {
+                                        "data": {
+                                            "attributes": {
+                                                "images": [
+                                                    {
+                                                        "filename": "http://static.budee.com/yyren/image/153/37/2464001.jpg"
+                                                    }
+                                                ],
+                                                "categories": [
+                                                    {
+                                                        "en": "Software",
+                                                        "cn": "软件"
+                                                    },
+                                                    {
+                                                        "en": "Virtual Processors",
+                                                        "cn": "虚拟处理器"
+                                                    }
+                                                ],
+                                                "title": "Unfilter Real-time Tonal Linearization Plug-in",
+                                                "brand": "Zynaptiq",
+                                                "forumId": 1
+                                            },
+                                            "id": 32,
+                                            "type": "topics"
+                                        }
+                                    },
+                                    "text": "产品 - Unfilter Real-time Tonal Linearization Plug-in"
+                                }
+                            ],
+                            "text": "un"
                         }
                     ]
                 },
