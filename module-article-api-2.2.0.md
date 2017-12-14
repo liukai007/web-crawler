@@ -5,6 +5,9 @@ HOST: http://192.168.1.138/
 
 2.2.0 mifan API 
 
++ 2017年12月14日
+    + 文件夹API增加统计数
+
 ## (POST|GET) 目录文件 [/article/folders]
 
 + Description
@@ -14,7 +17,7 @@ HOST: http://192.168.1.138/
         + include=admin
     + 查询列表时需要带上条件, 只查询特定类型的目录
         + filter[folderType]=1
-    + 查询列表时, 系统强制过滤参数为
+    + 查询列表时, 系统强制过滤参数, 不需要手工指定
         + filter[creator]={current user}
         + filter[enabled]=1
 
@@ -22,6 +25,8 @@ HOST: http://192.168.1.138/
     + id (long) - 目录ID
     + folderName (string) - 目录名称
     + folderType (int) - 此处固定为1, 1:产品比较目录类型
+    + amount (int) - 当前文件夹文件数
+    + capacity (int) - 文件夹总容量
 
 + Meta
     + number (int) - 当前页
@@ -108,6 +113,8 @@ HOST: http://192.168.1.138/
                     "parentId": 0,
                     "folderType": 1,
                     "folderName": "吉他相关",
+                    "amount": 0,
+                    "capacity": 6,
                     "displayOrder": 0
                 },
                 {
@@ -120,6 +127,8 @@ HOST: http://192.168.1.138/
                     "parentId": 0,
                     "folderType": 1,
                     "folderName": "扩声相关",
+                    "amount": 0,
+                    "capacity": 6,
                     "displayOrder": 0
                 },
                 {
@@ -132,6 +141,8 @@ HOST: http://192.168.1.138/
                     "parentId": 0,
                     "folderType": 1,
                     "folderName": "专业相关",
+                    "amount": 0,
+                    "capacity": 6,
                     "displayOrder": 0
                 }
             ]
@@ -189,7 +200,9 @@ HOST: http://192.168.1.138/
         + 只能往自己的目录中添加主题
         + 只能往存在的目录中添加主题
         + 只能在topicType = 1的目录中添加主题
-    + 查询列表时的默认行为
+    + 查询列表时需要手工指定的过滤条件
+        + filter[folderId]={id}
+    + 查询列表时的系统强制过滤参数, 不需要手工指定
         + include=topics参数, 查询关联数据的信息
         + filter[userId]={current user}
         + filter[enabled]=1
