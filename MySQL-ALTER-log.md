@@ -1,10 +1,16 @@
 # 数据库修改记录
 
+[米饭星]http://cdn.mifanxing.com/mifan/img/favicon.ico
+
+---
+
+# 2.3.0 (略)
+
 ---
 
 # 2.2.0
 
-## 2017年12月14日
+### 2017年12月14日
 > article.folders 目录表
 ```sql
 CREATE TABLE `folders` (
@@ -47,7 +53,7 @@ CREATE TABLE `users_topics_compare` (
 
 # 2.1.0
 
-## 2017年11月25日 2.1.0 数据库改动 
+### 2017年11月25日 2.1.0 数据库改动 
 > article.quartz_jobs 任务表 
 ```sql
 CREATE TABLE `quartz_jobs` (
