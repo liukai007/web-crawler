@@ -1,5 +1,52 @@
 # 数据库修改记录
 
+---
+
++ 2.2.0
+
++ 2017年12月14日
+> article.folders 目录表
+```sql
+CREATE TABLE `folders` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'parent ID',
+  `folder_type` tinyint(4) NOT NULL DEFAULT '0',
+  `folder_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文件夹名称',
+  `display_order` int(11) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parent_id_idx` (`parent_id`),
+  KEY `enabled_creator_folder_type_parent_id_display_order_idx` (`enabled`,`creator`,`folder_type`,`parent_id`,`display_order`),
+  KEY `enabled_creator_folder_type_display_order_idx` (`enabled`,`creator`,`folder_type`,`display_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+> article.users_topics_compare 用户添加主题比较的关联数据表
+```sql
+CREATE TABLE `users_topics_compare` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `topic_id` bigint(20) unsigned NOT NULL,
+  `folder_id` bigint(20) unsigned NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_topic_id_idx` (`user_id`,`topic_id`,`folder_id`),
+  KEY `topic_id_idx` (`topic_id`),
+  KEY `user_id_enabled_topic_id_idx` (`user_id`,`enabled`,`topic_id`),
+  KEY `user_id_enabled_folder_id_topic_id_idx` (`user_id`,`enabled`,`folder_id`,`topic_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+---
+
++ 2.1.0
+
 + 2017年11月25日 2.1.0 数据库改动 
 > article.quartz_jobs 任务表 
 ```sql
