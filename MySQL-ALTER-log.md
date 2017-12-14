@@ -19,6 +19,8 @@ CREATE TABLE `folders` (
   `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'parent ID',
   `folder_type` tinyint(4) NOT NULL DEFAULT '0',
   `folder_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '文件夹名称',
+  `amount` int(11) NOT NULL DEFAULT '0' COMMENT '当前大小',
+  `capacity` int(11) NOT NULL DEFAULT '6' COMMENT '最大容量',
   `display_order` int(11) NOT NULL DEFAULT '0',
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
   `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
