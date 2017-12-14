@@ -1,6 +1,6 @@
 # 数据库修改记录
 
-[米饭星]http://cdn.mifanxing.com/mifan/img/favicon.ico
+![米饭星]http://cdn.mifanxing.com/mifan/img/favicon.ico
 
 ---
 
@@ -11,6 +11,7 @@
 # 2.2.0
 
 ### 2017年12月14日
+
 > article.folders 目录表
 ```sql
 CREATE TABLE `folders` (
@@ -54,6 +55,7 @@ CREATE TABLE `users_topics_compare` (
 # 2.1.0
 
 ### 2017年11月25日 2.1.0 数据库改动 
+
 > article.quartz_jobs 任务表 
 ```sql
 CREATE TABLE `quartz_jobs` (
@@ -85,20 +87,23 @@ CREATE TABLE `quartz_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-+ 2017年11月24日 2.1.0 数据库改动
+### 2017年11月24日 2.1.0 数据库改动
+
 > support.event_dic，增加enabled字段
 ```sql
 ALTER TABLE `mifan_support`.`event_dic`
 ADD COLUMN `enabled`  tinyint(1) UNSIGNED NOT NULL DEFAULT 1 AFTER `event_describe`;
 ```
 
-+ 2017年11月23日 2.1.0 数据库改动
+### 2017年11月23日 2.1.0 数据库改动
+
 > article.scheduled_job，增加一行数据（排行榜定时任务）
 ```sql
 INSERT INTO `scheduled_job` VALUES (5, 0, 'DONE', '2017-11-23 14:42:23', '2017-11-23 14:42:26', '2017-11-23 14:42:30', NULL, '排行榜定时', 1);
 ```
 
-+ 2017年11月21日 2.1.0 数据库改动
+### 2017年11月21日 2.1.0 数据库改动
+
 > article.channels，增加频道表创建人和修改人字段
 ```sql
 ALTER TABLE `mifan_article`.`channels`
@@ -113,7 +118,8 @@ ADD COLUMN `display_order` INT NOT NULL DEFAULT 0 COMMENT '排序' AFTER `watche
 ADD INDEX `enabled_channel_source_display_order_idx` (`enabled` ASC, `channel_source` ASC, `display_order` ASC);
 ```
 
-+ 2017年11月02日 2.1.0 数据库改动
+### 2017年11月02日 2.1.0 数据库改动
+
 > article.translate_task，新增翻译任务表
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`translate_task` (
@@ -136,7 +142,9 @@ CREATE TABLE IF NOT EXISTS `mifan_article`.`translate_task` (
   UNIQUE KEY `topic_id_unique` (`topic_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 ```
-+ 2017年11月08日 2.1.0 数据库改动
+
+### 2017年11月08日 2.1.0 数据库改动
+
 > article.topics_model新增表, 分类模型增加数据库表, 修改表, 增加了一个字段
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
@@ -159,7 +167,9 @@ CREATE TABLE IF NOT EXISTS `mifan_article`.`topics_model` (
   KEY `forum_id_model_status_priority_idx` (`forum_id`,`model_status`,`priority`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
-+ 2017年10月31日 2.1.0 数据库改动
+
+### 2017年10月31日 2.1.0 数据库改动
+
 > article.topics表改动 增加两个新字段, 修改索引, SQL初始化训练数据
 ```sql
 ALTER TABLE `mifan_article`.`topics` 
@@ -237,7 +247,9 @@ CREATE TABLE IF NOT EXISTS `mifan_article`.`word_dictionary` (
   INDEX `enabled_word_cn_hash_idx` (`enabled` ASC, `word_cn_hash` ASC))
 ENGINE = InnoDB
 ```
-+ 2017年9月27日 2.0.3 数据库改动
+
+### 2017年9月27日 2.0.3 数据库改动
+
 > article.navigation 新增导航菜单表
 ```sql
 CREATE TABLE IF NOT EXISTS `mifan_article`.`navigation` (
@@ -305,14 +317,17 @@ CREATE TABLE `elastic_function_score` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-+ 2017年9月15日 
+### 2017年9月15日 
+
 > ucenter.user_addresses 新增字段
 ```sql
 ALTER TABLE `ucenter`.`user_addresses` 
 ADD COLUMN `address_label` VARCHAR(255) NULL COMMENT '地址标签' AFTER `address`,
 ADD COLUMN `postal_code` VARCHAR(30) NULL COMMENT '邮政编码' AFTER `address_label`;
 ```
-+ 2017年9月12日 
+
+### 2017年9月12日 
+
 > mifan_article.moderation 删除原post_id_idx普通索引
 ```sql
 ALTER TABLE `mifan_article`.`moderation` 
@@ -348,7 +363,9 @@ DROP INDEX `comment_id` ;
 ALTER TABLE `mifan_support`.`praise` 
 ADD UNIQUE INDEX `conf_id_theme_id_comment_id_creator_unique` (`conf_id` ASC, `theme_id` ASC, `comment_id` ASC, `creator` ASC);
 ```
-+ 2017年10月28日 
+
+### 2017年10月28日 
+
 > mifan_article.topics_fetch 修改原topic_id_idx普通索引为唯一索引
 ```sql
 ALTER TABLE `mifan_article`.`topics_fetch` 
