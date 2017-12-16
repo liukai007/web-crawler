@@ -1465,6 +1465,7 @@ HOST: http://192.168.1.138/
             "data": {
                 "id": 1,
                 "enabled": 1,
+                "auto":0
                 "version": 21,
                 "triggerCronExpression": "0/8 * * * * ?",
                 "jobData": "{\"timeout\":8}",
